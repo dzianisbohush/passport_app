@@ -1,6 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components'
+import '../styles/main.less';
 import {Button} from 'antd';
+
+const ButtonSC = styled.button`
+  background: transparent;
+  border-radius: 3px;
+  border: 2px solid palevioletred;
+  color: palevioletred;
+  margin: 0 1em;
+  padding: 0.25em 1em;
+`
 
 const Counter = ({
   increment,
@@ -10,7 +21,10 @@ const Counter = ({
   counter,
 }) => (
   <p>
+    <ButtonSC>button with styled components</ButtonSC>
     <Button type="primary">Button</Button>
+    <Button >Button</Button>
+    <Button type="danger">Button</Button>
     Clicked: {counter} times
     {' '}
     <button onClick={increment}>+</button>
