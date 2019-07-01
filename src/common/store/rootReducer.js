@@ -4,7 +4,7 @@ import edit from '../pages/edit/store';
 
 const rootReducer = combineReducers({
   home,
-  edit
+  edit,
 });
 
 export default rootReducer;

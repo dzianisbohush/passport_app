@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components'
-import {Button} from 'antd';
+import styled from 'styled-components';
+import { Button } from 'antd';
 
 const ButtonSC = styled.button`
   background: transparent;
@@ -10,23 +10,21 @@ const ButtonSC = styled.button`
   color: palevioletred;
   margin: 0 1em;
   padding: 0.25em 1em;
-`
+`;
 
-const Home = ({
-                   increment,
-                   decrement,
-                   counter,
-                 }) => (
+const Home = ({ increment, decrement, counter }) => (
   <p>
     <ButtonSC>button with styled components</ButtonSC>
     <Button type="primary">Button</Button>
-    <Button >Button</Button>
+    <Button>Button</Button>
     <Button type="danger">Button</Button>
-    Clicked: {counter} times
-    {' '}
-    <button onClick={increment}>+</button>
-    {' '}
-    <button onClick={decrement}>-</button>
+    Clicked: {counter} times{' '}
+    <button onClick={increment} type="button">
+      +
+    </button>{' '}
+    <button onClick={decrement} type="button">
+      -
+    </button>
   </p>
 );
 

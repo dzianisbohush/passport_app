@@ -7,9 +7,7 @@ const configureStore = preloadedState => {
   const store = createStore(
     rootReducer,
     preloadedState,
-    composeWithDevTools(
-      applyMiddleware(thunk)
-    )
+    composeWithDevTools(applyMiddleware(thunk)),
   );
 
   if (module.hot) {

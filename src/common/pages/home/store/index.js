@@ -3,16 +3,16 @@ const HOME_INCREMENT = 'HOME_INCREMENT';
 const HOME_DECREMENT = 'HOME_DECREMENT';
 
 const initialState = {
-  count: 0
+  count: 0,
 };
 
 // ACTIONS
 export const onIncrement = () => ({
-  type: HOME_INCREMENT
+  type: HOME_INCREMENT,
 });
 
 export const onDecrement = () => ({
-  type: HOME_DECREMENT
+  type: HOME_DECREMENT,
 });
 
 // REDUCER
@@ -21,12 +21,12 @@ const home = (state = initialState, action) => {
     case HOME_INCREMENT:
       return {
         ...state,
-        count: state.count + 1
+        count: state.count + 1,
       };
     case HOME_DECREMENT:
       return {
         ...state,
-        count: state.count - 1
+        count: state.count - 1,
       };
     default:
       return state;
