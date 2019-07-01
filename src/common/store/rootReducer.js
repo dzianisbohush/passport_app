@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
-import counter from './counter';
+import home from '../pages/home/store';
+import edit from '../pages/edit/store';
 
 const rootReducer = combineReducers({
-  counter,
+  home,
+  edit
 });
 
 export default rootReducer;
