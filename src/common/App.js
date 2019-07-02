@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Home from './pages/home/containers';
-import Edit from './pages/edit/containers';
+import Home from 'common/pages/home/containers';
+import Edit from 'common/pages/edit/containers';
 
 import 'antd/dist/antd.css';
 // import './styles/main.less';

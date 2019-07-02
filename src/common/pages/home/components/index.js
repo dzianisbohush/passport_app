@@ -15,7 +15,7 @@ const ButtonSC = styled.button`
 const Home = ({ increment, decrement, counter }) => (
   <p>
     <ButtonSC>button with styled components</ButtonSC>
-    <Button type="primary">Button</Button>
+    <Button type="primary">dd</Button>
     <Button>Button</Button>
     <Button type="danger">Button</Button>
     Clicked: {counter} times{' '}

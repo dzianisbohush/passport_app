@@ -1,12 +1,13 @@
+/* eslint-disable  no-console */
 import express from 'express';
 
-let app = require('./server').default;
+let app = require('server').default;
 
 if (module.hot) {
-  module.hot.accept('./server', function() {
+  module.hot.accept('./server', () => {
     console.log('🔁  HMR Reloading `./server`...');
     try {
-      app = require('./server').default;
+      app = require('server').default;
     } catch (error) {
       console.error(error);
     }
@@ -18,7 +19,7 @@ const port = process.env.PORT || 3000;
 
 export default express()
   .use((req, res) => app.handle(req, res))
-  .listen(port, function(err) {
+  .listen(port, err => {
     if (err) {
       console.error(err);
       return;

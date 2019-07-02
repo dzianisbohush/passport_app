@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import home from '../pages/home/store';
-import edit from '../pages/edit/store';
+import home from 'common/pages/home/store';
+import edit from 'common/pages/edit/store';
 
 const rootReducer = combineReducers({
   home,

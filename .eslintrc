@@ -16,5 +16,14 @@
   "env": {
     "browser": true,
     "node": true
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["client", "./src/client/"],
+        ["common", "./src/common/"],
+        ["server", "./src/server/"]
+      ]
+    }
   }
 }
