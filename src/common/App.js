@@ -3,7 +3,8 @@ import { Route, Switch } from 'react-router-dom';
 import Home from './pages/home/containers';
 import Edit from './pages/edit/containers';
 
-import './styles/main.less';
+import 'antd/dist/antd.css';
+// import './styles/main.less';
 
 const App = () => (
   <Switch>
