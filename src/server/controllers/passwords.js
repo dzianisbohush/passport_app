@@ -1,8 +1,8 @@
 const Password = require('../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
 
-async function getPasswordById(req, res) {
-  if (!req.params.id) {
+async function getPasswordsByUserId(req, res) {
+  if (!req.params.userId) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
       .json({ error: MESSAGES.EMPTY_ID });
@@ -10,7 +10,7 @@ async function getPasswordById(req, res) {
   }
 
   try {
-    const userData = await Password.getPasswordById(req.params.id);
+    const userData = await Password.getPasswordsByUserId(req.params.userId);
     if (!userData) {
       res
         .status(HTTP_STATUS_CODES.NOT_FOUND)
@@ -91,6 +91,13 @@ async function deletePasswordById(req, res) {
 }
 
 async function createPassword(req, res) {
+  if (!req.body.userId) {
+    res
+      .status(HTTP_STATUS_CODES.BAD_REQUEST)
+      .json({ error: MESSAGES.EMPTY_ID });
+    return;
+  }
+
   if (!req.body.name) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
@@ -135,7 +142,7 @@ async function createPassword(req, res) {
 
 module.exports = {
   createPassword,
-  getPasswordById,
+  getPasswordsByUserId,
   deletePasswordById,
   updatePasswordById,
 };

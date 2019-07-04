@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', controller.createPassword);
 router.put('/:id', controller.updatePasswordById);
-router.get('/:id', controller.getPasswordById);
+router.get('/:userId', controller.getPasswordsByUserId);
 router.delete('/:id', controller.deletePasswordById);
 
 export default router;

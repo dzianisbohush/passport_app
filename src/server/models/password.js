@@ -13,11 +13,15 @@ const sequelize = new Sequelize(database, username, password, {
   dialect,
 });
 
-const passwordModel = {
+const passwordSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
+    type: Sequelize.INTEGER,
+  },
+  userId: {
+    allowNull: false,
     type: Sequelize.INTEGER,
   },
   name: {
@@ -50,13 +54,17 @@ const passwordModel = {
 };
 
 class Password extends Model {}
-Password.init(passwordModel, {
+Password.init(passwordSchema, {
   sequelize,
   modelName: 'Password',
 });
 
 function createPassword(userData) {
   return Password.create(userData);
+}
+
+function getPasswordsByUserId(userId) {
+  return Password.findAll({ where: { userId } });
 }
 
 function getPasswordById(id) {
@@ -73,9 +81,11 @@ function deletePasswordById(id) {
 }
 
 module.exports = {
-  passwordModel,
+  passwordSchema,
+  Password,
   createPassword,
   getPasswordById,
+  getPasswordsByUserId,
   deletePasswordById,
   updatePasswordById,
 };
