@@ -47,4 +47,42 @@ Password.init(passwordModel, {
   modelName: 'Password',
 });
 
-module.exports = { passwordModel };
+async function createPassword(userData) {
+  try {
+    return await Password.create(userData);
+  } catch (error) {
+    return error;
+  }
+}
+
+async function getPasswordById(id) {
+  try {
+    return await Password.findOne(id);
+  } catch (error) {
+    return error;
+  }
+}
+
+async function updatePasswordById(id, newData) {
+  try {
+    return await Password.update(id, newData);
+  } catch (error) {
+    return error;
+  }
+}
+
+async function deletePasswordById(id) {
+  try {
+    return await Password.destroy(id);
+  } catch (error) {
+    return error;
+  }
+}
+
+module.exports = {
+  passwordModel,
+  createPassword,
+  getPasswordById,
+  deletePasswordById,
+  updatePasswordById,
+};

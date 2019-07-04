@@ -2,6 +2,7 @@
 import express from 'express';
 import Sequelize from 'sequelize';
 import postgresConnection from '../config/postgresConnection';
+import passwords from './server/routes/passwords';
 
 let app = require('server').default;
 
@@ -18,6 +19,8 @@ if (module.hot) {
 }
 
 const port = process.env.PORT || 3000;
+
+app.use('/api/articles', passwords);
 
 export default express()
   .use((req, res) => app.handle(req, res))
