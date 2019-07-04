@@ -20,7 +20,7 @@ if (module.hot) {
 
 const port = process.env.PORT || 3000;
 
-app.use('/api/articles', passwords);
+app.use('/api/passwords', passwords);
 
 export default express()
   .use((req, res) => app.handle(req, res))
