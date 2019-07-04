@@ -22,6 +22,7 @@ export const Header = styled.header`
 export const Img = styled.img.attrs(() => ({
   alt: 'User pic',
   srcSet:
+    // eslint-disable-next-line max-len
     'http://komotoz.ru/kartinki/images/kartinki_pro_lubov/kartinki_pro_lubov_17.jpg',
 }))`
   border-radius: 100%;
@@ -43,14 +44,12 @@ export const Ul = styled.ul`
   flex-direction: row;
   margin: 10px;
   padding: 0px;
-  & > li {
-    & :: after {
-      content: '|';
-      margin: 0px 10px;
-    }
-  }
   text-align: center;
   list-style-type: none;
+
+  & > span {
+    margin: 0px 10px;
+  }
 
   @media only screen and (max-width: 600px) {
     display: flex;
@@ -60,9 +59,9 @@ export const Ul = styled.ul`
     & > li {
       padding: 2px 0px;
       margin: 0px;
-      & :: after {
-        content: none;
-      }
+    }
+    & > span {
+      display: none;
     }
   }
 `;

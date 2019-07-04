@@ -14,9 +14,11 @@ const HeaderBlock = () => {
         <li>
           <Link to="/">Home</Link>
         </li>
+        <span>|</span>
         <li>
           <Link to="/status">Password Status Control</Link>
         </li>
+        <span>|</span>
         <li>
           <Link to="/import_export">Import/export csv</Link>
         </li>
