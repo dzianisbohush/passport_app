@@ -1,5 +1,7 @@
 /* eslint-disable  no-console */
 import express from 'express';
+import Sequelize from 'sequelize';
+import postgresConnection from '../config/postgresConnection';
 
 let app = require('server').default;
 
@@ -24,5 +26,23 @@ export default express()
       console.error(err);
       return;
     }
+
+    const {
+      development: { username, password, database, host, dialect },
+    } = postgresConnection;
+    const sequelize = new Sequelize(database, username, password, {
+      host,
+      dialect,
+    });
+    sequelize
+      .authenticate()
+      .then(() => {
+        console.log(
+          'Connection to database has been established successfully!',
+        );
+      })
+      .catch(sequelizeError => {
+        console.error('Unable to connect to the database:', sequelizeError);
+      });
     console.log(`> Started on port ${port}`);
   });
