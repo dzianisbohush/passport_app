@@ -42,36 +42,10 @@ const columns = [
   },
 ];
 
-const dataSource = [
-  {
-    name: 'Andrew',
-    resource: 'sf',
-    login: 'sfes',
-    passwords: 'sdfxcvse',
-  },
-  {
-    name: 'Andrew',
-    resource: 'sf',
-    login: 'sfes',
-    passwords: 'sdfxcvse',
-  },
-  {
-    name: 'Andreweeeeeeeeeeeeeeeeeeeeeeee',
-    resource: 'sf',
-    login: 'sfes',
-    passwords: 'sdfxcvse',
-  },
-];
-
 const TableBlock = () => {
   return (
     <TableWrapper>
-      <Table
-        rowSelection={{}}
-        columns={columns}
-        dataSource={dataSource}
-        bordered
-      />
+      <Table rowSelection={{}} columns={columns} dataSource={[]} bordered />
     </TableWrapper>
   );
 };
