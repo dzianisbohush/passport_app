@@ -4,10 +4,10 @@ export const Header = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
+  margin: 0px 50px;
   @media only screen and (max-width: 600px) {
     flex-direction: column;
-
+    margin: 0px;
     font-size: 0.8em;
 
     & > div {
