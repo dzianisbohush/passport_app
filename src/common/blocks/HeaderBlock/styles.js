@@ -43,12 +43,16 @@ export const Ul = styled.ul`
   display: flex;
   flex-direction: row;
   margin: 10px;
-  padding: 0px;
   text-align: center;
   list-style-type: none;
 
-  & > span {
-    margin: 0px 10px;
+  & > li {
+    padding: 0px 10px;
+    height: 20px;
+  }
+
+  & > :not(:last-child) {
+    border-right: 1px solid black;
   }
 
   @media only screen and (max-width: 600px) {
@@ -59,9 +63,10 @@ export const Ul = styled.ul`
     & > li {
       padding: 2px 0px;
       margin: 0px;
+      border: 0px;
     }
-    & > span {
-      display: none;
+    & > :not(:last-child) {
+      border-right: none;
     }
   }
 `;

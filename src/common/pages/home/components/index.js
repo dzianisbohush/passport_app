@@ -1,10 +1,6 @@
 import React from 'react';
 import HeaderBlock from 'common/blocks/HeaderBlock';
 
-const Home = () => (
-  <p>
-    <HeaderBlock />
-  </p>
-);
+const Home = () => <HeaderBlock />;
 
 export default Home;
