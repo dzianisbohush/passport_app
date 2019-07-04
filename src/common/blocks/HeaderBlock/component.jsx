@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Header, Span, Ul } from './styles';
+import { Header, Img, Span, Ul } from './styles';
 
 const HeaderBlock = () => {
   return (
     <Header>
-      <img alt="User pic" />
-      <Span />
+      <div>
+        <Img />
+        <Span>Andrei Yanushkevich</Span>
+      </div>
       <Ul>
         <li>
           <Link to="/">Home</Link>
