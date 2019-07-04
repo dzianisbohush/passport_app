@@ -1,5 +1,6 @@
 const HTTP_STATUS_CODES = {
   OK: 200,
+  CREATED: 201,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -10,6 +11,8 @@ const HTTP_STATUS_CODES = {
 };
 
 const MESSAGES = {
+  CREATED: 'Created',
+  DUPLICATE_PASSWORD: 'Password must be different from the previous one',
   EMPTY_ID: 'Id is required',
   EMPTY_NAME: 'Name is required',
   EMPTY_RESOURCE_ADDRESS: 'Resource address is required',

@@ -6,9 +6,17 @@ async function getPasswordById(req, res) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
       .json({ error: MESSAGES.EMPTY_ID });
+    return;
   }
+
   try {
     const userData = await Password.getPasswordById(req.params.id);
+    if (!userData) {
+      res
+        .status(HTTP_STATUS_CODES.NOT_FOUND)
+        .json({ error: MESSAGES.NOT_FOUND });
+      return;
+    }
     res.status(HTTP_STATUS_CODES.OK).json(userData);
   } catch (e) {
     res
@@ -22,21 +30,32 @@ async function updatePasswordById(req, res) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
       .json({ error: MESSAGES.EMPTY_ID });
+    return;
   }
+
   try {
     const existingData = await Password.getPasswordById(req.params.id);
+
     if (!existingData) {
       res
         .status(HTTP_STATUS_CODES.NOT_FOUND)
         .json({ error: MESSAGES.NOT_FOUND });
+      return;
     }
+
+    if (existingData.password === req.body.password) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.DUPLICATE_PASSWORD });
+      return;
+    }
+
     const updatedData = await Password.updatePasswordById(
       req.params.id,
       req.body,
     );
-    if (JSON.stringify(existingData) !== JSON.stringify(updatedData)) {
-      res.status(HTTP_STATUS_CODES.OK).json(updatedData);
-    }
+
+    res.status(HTTP_STATUS_CODES.OK).json(updatedData);
   } catch (e) {
     res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
@@ -49,22 +68,21 @@ async function deletePasswordById(req, res) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
       .json({ error: MESSAGES.EMPTY_ID });
+    return;
   }
+
   try {
     const existingData = await Password.getPasswordById(req.params.id);
+
     if (!existingData) {
       res
         .status(HTTP_STATUS_CODES.NOT_FOUND)
         .json({ error: MESSAGES.NOT_FOUND });
+      return;
     }
+
     await Password.deletePasswordById(req.params.id);
-    const remoteRecord = await Password.getPasswordById(req.params.id);
-    if (remoteRecord) {
-      res
-        .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-        .status({ error: MESSAGES.INTERNAL_SERVER_ERROR });
-    }
-    res.status(HTTP_STATUS_CODES.OK).json({ success: MESSAGES.OK });
+    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
   } catch (e) {
     res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
@@ -86,6 +104,7 @@ async function createPassword(req, res) {
       .json({ error: MESSAGES.EMPTY_RESOURCE_ADDRESS });
     return;
   }
+
   if (!req.body.login) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
@@ -102,11 +121,11 @@ async function createPassword(req, res) {
   try {
     const date = new Date();
     date.setMonth(date.getMonth() + 1);
-    const userData = await Password.createPassword({
+    await Password.createPassword({
       ...req.body,
       sendNotificationAt: date,
     });
-    res.status(HTTP_STATUS_CODES.OK).json(userData);
+    res.status(HTTP_STATUS_CODES.CREATED).json({ message: MESSAGES.CREATED });
   } catch (error) {
     res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)

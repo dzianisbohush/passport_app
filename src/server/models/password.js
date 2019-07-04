@@ -39,6 +39,14 @@ const passwordModel = {
     allowNull: false,
     type: Sequelize.DATE,
   },
+  createdAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
+  updatedAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
 };
 
 class Password extends Model {}
@@ -47,36 +55,21 @@ Password.init(passwordModel, {
   modelName: 'Password',
 });
 
-async function createPassword(userData) {
-  try {
-    return await Password.create(userData);
-  } catch (error) {
-    return error;
-  }
+function createPassword(userData) {
+  return Password.create(userData);
 }
 
-async function getPasswordById(id) {
-  try {
-    return await Password.findOne(id);
-  } catch (error) {
-    return error;
-  }
+function getPasswordById(id) {
+  return Password.findByPk(id);
 }
 
 async function updatePasswordById(id, newData) {
-  try {
-    return await Password.update(id, newData);
-  } catch (error) {
-    return error;
-  }
+  await Password.update(newData, { where: { id } });
+  return Password.findByPk(id);
 }
 
-async function deletePasswordById(id) {
-  try {
-    return await Password.destroy(id);
-  } catch (error) {
-    return error;
-  }
+function deletePasswordById(id) {
+  Password.findByPk(id).then(record => record.destroy());
 }
 
 module.exports = {
