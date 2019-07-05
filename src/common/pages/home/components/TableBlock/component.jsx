@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'antd';
 
-import { TableWrapper, ActionButtons, PasswordButtons } from './styles';
+import PasswordButtons from 'common/pages/home/components/PasswordButtons';
+import { TableWrapper, ActionButtons } from './styles';
 
 const columns = [
   {
@@ -63,6 +64,7 @@ class TableBlock extends Component {
     const { isChecked } = this.state;
     return (
       <TableWrapper>
+        <PasswordButtons isChecked={isChecked} />
         <Table
           rowSelection={{
             onSelect: this.handleRowSelected,
@@ -72,14 +74,6 @@ class TableBlock extends Component {
           dataSource={[{ name: 'andrew' }]}
           bordered
         />
-        <PasswordButtons>
-          <Button shape="circle" size="large">
-            +
-          </Button>
-          <Button disabled={!isChecked} shape="circle" size="large">
-            ~
-          </Button>
-        </PasswordButtons>
       </TableWrapper>
     );
   }
