@@ -1,14 +1,34 @@
 import { connect } from 'react-redux';
-import Home from '../components';
-import { onDecrement, onIncrement } from '../store/index';
+import Home from 'common/pages/home/components';
+import getPasswordsByUserId from 'common/api/getPasswordsByUserId';
+import {
+  getPasswordsBegin,
+  getPasswordsFailure,
+  getPasswordsSuccess,
+} from '../store/index';
+
+const getPasswordsItems = () => async dispatch => {
+  try {
+    dispatch(getPasswordsBegin());
+
+    const response = await getPasswordsByUserId('1'); // @todo put real user id
+    const { data } = response;
+
+    dispatch(getPasswordsSuccess(data));
+  } catch (e) {
+    dispatch(getPasswordsFailure(e));
+
+    throw e;
+  }
+};
 
 const mapStateToProps = state => ({
-  counter: state.home.count,
+  passwordsItems: state.home.items,
+  loading: state.home.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
-  increment: () => dispatch(onIncrement()),
-  decrement: () => dispatch(onDecrement()),
+  getPasswordsItems: () => dispatch(getPasswordsItems()),
 });
 
 export default connect(
