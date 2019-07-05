@@ -10,3 +10,11 @@ export const ActionButtons = styled.div`
     margin: 10px;
   }
 `;
+
+export const PasswordButtons = styled.div`
+  margin: 20px 0px;
+  text-align: right;
+  & > button {
+    margin-left: 20px;
+  }
+`;

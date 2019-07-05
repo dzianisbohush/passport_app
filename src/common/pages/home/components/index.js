@@ -1,7 +1,7 @@
 import React from 'react';
 
 import HeaderBlock from 'common/blocks/HeaderBlock';
-import TableBlock from 'common/blocks/TableBlock';
+import TableBlock from './TableBlock';
 
 const Home = () => {
   return (
