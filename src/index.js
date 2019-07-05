@@ -2,6 +2,10 @@
 import express from 'express';
 import Sequelize from 'sequelize';
 import postgresConnection from '../config/postgresConnection';
+import passwords from './server/routes/passwords';
+import users from './server/routes/users';
+
+const bodyParser = require('body-parser');
 
 let app = require('server').default;
 
@@ -20,6 +24,9 @@ if (module.hot) {
 const port = process.env.PORT || 3000;
 
 export default express()
+  .use(bodyParser.json())
+  .use('/api/users', users)
+  .use('/api/passwords', passwords)
   .use((req, res) => app.handle(req, res))
   .listen(port, err => {
     if (err) {

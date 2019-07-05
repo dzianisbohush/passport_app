@@ -13,11 +13,15 @@ const sequelize = new Sequelize(database, username, password, {
   dialect,
 });
 
-const passwordModel = {
+const passwordSchema = {
   id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
+    type: Sequelize.INTEGER,
+  },
+  userId: {
+    allowNull: false,
     type: Sequelize.INTEGER,
   },
   name: {
@@ -39,12 +43,49 @@ const passwordModel = {
     allowNull: false,
     type: Sequelize.DATE,
   },
+  createdAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
+  updatedAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
 };
 
 class Password extends Model {}
-Password.init(passwordModel, {
+Password.init(passwordSchema, {
   sequelize,
   modelName: 'Password',
 });
 
-module.exports = { passwordModel };
+function createPassword(userData) {
+  return Password.create(userData);
+}
+
+function getPasswordsByUserId(userId) {
+  return Password.findAll({ where: { userId } });
+}
+
+function getPasswordById(id) {
+  return Password.findByPk(id);
+}
+
+async function updatePasswordById(id, newData) {
+  await Password.update(newData, { where: { id } });
+  return Password.findByPk(id);
+}
+
+function deletePasswordById(id) {
+  Password.findByPk(id).then(record => record.destroy());
+}
+
+module.exports = {
+  passwordSchema,
+  Password,
+  createPassword,
+  getPasswordById,
+  getPasswordsByUserId,
+  deletePasswordById,
+  updatePasswordById,
+};
