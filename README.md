@@ -9,7 +9,7 @@
     src/server/config/database-config.js
 4. `npm install`
 5 first syncronisation use code in src/server/models/index sync whith flag force set to true
-    then  disable it 
+    then  disable it.
 6 `npm run migrate`
 7. `npm start`
 8. visit http://localhost:3000
