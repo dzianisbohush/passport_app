@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Edit = ({
-                   increment,
-                   decrement,
-                   counter,
-                 }) => (
+const Edit = ({ increment, decrement, counter }) => (
   <p>
-    IT IS EDIT PAGE
-    Clicked: {counter} times
-    {' '}
-    <button onClick={increment}>+</button>
-    {' '}
-    <button onClick={decrement}>-</button>
+    IT IS EDIT PAGE Clicked: {counter} times{' '}
+    <button onClick={increment} type="button">
+      +
+    </button>{' '}
+    <button onClick={decrement} type="button">
+      -
+    </button>
   </p>
 );
 

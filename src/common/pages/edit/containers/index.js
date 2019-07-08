@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Edit from '../components';
-import {onDecrement, onIncrement} from '../store/index';
+import { onDecrement, onIncrement } from '../store/index';
 
 const mapStateToProps = state => ({
   counter: state.edit.count,
@@ -8,7 +8,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   increment: () => dispatch(onIncrement()),
-  decrement: () => dispatch(onDecrement())
+  decrement: () => dispatch(onDecrement()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Edit);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Edit);

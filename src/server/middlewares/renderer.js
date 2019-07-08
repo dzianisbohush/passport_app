@@ -1,12 +1,12 @@
-import React from "react";
-import configureStore from "../../common/store/configureStore";
-import {renderToString} from "react-dom/server";
-import {Provider} from "react-redux";
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
-import App from "../../common/App";
-import serialize from "serialize-javascript";
+import serialize from 'serialize-javascript';
+import App from 'common/App';
+import configureStore from 'common/store/configureStore';
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); //eslint-disable-line
 
 const render = (req, res) => {
   // Create a Redux store instance
@@ -19,7 +19,7 @@ const render = (req, res) => {
       <Provider store={store}>
         <App />
       </Provider>
-    </StaticRouter>
+    </StaticRouter>,
   );
 
   // Grab the initial state from our Redux store
@@ -35,12 +35,16 @@ const render = (req, res) => {
         <meta charSet='utf-8' />
         <title>Passport pocket</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        ${assets.client.css
-      ? `<link rel="stylesheet" href="${assets.client.css}">`
-      : ''}
-          ${process.env.NODE_ENV === 'production'
-      ? `<script src="${assets.client.js}" defer></script>`
-      : `<script src="${assets.client.js}" defer crossorigin></script>`}
+        ${
+          assets.client.css
+            ? `<link rel="stylesheet" href="${assets.client.css}">`
+            : ''
+        }
+          ${
+            process.env.NODE_ENV === 'production'
+              ? `<script src="${assets.client.js}" defer></script>`
+              : `<script src="${assets.client.js}" defer crossorigin></script>`
+          }
     </head>
     <body>
         <div id="root">${markup}</div>
