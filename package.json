@@ -6,7 +6,7 @@
     "start": "cross-env PORT=4000 razzle start",
     "build": "razzle build",
     "test": "razzle test --env=jsdom",
-    "start:prod": "NODE_ENV=production node build/server.js",
+    "start:prod": "cross-env NODE_ENV=production node build/server.js",
     "lint": "eslint src -c .eslintrc --ext js,jsx --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,css,scss}\"",
     "migrate": "sequelize db:migrate --migrations-path=src/server/migrations"
