@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 import { Form, Input, Button } from 'antd';
+import PropTypes from 'prop-types';
 
 import WrappedForm from './styles';
 
 class PasswordForm extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields();
-  }
+    const { form } = this.form;
+    form.validateFields();
+  };
 
   render() {
-    const { getFieldDecorator } = this.props.form;
-    const { id, name, resource, login } = this.props;
+    const { id, name, resource, login, form } = this.props;
+    const { getFieldDecorator } = form;
     const title = id ? 'Edit Password' : 'Create Password';
     return (
       <WrappedForm>
@@ -60,6 +58,14 @@ class PasswordForm extends Component {
     );
   }
 }
+
+PasswordForm.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  resource: PropTypes.string.isRequired,
+  login: PropTypes.string.isRequired,
+  form: PropTypes.node.isRequired,
+};
 
 const WrappedPasswordForm = Form.create({ name: 'password from' })(
   PasswordForm,
