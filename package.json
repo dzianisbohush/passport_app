@@ -12,7 +12,11 @@
     "migrate": "sequelize db:migrate --migrations-path=src/server/migrations"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "antd": "^3.20.0",
+    "axios": "^0.19.0",
     "babel-plugin-import": "^1.12.0",
     "body-parser": "^1.19.0",
     "express": "^4.15.2",
@@ -23,6 +27,7 @@
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.4",
     "react-router-dom": "^5.0.1",
+    "react-router-prop-types": "^1.0.4",
     "redux": "^3.6.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.2.0",
@@ -31,6 +36,7 @@
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.0",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^8.2.6",

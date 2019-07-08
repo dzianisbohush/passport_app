@@ -10,7 +10,7 @@
       }
     ],
     "prettier/prettier": "error",
-    "max-len": ["error", 80],
+    "max-len": ["error", 100],
     "global-require": 0
   },
   "env": {

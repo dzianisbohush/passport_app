@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const StyledButtons = styled.div`
+export const StyledButtons = styled.div`
   margin: 20px 0px;
   text-align: right;
   & > button {
@@ -8,4 +8,6 @@ const StyledButtons = styled.div`
   }
 `;
 
-export default StyledButtons;
+export const StyledIcon = styled.span`
+  margin-left: 7px;
+`;
