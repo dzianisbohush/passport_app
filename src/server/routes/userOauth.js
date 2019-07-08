@@ -23,24 +23,20 @@ router.get(
 // callback route for google to redirect to
 // hand control to passport to use code to grab profile info
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-  // res.send(req.user);
-  // res.redirect('/profile');
+  const { user } = req;
 
-  // eslint-disable-next-line prefer-destructuring
-  const user = req.user;
-  // res.redirect('/profile');
   let msg = 'your are not autinficated';
   if (user) {
     // eslint-disable-next-line max-len
     msg = `= взято из req.user после отработки кукей == username - ${user.name}||img-- ${user.img} || email- ${user.email}||googleId - ${user.googleId}`;
   }
+  res.redirect('/profile');
   res.send(msg);
-  // res.redirect('/profile');
 });
+
 // test rout for chekin if logout work
 router.get('/test', (req, res) => {
-  // eslint-disable-next-line prefer-destructuring
-  const user = req.user;
+  const { user } = req;
   let msg = 'your are not autinficated';
   if (user) {
     // eslint-disable-next-line max-len

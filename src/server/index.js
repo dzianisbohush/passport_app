@@ -3,8 +3,6 @@ import render from 'server/middlewares/renderer';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
-// eslint-disable-next-line no-unused-vars
-import passportSetup from './config/passport-setup';
 import userOauthRouth from './routes/userOauth';
 import keys from './config/keys';
 
@@ -22,11 +20,10 @@ server.use(
 server.use(passport.initialize());
 server.use(passport.session());
 
-server.use('/auth', userOauthRouth);
-
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
+  .use('/auth', userOauthRouth)
   .get('/*', (req, res, next) => {
     if (!req.path.includes('/api/')) {
       render(req, res);
