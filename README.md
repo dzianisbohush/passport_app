@@ -7,7 +7,6 @@
 2. configure config/postgresConnection.json according to your values
     in /config/postgesConnection.json and 
     src/server/config/database-config.js
-    
 4. `npm install`
 5 first syncronisation use code in src/server/models/index sync whith flag force set to true
     then  disable it 
