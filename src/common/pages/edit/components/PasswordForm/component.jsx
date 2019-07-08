@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Form, Input, Button } from 'antd';
 import PropTypes from 'prop-types';
 
 import WrappedForm from './styles';
 
-class PasswordForm extends Component {
+class PasswordForm extends PureComponent {
   handleSubmit = e => {
     e.preventDefault();
     const { form } = this.form;
@@ -29,7 +29,7 @@ class PasswordForm extends Component {
             {getFieldDecorator('resource', {
               initialValue: resource,
               rules: [
-                { required: true, message: 'Please inputpassword resource!' },
+                { required: true, message: 'Please input password resource!' },
               ],
             })(<Input />)}
           </Form.Item>
