@@ -34,14 +34,4 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.send(msg);
 });
 
-// test rout for chekin if logout work
-router.get('/test', (req, res) => {
-  const { user } = req;
-  let msg = 'your are not autinficated';
-  if (user) {
-    // eslint-disable-next-line max-len
-    msg = `= взято из req.user после отработки кукей == username - ${user.name}||img-- ${user.img} || email- ${user.email}||googleId - ${user.googleId}`;
-  }
-  res.send(msg);
-});
 export default router;
