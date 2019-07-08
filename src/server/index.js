@@ -28,7 +28,7 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res, next) => {
-    if (!req.path.includes('/db/')) {
+    if (!req.path.includes('/api/')) {
       render(req, res);
       next();
     }

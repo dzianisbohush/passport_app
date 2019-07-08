@@ -10,7 +10,7 @@ import 'antd/dist/antd.css';
 const App = () => (
   <Switch>
     <Route exact path="/profile" component={Home} />
-    <Route exact path="/profile/edit" component={Edit} />
+    <Route exact path="/profile/edit/:id?" component={Edit} />
     <Route exact path="/auth/google/redirect" component={TestRedirect} />
 
     <Route exact path="/" component={Start} />
