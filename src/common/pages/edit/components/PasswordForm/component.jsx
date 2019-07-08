@@ -7,12 +7,17 @@ import WrappedForm from './styles';
 class PasswordForm extends PureComponent {
   handleSubmit = e => {
     e.preventDefault();
-    const { form } = this.form;
-    form.validateFields();
+    // eslint-disable-next-line react/prop-types
+    const { addPasswordItem, form } = this.props;
+    form.validateFields((err, values) => {
+      if (!err) {
+        addPasswordItem(values);
+      }
+    });
   };
 
   render() {
-    const { id, name, resource, login, form } = this.props;
+    const { id, name, resourceAddress, login, form } = this.props;
     const { getFieldDecorator } = form;
     const title = id ? 'Edit Password' : 'Create Password';
     return (
@@ -25,11 +30,11 @@ class PasswordForm extends PureComponent {
               rules: [{ required: true, message: 'Please input your name!' }],
             })(<Input />)}
           </Form.Item>
-          <Form.Item label="resource">
-            {getFieldDecorator('resource', {
-              initialValue: resource,
+          <Form.Item label="resourceAddress">
+            {getFieldDecorator('resourceAddress', {
+              initialValue: resourceAddress,
               rules: [
-                { required: true, message: 'Please input password resource!' },
+                { required: true, message: 'Please input resource address!' },
               ],
             })(<Input />)}
           </Form.Item>
@@ -62,7 +67,7 @@ class PasswordForm extends PureComponent {
 PasswordForm.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  resource: PropTypes.string.isRequired,
+  resourceAddress: PropTypes.string.isRequired,
   login: PropTypes.string.isRequired,
   form: PropTypes.node.isRequired,
 };

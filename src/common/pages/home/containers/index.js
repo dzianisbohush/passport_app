@@ -5,7 +5,7 @@ import {
   getPasswordsBegin,
   getPasswordsFailure,
   getPasswordsSuccess,
-} from '../store/index';
+} from 'common/store/rootReducer';
 
 const getPasswordsItems = () => async dispatch => {
   try {
@@ -23,8 +23,8 @@ const getPasswordsItems = () => async dispatch => {
 };
 
 const mapStateToProps = state => ({
-  passwordsItems: state.home.items,
-  loading: state.home.loading,
+  passwordsItems: state.items,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
