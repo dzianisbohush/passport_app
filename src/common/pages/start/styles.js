@@ -1,25 +1,33 @@
 import styled from 'styled-components';
 
+// colors constants
+const white = '#ffffff';
+const cyan = '#00d4ff';
+const robinsEggBlue = '#00c4eb';
+const orange = '#ffa500';
+const tangerine = '#eb9800';
+const matisse = '#1e5799';
+const mariner = '#207cca';
+const curiousBlue = '#2989d8';
+const seagull = '#7db9e8';
+
 export const StyledMainWrapper = styled.div`
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
   background: linear-gradient(
     135deg,
-    #1e5799 0%,
-    #207cca 32%,
-    #207cca 32%,
-    #2989d8 50%,
-    #1e5799 97%,
-    #7db9e8 100%
+    ${matisse} 0%,
+    ${mariner} 32%,
+    ${mariner} 32%,
+    ${curiousBlue} 50%,
+    ${matisse} 97%,
+    ${seagull} 100%
   );
 `;
 
 export const StyledButtonsWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
 `;
@@ -34,22 +42,22 @@ const StyledLink = styled.a`
 `;
 
 export const StyledLoginLink = styled(StyledLink)`
-  background-color: #00d4ff;
-  color: #ffffff;
+  background-color: ${cyan};
+  color: ${white};
 
   &:hover {
-    background-color: #00c4eb;
-    color: #ffffff;
+    background-color: ${robinsEggBlue};
+    color: ${white};
   }
 `;
 
 export const StyledLogoutLink = styled(StyledLink)`
-  background-color: #ffa500;
-  color: #ffffff;
+  background-color: ${orange};
+  color: ${white};
   margin-top: 10px;
 
   &:hover {
-    background-color: #eb9800;
-    color: #ffffff;
+    background-color: ${tangerine};
+    color: ${white};
   }
 `;

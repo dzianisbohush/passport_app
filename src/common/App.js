@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import 'antd/dist/antd.css';
 import Home from 'common/pages/home/containers';
 import Edit from 'common/pages/edit/containers';
 import Start from './pages/start';
-import 'antd/dist/antd.css';
 
 const App = () => (
   <Switch>

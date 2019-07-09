@@ -14,11 +14,11 @@ const Start = () => (
     <StyledButtonsWrapper>
       <StyledLoginLink href="auth/google">
         <FontAwesomeIcon icon={faGooglePlus} />
-        Authorize with Gooogle +
+        <span>Authorize with Gooogle +</span>
       </StyledLoginLink>
       <StyledLogoutLink href="auth/logout">
         <FontAwesomeIcon icon={faSignOutAlt} />
-        Logout
+        <span>Logout</span>
       </StyledLogoutLink>
     </StyledButtonsWrapper>
   </StyledMainWrapper>

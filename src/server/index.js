@@ -1,12 +1,11 @@
 import express from 'express';
-import render from 'server/middlewares/renderer';
+import render from 'server/routes/renderer';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
-import userOauthRouth from './routes/userOauth';
-import keys from './config/keys';
-
-import './config/passport-setup';
+import userOauthRouth from 'server/routes/userOauth';
+import keys from 'server/config/keys';
+import 'server/config/passport-setup';
 
 const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
