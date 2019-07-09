@@ -4,8 +4,8 @@ import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
 import userOauthRouth from 'server/routes/userOauth';
-import keys from 'server/config/keys';
-import 'server/config/passport-setup';
+import { ONE_DAY_PERIOD, COOKIE_SESSION_KEY } from 'server/constants';
+import 'server/controllers/passportSetup';
 
 const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -13,8 +13,8 @@ server.use(bodyParser.json());
 
 server.use(
   cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [keys.session.cookieKey],
+    maxAge: ONE_DAY_PERIOD,
+    keys: [COOKIE_SESSION_KEY],
   }),
 );
 

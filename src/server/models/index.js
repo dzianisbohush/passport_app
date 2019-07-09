@@ -1,11 +1,12 @@
 import User from './user';
-import Password from './password';
-// import sequelize from '../config/database-config';
+// import Password from './password';
 
 const DB = {};
 
-User.hasMany(Password);
-Password.belongsTo(User, { foreignKey: 'UserId' });
+// console.log(111, User, Password);
+
+// User.hasMany(Password);
+// Password.belongsTo(User, { foreignKey: 'userEmail' });
 DB.User = User;
 DB.Password = Password;
 

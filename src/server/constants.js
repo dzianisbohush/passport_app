@@ -26,4 +26,27 @@ const MESSAGES = {
   OK: 'Ok',
 };
 
-module.exports = { HTTP_STATUS_CODES, MESSAGES };
+const ONE_DAY_PERIOD = 24 * 60 * 60 * 1000;
+
+// Google API
+const GOOGLE_API_USER_INFO_PROFILE =
+  'https://www.googleapis.com/auth/userinfo.profile';
+const GOOGLE_API_USER_INFO_EMAIL =
+  'https://www.googleapis.com/auth/userinfo.email';
+const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const GOOGLE_CALLBACK_URL = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
+const COOKIE_SESSION_KEY = 'somedummysecretkey';
+
+module.exports = {
+  HTTP_STATUS_CODES,
+  MESSAGES,
+  ONE_DAY_PERIOD,
+  GOOGLE_API_USER_INFO_PROFILE,
+  GOOGLE_API_USER_INFO_EMAIL,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_CALLBACK_URL,
+  COOKIE_SESSION_KEY,
+};

@@ -3,11 +3,10 @@
 ## Development
 
 1. install PostgreSQL database
-2. configure config/postgresConnection.json according to your values in `/config/postgesConnection.json` and `src/server/config/database-config.js`
+2. configure config/postgresConnection.json according to your values in `/config/postgesConnection.json` 
 3. `npm install`
-4. first syncronisation use code in `src/server/models/index` sync whith flag force set to `true`
- then  disable it.
-5. `npm run migrate`
+4. `npm run migrate`
+5. rename `.env.template` to `.env` and put your values
 6. `npm start`
 7. visit http://localhost:3000 
 

@@ -1,5 +1,9 @@
 import express from 'express';
 import passport from 'passport';
+import {
+  GOOGLE_API_USER_INFO_EMAIL,
+  GOOGLE_API_USER_INFO_PROFILE,
+} from 'server/constants';
 
 const router = express.Router();
 
@@ -13,10 +17,7 @@ router.get('/logout', (req, res) => {
 router.get(
   '/google',
   passport.authenticate('google', {
-    scope: [
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/userinfo.email',
-    ],
+    scope: [GOOGLE_API_USER_INFO_PROFILE, GOOGLE_API_USER_INFO_EMAIL],
   }),
 );
 
