@@ -1,7 +1,12 @@
 import React, { PureComponent } from 'react';
 import { Form, Input, Button } from 'antd';
 import PropTypes from 'prop-types';
-import MESSAGES from 'common/constants';
+import {
+  EMPTY_NAME_MESSAGE,
+  EMPTY_RESOURCE_ADDRESS_MESSAGE,
+  EMPTY_LOGIN_MESSAGE,
+  EMPTY_PASSWORD_MESSAGE,
+} from 'common/constants';
 import WrappedForm from './styles';
 
 class PasswordForm extends PureComponent {
@@ -27,26 +32,26 @@ class PasswordForm extends PureComponent {
           <Form.Item label="name">
             {getFieldDecorator('name', {
               initialValue: name,
-              rules: [{ required: true, message: MESSAGES.EMPTY_NAME }],
+              rules: [{ required: true, message: EMPTY_NAME_MESSAGE }],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="resourceAddress">
             {getFieldDecorator('resourceAddress', {
               initialValue: resourceAddress,
               rules: [
-                { required: true, message: MESSAGES.EMPTY_RESOURCE_ADDRESS },
+                { required: true, message: EMPTY_RESOURCE_ADDRESS_MESSAGE },
               ],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="login">
             {getFieldDecorator('login', {
               initialValue: login,
-              rules: [{ required: true, message: MESSAGES.EMPTY_LOGIN }],
+              rules: [{ required: true, message: EMPTY_LOGIN_MESSAGE }],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="password">
             {getFieldDecorator('password', {
-              rules: [{ required: true, message: MESSAGES.EMPTY_PASSWORD }],
+              rules: [{ required: true, message: EMPTY_PASSWORD_MESSAGE }],
             })(<Input.Password />)}
           </Form.Item>
           <Form.Item>
@@ -75,7 +80,10 @@ PasswordForm.propTypes = {
   title: PropTypes.string.isRequired,
   resourceAddress: PropTypes.string,
   login: PropTypes.string,
-  form: PropTypes.node.isRequired,
+  form: PropTypes.shape({
+    validateFields: PropTypes.func,
+    getFieldDecorator: PropTypes.func,
+  }).isRequired,
   submitAction: PropTypes.func.isRequired,
 };
 
