@@ -20,9 +20,9 @@ const passwordSchema = {
     primaryKey: true,
     type: Sequelize.INTEGER,
   },
-  userId: {
+  userEmail: {
     allowNull: false,
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   name: {
     type: Sequelize.STRING,
@@ -36,7 +36,7 @@ const passwordSchema = {
   password: {
     type: Sequelize.STRING,
   },
-  isPrivate: {
+  isAccepted: {
     type: Sequelize.BOOLEAN,
   },
   sendNotificationAt: {
@@ -63,8 +63,8 @@ function createPassword(userData) {
   return Password.create(userData);
 }
 
-function getPasswordsByUserId(userId) {
-  return Password.findAll({ where: { userId } });
+function getPasswordsByUserEmail(userEmail) {
+  return Password.findAll({ where: { userEmail } });
 }
 
 function getPasswordById(id) {
@@ -85,7 +85,7 @@ module.exports = {
   Password,
   createPassword,
   getPasswordById,
-  getPasswordsByUserId,
+  getPasswordsByUserEmail,
   deletePasswordById,
   updatePasswordById,
 };

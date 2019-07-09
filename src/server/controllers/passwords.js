@@ -2,17 +2,17 @@ const Password = require('../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
 
 async function getPasswordsByUserId(req, res) {
-  const { userId } = req.params;
+  const { userEmail } = req.params;
 
-  if (!userId) {
+  if (!userEmail) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
-      .json({ error: MESSAGES.EMPTY_ID });
+      .json({ error: MESSAGES.EMPTY_EMAIL });
     return;
   }
 
   try {
-    const userData = await Password.getPasswordsByUserId(userId);
+    const userData = await Password.getPasswordsByUserEmail(userEmail);
     if (!userData || userData.length < 1) {
       res
         .status(HTTP_STATUS_CODES.NOT_FOUND)
@@ -53,7 +53,10 @@ async function updatePasswordById(req, res) {
       return;
     }
 
-    const updatedData = await Password.updatePasswordById(id, req.body);
+    const updatedData = await Password.updatePasswordById(id, {
+      ...req.body,
+      isAccepted: false,
+    });
 
     res.status(HTTP_STATUS_CODES.OK).json(updatedData);
   } catch (e) {
@@ -92,10 +95,10 @@ async function deletePasswordById(req, res) {
 }
 
 async function createPassword(req, res) {
-  if (!req.body.userId) {
+  if (!req.body.userEmail) {
     res
       .status(HTTP_STATUS_CODES.BAD_REQUEST)
-      .json({ error: MESSAGES.EMPTY_ID });
+      .json({ error: MESSAGES.EMPTY_USER_EMAIL });
     return;
   }
 
@@ -127,10 +130,28 @@ async function createPassword(req, res) {
   }
 
   try {
+    const existingUserPasswords = await Password.getPasswordsByUserEmail(
+      req.body.userEmail,
+    );
+
+    const duplicatePasswords = existingUserPasswords.find(
+      existingPassword =>
+        existingPassword.domain === req.body.domain &&
+        existingPassword.login === req.body.login &&
+        existingPassword.password === req.body.password,
+    );
+
+    const isPasswordAlreadyExists = !!duplicatePasswords;
+    if (isPasswordAlreadyExists) {
+      res
+        .status(HTTP_STATUS_CODES.CONFLICT)
+        .json({ message: MESSAGES.DUPLICATE_PASSWORD });
+    }
     const date = new Date();
     date.setMonth(date.getMonth() + 1);
     await Password.createPassword({
       ...req.body,
+      isAccepted: true,
       sendNotificationAt: date,
     });
     res.status(HTTP_STATUS_CODES.CREATED).json({ message: MESSAGES.CREATED });
