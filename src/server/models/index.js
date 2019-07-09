@@ -8,7 +8,7 @@ const DB = {};
 // User.hasMany(Password);
 // Password.belongsTo(User, { foreignKey: 'userEmail' });
 DB.User = User;
-DB.Password = Password;
+// DB.Password = Password;
 
 // eslint-disable-next-line max-len
 //  if you need to drop tours tables and reset then run this code ones(coment in => run => coment out)
