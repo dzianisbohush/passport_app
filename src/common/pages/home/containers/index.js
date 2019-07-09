@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Home from 'common/pages/home/components';
-import getPasswordsByUserId from 'common/api/getPasswordsByUserId';
+import getPasswordsByUserEmail from 'common/api/getPasswordsByUserEmail';
 import {
   getPasswordsBegin,
   getPasswordsFailure,
@@ -11,14 +11,15 @@ const getPasswordsItems = () => async dispatch => {
   try {
     dispatch(getPasswordsBegin());
 
-    const response = await getPasswordsByUserId('1'); // @todo put real user id
+    const response = await getPasswordsByUserEmail('ru@ru.ru'); // @todo put real user email
+
     const { data } = response;
 
-    dispatch(getPasswordsSuccess(data));
+    dispatch(getPasswordsSuccess(data || []));
   } catch (e) {
     dispatch(getPasswordsFailure(e));
 
-    throw e;
+    console.log(e);
   }
 };
 
