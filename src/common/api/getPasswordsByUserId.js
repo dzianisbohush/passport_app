@@ -6,7 +6,7 @@ const getPasswordsByUserId = async userId => {
 
     return response;
   } catch (error) {
-    throw console.error(error);
+    console.log(error);
   }
 };
 

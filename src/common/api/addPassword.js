@@ -18,7 +18,7 @@ const addPassword = async ({
 
     return response;
   } catch (error) {
-    throw error(error);
+    console.log(error);
   }
 };
 

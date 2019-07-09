@@ -1,10 +1,10 @@
 // CONSTS
-const HOME_GET_PASSWORDS_BEGIN = 'HOME_GET_PASSWORDS_BEGIN';
+const HOME_GET_PASSWORDS_PENDING = 'HOME_GET_PASSWORDS_PENDING';
 const HOME_GET_PASSWORDS_SUCCESS = 'HOME_GET_PASSWORDS_SUCCESS';
 const HOME_GET_PASSWORDS_FAILURE = 'HOME_GET_PASSWORDS_FAILURE';
 const HOME_GET_REMOVE_PASSWORDS_ITEMS = 'HOME_GET_REMOVE_PASSWORDS_ITEMS';
 
-const ADD_PASSWORD_BEGIN = 'ADD_PASSWORD_BEGIN';
+const ADD_PASSWORD_PENDING = 'ADD_PASSWORD_PENDING';
 const ADD_PASSWORD_SUCCESS = 'ADD_PASSWORD_SUCCESS';
 const ADD_PASSWORD_FAILURE = 'ADD_PASSWORD_FAILURE';
 
@@ -15,8 +15,8 @@ const initialState = {
 };
 
 // ACTIONS
-export const getPasswordsBegin = () => ({
-  type: HOME_GET_PASSWORDS_BEGIN,
+export const getPasswordsPending = () => ({
+  type: HOME_GET_PASSWORDS_PENDING,
 });
 
 export const getPasswordsSuccess = payload => ({
@@ -33,8 +33,8 @@ export const removePasswordsItems = () => ({
   type: HOME_GET_REMOVE_PASSWORDS_ITEMS,
 });
 
-export const addPasswordBegin = () => ({
-  type: ADD_PASSWORD_BEGIN,
+export const addPasswordPending = () => ({
+  type: ADD_PASSWORD_PENDING,
 });
 
 export const addPasswordSuccess = payload => ({
@@ -50,7 +50,7 @@ export const addPasswordFailure = payload => ({
 // REDUCER
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case HOME_GET_PASSWORDS_BEGIN:
+    case HOME_GET_PASSWORDS_PENDING:
       return {
         ...state,
         loading: true,
@@ -74,15 +74,17 @@ const rootReducer = (state = initialState, action) => {
         error: '',
         loading: false,
       };
-    case ADD_PASSWORD_BEGIN:
+    case ADD_PASSWORD_PENDING:
       return {
         ...state,
         loading: true,
       };
     case ADD_PASSWORD_SUCCESS:
-      return Object.assign({}, state, {
-        items: [...state.items, action.payload],
-      });
+      return {
+        ...state,
+        items: [action.item],
+        loading: false,
+      };
     case ADD_PASSWORD_FAILURE:
       return {
         ...state,

@@ -3,23 +3,21 @@ import { connect } from 'react-redux';
 import Edit from 'common/pages/edit/components/PasswordForm';
 import addPassword from 'common/api/addPassword';
 import {
-  addPasswordBegin,
+  addPasswordPending,
   addPasswordSuccess,
   addPasswordFailure,
 } from 'common/store/rootReducer';
 
 const addPasswordItem = item => async dispatch => {
   try {
-    dispatch(addPasswordBegin());
+    dispatch(addPasswordPending());
 
-    const response = await addPassword(item); // @todo put real user id
+    const response = await addPassword(item);
     const { data } = response;
 
     dispatch(addPasswordSuccess(data));
   } catch (e) {
     dispatch(addPasswordFailure(e));
-
-    throw e;
   }
 };
 
@@ -27,7 +25,11 @@ const mapDispatchToProps = dispatch => ({
   addPasswordItem: item => dispatch(addPasswordItem(item)),
 });
 
+const mapStateToProps = state => ({
+  items: state.items,
+});
+
 export default connect(
-  undefined,
+  mapStateToProps,
   mapDispatchToProps,
 )(Edit);

@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Form, Input, Button } from 'antd';
 import PropTypes from 'prop-types';
 
+import MESSAGES from 'common/constants';
 import WrappedForm from './styles';
 
 class PasswordForm extends PureComponent {
@@ -27,26 +28,26 @@ class PasswordForm extends PureComponent {
           <Form.Item label="name">
             {getFieldDecorator('name', {
               initialValue: name,
-              rules: [{ required: true, message: 'Please input your name!' }],
+              rules: [{ required: true, message: MESSAGES.EMPTY_NAME }],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="resourceAddress">
             {getFieldDecorator('resourceAddress', {
               initialValue: resourceAddress,
               rules: [
-                { required: true, message: 'Please input resource address!' },
+                { required: true, message: MESSAGES.EMPTY_RESOURCE_ADDRESS },
               ],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="login">
             {getFieldDecorator('login', {
               initialValue: login,
-              rules: [{ required: true, message: 'Please input your login!' }],
+              rules: [{ required: true, message: MESSAGES.EMPTY_LOGIN }],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="password">
             {getFieldDecorator('password', {
-              rules: [{ required: true, message: 'Password is required!' }],
+              rules: [{ required: true, message: MESSAGES.EMPTY_PASSWORD }],
             })(<Input.Password />)}
           </Form.Item>
           <Form.Item>

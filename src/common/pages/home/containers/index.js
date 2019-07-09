@@ -2,14 +2,14 @@ import { connect } from 'react-redux';
 import Home from 'common/pages/home/components';
 import getPasswordsByUserId from 'common/api/getPasswordsByUserId';
 import {
-  getPasswordsBegin,
+  getPasswordsPending,
   getPasswordsFailure,
   getPasswordsSuccess,
 } from 'common/store/rootReducer';
 
 const getPasswordsItems = () => async dispatch => {
   try {
-    dispatch(getPasswordsBegin());
+    dispatch(getPasswordsPending());
 
     const response = await getPasswordsByUserId('1'); // @todo put real user id
     const { data } = response;
@@ -17,8 +17,6 @@ const getPasswordsItems = () => async dispatch => {
     dispatch(getPasswordsSuccess(data));
   } catch (e) {
     dispatch(getPasswordsFailure(e));
-
-    throw e;
   }
 };
 
