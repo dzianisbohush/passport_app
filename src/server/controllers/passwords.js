@@ -136,7 +136,7 @@ async function createPassword(req, res) {
 
     const duplicatePasswords = existingUserPasswords.find(
       existingPassword =>
-        existingPassword.domain === req.body.domain &&
+        existingPassword.resourceAddress === req.body.resourceAddress &&
         existingPassword.login === req.body.login &&
         existingPassword.password === req.body.password,
     );
