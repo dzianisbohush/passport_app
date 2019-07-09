@@ -1,20 +1,25 @@
 import React, { PureComponent } from 'react';
 import { Form, Input, Button } from 'antd';
 import PropTypes from 'prop-types';
-
+import MESSAGES from 'common/constants';
 import WrappedForm from './styles';
 
 class PasswordForm extends PureComponent {
   handleSubmit = e => {
     e.preventDefault();
-    const { form } = this.form;
-    form.validateFields();
+    const { submitAction, form } = this.props;
+
+    form.validateFields((err, values) => {
+      if (!err) {
+        submitAction(values);
+      }
+    });
   };
 
   render() {
-    const { id, name, resource, login, form } = this.props;
+    const { title, name, resourceAddress, login, form } = this.props;
     const { getFieldDecorator } = form;
-    const title = id ? 'Edit Password' : 'Create Password';
+
     return (
       <WrappedForm>
         <h2>{title}</h2>
@@ -22,26 +27,26 @@ class PasswordForm extends PureComponent {
           <Form.Item label="name">
             {getFieldDecorator('name', {
               initialValue: name,
-              rules: [{ required: true, message: 'Please input your name!' }],
+              rules: [{ required: true, message: MESSAGES.EMPTY_NAME }],
             })(<Input />)}
           </Form.Item>
-          <Form.Item label="resource">
-            {getFieldDecorator('resource', {
-              initialValue: resource,
+          <Form.Item label="resourceAddress">
+            {getFieldDecorator('resourceAddress', {
+              initialValue: resourceAddress,
               rules: [
-                { required: true, message: 'Please input password resource!' },
+                { required: true, message: MESSAGES.EMPTY_RESOURCE_ADDRESS },
               ],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="login">
             {getFieldDecorator('login', {
               initialValue: login,
-              rules: [{ required: true, message: 'Please input your login!' }],
+              rules: [{ required: true, message: MESSAGES.EMPTY_LOGIN }],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="password">
             {getFieldDecorator('password', {
-              rules: [{ required: true, message: 'Password is required!' }],
+              rules: [{ required: true, message: MESSAGES.EMPTY_PASSWORD }],
             })(<Input.Password />)}
           </Form.Item>
           <Form.Item>
@@ -59,12 +64,19 @@ class PasswordForm extends PureComponent {
   }
 }
 
+PasswordForm.defaultProps = {
+  name: '',
+  resourceAddress: '',
+  login: '',
+};
+
 PasswordForm.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  resource: PropTypes.string.isRequired,
-  login: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  resourceAddress: PropTypes.string,
+  login: PropTypes.string,
   form: PropTypes.node.isRequired,
+  submitAction: PropTypes.func.isRequired,
 };
 
 const WrappedPasswordForm = Form.create({ name: 'password from' })(
