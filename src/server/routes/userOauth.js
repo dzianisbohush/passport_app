@@ -31,7 +31,7 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     // eslint-disable-next-line max-len
     msg = `= взято из req.user после отработки кукей == username - ${user.name}||img-- ${user.img} || email- ${user.email}||googleId - ${user.googleId}`;
   }
-  res.redirect('/profile');
+  // res.redirect('/profile');
   res.send(msg);
 });
 

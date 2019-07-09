@@ -37,7 +37,7 @@ const GOOGLE_API_USER_INFO_EMAIL =
   'https://www.googleapis.com/auth/userinfo.email';
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-const GOOGLE_CALLBACK_URL = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+const GOOGLE_CALLBACK_URL = '/auth/google/redirect';
 
 const COOKIE_SESSION_KEY = 'somedummysecretkey';
 
