@@ -15,6 +15,8 @@ const MESSAGES = {
   DUPLICATE_PASSWORD: 'Password must be different from the previous one',
   EMPTY_ID: 'Id is required',
   EMPTY_NAME: 'Name is required',
+  EMPTY_USER_EMAIL: 'userEmail is required',
+  EMPTY_EMAIL: 'Email is required',
   EMPTY_RESOURCE_ADDRESS: 'Resource address is required',
   EMPTY_LOGIN: 'Login is required',
   EMPTY_PASSWORD: 'Password is required',
