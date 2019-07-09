@@ -20,7 +20,17 @@ const userSchema = {
     primaryKey: true,
     type: Sequelize.INTEGER,
   },
+  googleId: {
+    allowNull: false,
+    type: Sequelize.STRING,
+  },
+  email: {
+    type: Sequelize.STRING,
+  },
   name: {
+    type: Sequelize.STRING,
+  },
+  img: {
     type: Sequelize.STRING,
   },
   createdAt: {
@@ -31,7 +41,6 @@ const userSchema = {
     allowNull: false,
     type: Sequelize.DATE,
   },
-  // test variant of user`s db model
 };
 
 class User extends Model {}
@@ -44,8 +53,18 @@ function createUser(userData) {
   return User.create(userData);
 }
 
+function getUserByUserEmail(email) {
+  return User.findOne({ where: { email } });
+}
+
+function deleteUserByEmail(userEmail) {
+  User.findOne(userEmail).then(record => record.destroy());
+}
+
 module.exports = {
   userSchema,
   User,
   createUser,
+  deleteUserByEmail,
+  getUserByUserEmail,
 };

@@ -13,9 +13,11 @@ const HTTP_STATUS_CODES = {
 const MESSAGES = {
   CREATED: 'Created',
   DUPLICATE_PASSWORD: 'Password must be different from the previous one',
+  DUPLICATE_USER: 'User with this email already exists',
   EMPTY_ID: 'Id is required',
   EMPTY_NAME: 'Name is required',
   EMPTY_USER_EMAIL: 'userEmail is required',
+  EMPTY_GOOGLE_ID: 'googleId is required',
   EMPTY_EMAIL: 'Email is required',
   EMPTY_RESOURCE_ADDRESS: 'Resource address is required',
   EMPTY_LOGIN: 'Login is required',
