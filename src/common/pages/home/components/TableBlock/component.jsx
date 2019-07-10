@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { Table } from 'antd';
 import PropTypes from 'prop-types';
+
 import PasswordButtons from 'common/pages/home/components/PasswordButtons';
 import TableActionsButtons from 'common/pages/home/components/TableActionsButtons';
+import DeleteModal from 'common/blocks/DeleteModal';
+
 import TableWrapper from './styles';
 
 class TableBlock extends Component {
   state = {
     isActiveShareBtn: false,
+    isVisible: false,
+    itemIdToDelete: null,
   };
 
   handleRowSelected = () => {
@@ -16,6 +21,31 @@ class TableBlock extends Component {
     this.setState({
       isActiveShareBtn: !isActiveShareBtn,
     });
+  };
+
+  handleDeleteClick = e => {
+    e.preventDefault();
+    const { id } = e.target.dataset;
+    this.setState({
+      isVisible: true,
+      itemIdToDelete: id,
+    });
+  };
+
+  handleDeleteModalDismiss = () => {
+    this.setState({
+      isVisible: false,
+    });
+  };
+
+  handleDeleteModalSubmit = () => {
+    const { deletePasswordItem } = this.props;
+    const { itemIdToDelete } = this.state;
+    this.setState({
+      isVisible: false,
+      itemIdToDelete: null,
+    });
+    deletePasswordItem(itemIdToDelete);
   };
 
   getColumns = () => {
@@ -41,14 +71,18 @@ class TableBlock extends Component {
       {
         title: 'actions',
         render: record => (
-          <TableActionsButtons goToEditPage={goToEditPage} itemId={record.id} />
+          <TableActionsButtons
+            goToEditPage={goToEditPage}
+            itemId={record.id}
+            handleDeleteClick={this.handleDeleteClick}
+          />
         ),
       },
     ];
   };
 
   render() {
-    const { isActiveShareBtn } = this.state;
+    const { isActiveShareBtn, isVisible } = this.state;
     const { loading, items, goToAddPage } = this.props;
     const columns = this.getColumns();
 
@@ -74,6 +108,11 @@ class TableBlock extends Component {
             pageSize: 5,
           }}
         />
+        <DeleteModal
+          isVisible={isVisible}
+          handleDeleteModalSubmit={this.handleDeleteModalSubmit}
+          handleDeleteModalDismiss={this.handleDeleteModalDismiss}
+        />
       </TableWrapper>
     );
   }
@@ -96,6 +135,7 @@ TableBlock.propTypes = {
   ).isRequired,
   goToEditPage: PropTypes.func.isRequired,
   goToAddPage: PropTypes.func.isRequired,
+  deletePasswordItem: PropTypes.func.isRequired,
 };
 
 export default TableBlock;

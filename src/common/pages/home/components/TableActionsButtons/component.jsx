@@ -11,12 +11,15 @@ class TableActionsButtons extends PureComponent {
   };
 
   render() {
+    const { itemId, handleDeleteClick } = this.props;
     return (
       <ActionButtons>
         <Button type="primary" onClick={this.handleClickEditBtn}>
           Edit
         </Button>
-        <Button type="danger">Delete</Button>
+        <Button type="danger" data-id={itemId} onClick={handleDeleteClick}>
+          Delete
+        </Button>
       </ActionButtons>
     );
   }
@@ -25,6 +28,7 @@ class TableActionsButtons extends PureComponent {
 TableActionsButtons.propTypes = {
   goToEditPage: PropTypes.func.isRequired,
   itemId: PropTypes.number.isRequired,
+  handleDeleteClick: PropTypes.func.isRequired,
 };
 
 export default TableActionsButtons;
