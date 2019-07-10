@@ -1,7 +1,7 @@
 // We need to use require instead of import
 // because this file is imported by sequelize-cli(without babel)
 const Sequelize = require('sequelize');
-const postgresConnection = require('../../../config/postgresConnection');
+const postgresConnection = require('../../../config/dbConfig');
 
 const { Model } = Sequelize;
 
