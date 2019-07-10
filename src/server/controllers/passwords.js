@@ -55,7 +55,7 @@ async function updatePasswordById(req, res) {
 
     const updatedData = await Password.updatePasswordById(id, {
       ...req.body,
-      isAccepted: false,
+      isAccepted: true,
     });
 
     res.status(HTTP_STATUS_CODES.OK).json(updatedData);
