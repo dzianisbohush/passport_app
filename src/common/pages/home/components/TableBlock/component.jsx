@@ -49,14 +49,14 @@ class TableBlock extends Component {
 
   render() {
     const { isActiveShareBtn } = this.state;
-    const { loading, items, goToEditPage } = this.props;
+    const { loading, items, goToAddPage } = this.props;
     const columns = this.getColumns();
 
     return (
       <TableWrapper>
         <PasswordButtons
           isActiveShareBtn={isActiveShareBtn}
-          goToEditPage={goToEditPage}
+          goToAddPage={goToAddPage}
         />
         <Table
           rowSelection={{
@@ -95,6 +95,7 @@ TableBlock.propTypes = {
     }),
   ).isRequired,
   goToEditPage: PropTypes.func.isRequired,
+  goToAddPage: PropTypes.func.isRequired,
 };
 
 export default TableBlock;
