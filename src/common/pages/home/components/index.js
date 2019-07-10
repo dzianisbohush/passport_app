@@ -24,7 +24,7 @@ class Home extends Component {
   };
 
   render() {
-    const { loading, passwordsItems } = this.props;
+    const { loading, passwordsItems, deletePasswordItem } = this.props;
 
     return (
       <div>
@@ -34,6 +34,7 @@ class Home extends Component {
           items={passwordsItems}
           goToEditPage={this.goToEditPage}
           goToAddPage={this.goToAddPage}
+          deletePasswordItem={deletePasswordItem}
         />
       </div>
     );
@@ -42,6 +43,7 @@ class Home extends Component {
 
 Home.propTypes = {
   getPasswordsItems: PropTypes.func.isRequired,
+  deletePasswordItem: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   passwordsItems: PropTypes.arrayOf(
     PropTypes.shape({

@@ -7,7 +7,10 @@ import {
   ADD_PASSWORD_FAILURE,
   CHANGE_PASSWORD_FAILURE,
   CHANGE_PASSWORD_PENDING,
-} from '../constants';
+  DELETE_PASSWORD_PENDING,
+  DELETE_PASSWORD_SUCCESS,
+  DELETE_PASSWORD_FAILURE,
+} from 'common/store/constants';
 
 const initialState = {
   items: [],
@@ -58,6 +61,22 @@ const passwords = (state = initialState, action) => {
         loading: true,
       };
     case CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case DELETE_PASSWORD_PENDING:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DELETE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        items: state.items.filter(elem => elem.id !== action.payload),
+      };
+    case DELETE_PASSWORD_FAILURE:
       return {
         ...state,
         error: action.payload,
