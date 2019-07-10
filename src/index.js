@@ -1,7 +1,7 @@
 /* eslint-disable  no-console */
 import express from 'express';
 import Sequelize from 'sequelize';
-import postgresConnection from '../config/postgresConnection';
+import postgresConnection from '../config/dbConfig';
 import passwords from './server/routes/passwords';
 import users from './server/routes/users';
 
