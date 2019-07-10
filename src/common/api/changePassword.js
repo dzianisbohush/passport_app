@@ -2,7 +2,8 @@
 
 import axios from 'axios';
 
-const addPassword = async ({
+const changePassword = async ({
+  id,
   userEmail,
   name,
   resourceAddress,
@@ -10,7 +11,7 @@ const addPassword = async ({
   password,
 }) => {
   try {
-    const response = await axios.post('/api/passwords', {
+    const response = await axios.put(`/api/passwords/${id}`, {
       userEmail,
       name,
       resourceAddress,
@@ -24,4 +25,4 @@ const addPassword = async ({
   }
 };
 
-export default addPassword;
+export default changePassword;

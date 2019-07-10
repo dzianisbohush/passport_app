@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  'config': path.resolve('config', 'postgresConnection.json'),
+  'config': path.resolve('config', 'dbConfig.js'),
   'models-path': path.resolve('src', 'server', 'models'),
   'migrations-path': path.resolve('src', 'server', 'migrations')
 };

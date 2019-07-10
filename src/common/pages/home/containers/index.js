@@ -1,30 +1,31 @@
 import { connect } from 'react-redux';
 import Home from 'common/pages/home/components';
-import getPasswordsByUserId from 'common/api/getPasswordsByUserId';
+import getPasswordsByUserEmail from 'common/api/getPasswordsByUserEmail';
 import {
-  getPasswordsBegin,
+  getPasswordsPending,
   getPasswordsFailure,
   getPasswordsSuccess,
-} from '../store/index';
+} from 'common/store/actions/passwords';
 
 const getPasswordsItems = () => async dispatch => {
   try {
-    dispatch(getPasswordsBegin());
+    dispatch(getPasswordsPending());
 
-    const response = await getPasswordsByUserId('1'); // @todo put real user id
+    const response = await getPasswordsByUserEmail('ru@ru.ru'); // @todo put real user email
+
     const { data } = response;
 
-    dispatch(getPasswordsSuccess(data));
+    dispatch(getPasswordsSuccess(data || []));
   } catch (e) {
     dispatch(getPasswordsFailure(e));
 
-    throw e;
+    console.log(e);
   }
 };
 
 const mapStateToProps = state => ({
-  passwordsItems: state.home.items,
-  loading: state.home.loading,
+  passwordsItems: state.passwords.items,
+  loading: state.passwords.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

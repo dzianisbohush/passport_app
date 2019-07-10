@@ -1,43 +1,70 @@
-import Sequelize from 'sequelize';
-import db from '../config/database-config';
+// We need to use require instead of import
+// because this file is imported by sequelize-cli(without babel)
+const Sequelize = require('sequelize');
+const postgresConnection = require('../../../config/dbConfig');
 
-const defaultUserImg =
-  // eslint-disable-next-line max-len
-  'https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwjp7uSztJ3jAhWBjKQKHSZwAqkQjRx6BAgBEAQ&url=https%3A%2F%2Fdeathbattlefanon.fandom.com%2Fwiki%2FChin-Chin&psig=AOvVaw3O0n5ETwjexM5gl5avRJsb&ust=1562403407133663';
+const { Model } = Sequelize;
 
-const User = db.define(
-  'User',
-  {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
-      unique: true,
-    },
-    googleId: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    email: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    img: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      defaultValue: defaultUserImg,
-    },
+const {
+  development: { username, password, database, host, dialect },
+} = postgresConnection;
+const sequelize = new Sequelize(database, username, password, {
+  host,
+  dialect,
+});
+
+const userSchema = {
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: Sequelize.INTEGER,
   },
-  {
-    // eslint-disable-next-line max-len
-    timestamps: false, // Колонки createdAt и updatedAt будут созданы автоматически
+  googleId: {
+    allowNull: false,
+    type: Sequelize.STRING,
   },
-);
+  email: {
+    type: Sequelize.STRING,
+  },
+  name: {
+    type: Sequelize.STRING,
+  },
+  img: {
+    type: Sequelize.STRING,
+  },
+  createdAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
+  updatedAt: {
+    allowNull: false,
+    type: Sequelize.DATE,
+  },
+};
 
-export default User;
+class User extends Model {}
+User.init(userSchema, {
+  sequelize,
+  modelName: 'User',
+});
+
+function createUser(userData) {
+  return User.create(userData);
+}
+
+function getUserByUserEmail(email) {
+  return User.findOne({ where: { email } });
+}
+
+function deleteUserByEmail(userEmail) {
+  User.findOne(userEmail).then(record => record.destroy());
+}
+
+module.exports = {
+  userSchema,
+  User,
+  createUser,
+  deleteUserByEmail,
+  getUserByUserEmail,
+};

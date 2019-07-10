@@ -14,7 +14,13 @@ class Home extends Component {
   goToEditPage = id => {
     const { history } = this.props;
 
-    history.push(id ? `/edit/${id}` : '/edit');
+    history.push(`/edit/${id}`);
+  };
+
+  goToAddPage = () => {
+    const { history } = this.props;
+
+    history.push('/add');
   };
 
   render() {
@@ -27,6 +33,7 @@ class Home extends Component {
           loading={loading}
           items={passwordsItems}
           goToEditPage={this.goToEditPage}
+          goToAddPage={this.goToAddPage}
         />
       </div>
     );

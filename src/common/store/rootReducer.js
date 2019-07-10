@@ -1,10 +1,8 @@
 import { combineReducers } from 'redux';
-import home from 'common/pages/home/store';
-import edit from 'common/pages/edit/store';
+import passwords from './reducers/passwords';
 
 const rootReducer = combineReducers({
-  home,
-  edit,
+  passwords,
 });
 
 export default rootReducer;
