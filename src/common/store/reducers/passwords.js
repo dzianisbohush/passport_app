@@ -74,7 +74,10 @@ const passwords = (state = initialState, action) => {
     case DELETE_PASSWORD_SUCCESS:
       return {
         ...state,
-        items: state.items.filter(elem => elem.id !== action.payload),
+        items: state.items.filter(
+          elem => elem.id.toString() !== action.payload,
+        ),
+        loading: false,
       };
     case DELETE_PASSWORD_FAILURE:
       return {
