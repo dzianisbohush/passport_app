@@ -14,7 +14,7 @@ class PasswordButtons extends PureComponent {
   };
 
   render() {
-    const { isActiveShareBtn } = this.props;
+    const { isActiveShareBtn, handleShareButtonClick } = this.props;
     return (
       <StyledButtons>
         <Button size="large" type="primary" onClick={this.handleAddBtnClick}>
@@ -23,7 +23,12 @@ class PasswordButtons extends PureComponent {
             <FontAwesomeIcon icon={faPlus} />
           </StyledIcon>
         </Button>
-        <Button disabled={!isActiveShareBtn} size="large" type="primary">
+        <Button
+          disabled={!isActiveShareBtn}
+          size="large"
+          type="primary"
+          onClick={handleShareButtonClick}
+        >
           Share
           <StyledIcon>
             <FontAwesomeIcon icon={faShareAlt} />
@@ -37,6 +42,7 @@ class PasswordButtons extends PureComponent {
 PasswordButtons.propTypes = {
   isActiveShareBtn: PropTypes.bool.isRequired,
   goToAddPage: PropTypes.func.isRequired,
+  handleShareButtonClick: PropTypes.func.isRequired,
 };
 
 export default PasswordButtons;

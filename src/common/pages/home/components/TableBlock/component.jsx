@@ -5,36 +5,71 @@ import PropTypes from 'prop-types';
 import PasswordButtons from 'common/pages/home/components/PasswordButtons';
 import TableActionsButtons from 'common/pages/home/components/TableActionsButtons';
 import DeleteModal from 'common/blocks/DeleteModal';
+import ShareModal from 'common/pages/home/components/ShareModal';
+import getUsers from 'common/api/getUsers';
 
 import TableWrapper from './styles';
 
 class TableBlock extends Component {
   state = {
     isActiveShareBtn: false,
-    isVisible: false,
+    isDeleteModalVisible: false,
+    isShareModalVisible: false,
     itemIdToDelete: null,
+    passwordsToShare: [],
+    users: [],
   };
 
-  handleRowSelected = () => {
-    const { isActiveShareBtn } = this.state;
-
+  componentDidMount() {
+    const users = getUsers();
     this.setState({
-      isActiveShareBtn: !isActiveShareBtn,
+      users,
     });
+  }
+
+  handleRowSelected = (row, isSelected) => {
+    const { passwordsToShare } = this.state;
+    if (isSelected) {
+      this.setState({
+        isActiveShareBtn: true,
+        passwordsToShare: [...passwordsToShare, row],
+      });
+    } else {
+      const index = passwordsToShare.findIndex(elem => elem.id === row.id);
+      passwordsToShare.splice(index, 1);
+      this.setState({
+        isActiveShareBtn: false,
+        passwordsToShare,
+      });
+    }
+  };
+
+  handleAllRowsSelected = (isSelected, rows) => {
+    if (isSelected) {
+      this.setState({
+        isActiveShareBtn: true,
+        passwordsToShare: rows,
+      });
+    } else {
+      this.setState({
+        isActiveShareBtn: false,
+        passwordsToShare: [],
+      });
+    }
   };
 
   handleDeleteClick = e => {
     e.preventDefault();
     const { id } = e.target.dataset;
     this.setState({
-      isVisible: true,
+      isDeleteModalVisible: true,
       itemIdToDelete: id,
     });
   };
 
   handleDeleteModalDismiss = () => {
     this.setState({
-      isVisible: false,
+      isDeleteModalVisible: false,
     });
   };
 
@@ -42,10 +77,16 @@ class TableBlock extends Component {
     const { deletePasswordItem } = this.props;
     const { itemIdToDelete } = this.state;
     this.setState({
-      isVisible: false,
+      isDeleteModalVisible: false,
       itemIdToDelete: null,
     });
     deletePasswordItem(itemIdToDelete);
+  };
+
+  handleShareButtonClick = () => {
+    this.setState({
+      isShareModalVisible: true,
+    });
   };
 
   getColumns = () => {
@@ -82,7 +123,13 @@ class TableBlock extends Component {
   };
 
   render() {
-    const { isActiveShareBtn, isVisible } = this.state;
+    const {
+      isActiveShareBtn,
+      isDeleteModalVisible,
+      isShareModalVisible,
+      passwordsToShare,
+      users,
+    } = this.state;
     const { loading, items, goToAddPage } = this.props;
     const columns = this.getColumns();
 
@@ -91,11 +138,12 @@ class TableBlock extends Component {
         <PasswordButtons
           isActiveShareBtn={isActiveShareBtn}
           goToAddPage={goToAddPage}
+          handleShareButtonClick={this.handleShareButtonClick}
         />
         <Table
           rowSelection={{
             onSelect: this.handleRowSelected,
-            onSelectAll: this.handleRowSelected,
+            onSelectAll: this.handleAllRowsSelected,
           }}
           columns={columns}
           dataSource={items}
@@ -109,9 +157,14 @@ class TableBlock extends Component {
           }}
         />
         <DeleteModal
-          isVisible={isVisible}
+          isVisible={isDeleteModalVisible}
           handleDeleteModalSubmit={this.handleDeleteModalSubmit}
           handleDeleteModalDismiss={this.handleDeleteModalDismiss}
+        />
+        <ShareModal
+          visible={isShareModalVisible}
+          users={users}
+          passwordsToShare={passwordsToShare}
         />
       </TableWrapper>
     );
