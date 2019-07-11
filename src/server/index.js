@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
-import render from 'server/middlewares/renderer';
+import render from 'server/routes/renderer';
 import googleAuth from './routes/googleAuth';
 import setupPassport from './auth/setupPassport';
 import { COOKIES_SECRET_KEY, COOKIES_MAX_AGE } from './config';
@@ -28,10 +28,16 @@ server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
   .get('/*', (req, res, next) => {
-    if (!req.path.includes('/api/')) {
+    const { user } = req;
+
+    if (
+      (user && !req.path.includes('/api/') && !req.path.includes('/auth/')) ||
+      req.path === '/'
+    ) {
       render(req, res);
       next();
+    } else {
+      res.redirect('/');
     }
-    next();
   });
 export default server;
