@@ -14,13 +14,13 @@ class Home extends Component {
   goToEditPage = id => {
     const { history } = this.props;
 
-    history.push(`/edit/${id}`);
+    history.push(`profile/edit/${id}`);
   };
 
   goToAddPage = () => {
     const { history } = this.props;
 
-    history.push('/add');
+    history.push('profile/add');
   };
 
   render() {

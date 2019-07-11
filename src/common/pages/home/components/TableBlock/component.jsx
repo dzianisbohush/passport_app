@@ -161,11 +161,13 @@ class TableBlock extends Component {
           handleDeleteModalSubmit={this.handleDeleteModalSubmit}
           handleDeleteModalDismiss={this.handleDeleteModalDismiss}
         />
-        <ShareModal
-          visible={isShareModalVisible}
-          users={users}
-          passwordsToShare={passwordsToShare}
-        />
+        {users.length && (
+          <ShareModal
+            visible={isShareModalVisible}
+            users={users}
+            passwordsToShare={passwordsToShare}
+          />
+        )}
       </TableWrapper>
     );
   }
