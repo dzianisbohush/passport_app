@@ -4,6 +4,7 @@ import { getStrategy as getGoogleStrategy } from './strategies/google';
 
 function setupUserSerialization() {
   passport.serializeUser((user, done) => {
+    console.log(999, done);
     done(null, user.email);
   });
 }
@@ -11,6 +12,7 @@ function setupUserSerialization() {
 function setupUserDeserealization() {
   passport.deserializeUser((email, done) => {
     User.getUserByUserEmail(email).then(user => {
+      console.log(2323322, done);
       done(null, user);
     });
   });
