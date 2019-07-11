@@ -53,6 +53,10 @@ function createUser(userData) {
   return User.create(userData);
 }
 
+function getUserByGoogleId(googleId) {
+  return User.findOne({ where: { googleId } });
+}
+
 function getUserByUserEmail(email) {
   return User.findOne({ where: { email } });
 }
@@ -67,4 +71,5 @@ module.exports = {
   createUser,
   deleteUserByEmail,
   getUserByUserEmail,
+  getUserByGoogleId,
 };
