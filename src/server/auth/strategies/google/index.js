@@ -8,8 +8,6 @@ import {
 } from './constants';
 import User from '../../../models/user';
 
-// TODO: remove eslint disabling after adding more utils
-// eslint-disable-next-line import/prefer-default-export
 export const openAuthWindow = passport.authenticate('google', {
   scope: [GOOGLE_USER_INFO_PROFILE, GOOGLE_USER_INFO_EMAIL],
 });

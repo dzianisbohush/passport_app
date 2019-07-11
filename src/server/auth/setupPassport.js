@@ -16,7 +16,6 @@ function setupUserDeserialization() {
   });
 }
 
-// It`s possible to add more strategies if it is necessary
 function setupAuthStrategy(strategyName) {
   switch (strategyName) {
     case 'google':
