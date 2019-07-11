@@ -4,4 +4,4 @@ COPY . /
 RUN npm install
 EXPOSE 4000
 EXPOSE 3001
-CMD npm run migrate ; npm start
+CMD npm run migrate ; npm run build ; npm run start:prod

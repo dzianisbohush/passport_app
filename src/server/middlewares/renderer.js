@@ -2,6 +2,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
+import { ServerStyleSheet } from 'styled-components';
 import serialize from 'serialize-javascript';
 import App from 'common/App';
 import configureStore from 'common/store/configureStore';
@@ -13,14 +14,19 @@ const render = (req, res) => {
   const store = configureStore();
 
   const context = {};
+  const sheet = new ServerStyleSheet();
   // Render the component to a string
   const markup = renderToString(
-    <StaticRouter context={context} location={req.url}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </StaticRouter>,
+    sheet.collectStyles(
+      <StaticRouter context={context} location={req.url}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </StaticRouter>,
+    ),
   );
+
+  const styles = sheet.getStyleTags();
 
   // Grab the initial state from our Redux store
   const finalState = store.getState();
@@ -34,6 +40,7 @@ const render = (req, res) => {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charSet='utf-8' />
         <title>Passport pocket</title>
+         ${styles}
         <meta name="viewport" content="width=device-width, initial-scale=1">
         ${
           assets.client.css
