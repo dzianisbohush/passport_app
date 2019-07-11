@@ -4,15 +4,13 @@ import { getStrategy as getGoogleStrategy } from './strategies/google';
 
 function setupUserSerialization() {
   passport.serializeUser((user, done) => {
-    console.log(999, done);
     done(null, user.email);
   });
 }
 
-function setupUserDeserealization() {
+function setupUserDeserialization() {
   passport.deserializeUser((email, done) => {
     User.getUserByUserEmail(email).then(user => {
-      console.log(2323322, done);
       done(null, user);
     });
   });
@@ -31,6 +29,6 @@ function setupAuthStrategy(strategyName) {
 
 export default function setupPassport(strategyName) {
   setupUserSerialization();
-  setupUserDeserealization();
+  setupUserDeserialization();
   setupAuthStrategy(strategyName);
 }

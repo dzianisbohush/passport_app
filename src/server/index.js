@@ -14,7 +14,7 @@ server.use(bodyParser.json());
 server.use(
   cookieSession({
     maxAge: COOKIES_MAX_AGE,
-    keys: COOKIES_SECRET_KEY,
+    keys: [COOKIES_SECRET_KEY],
   }),
 );
 
