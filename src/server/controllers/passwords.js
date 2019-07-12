@@ -1,5 +1,3 @@
-import getPasswordsByUserEmail from '../../common/api/getPasswordsByUserEmail';
-
 const Password = require('../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
 
@@ -33,7 +31,9 @@ async function acceptSharingPasswords(req, res) {
     return;
   }
   try {
-    const userPasswords = await getPasswordsByUserEmail(req.params.userEmail);
+    const userPasswords = await Password.getPasswordsByUserEmail(
+      req.params.userEmail,
+    );
     if (!userPasswords) {
       res
         .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
@@ -63,7 +63,7 @@ async function rejectSharingPasswords(req, res) {
   }
 
   try {
-    const userPasswords = await getPasswordsByUserEmail(userEmail);
+    const userPasswords = await Password.getPasswordsByUserEmail(userEmail);
     if (!userPasswords) {
       res
         .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
