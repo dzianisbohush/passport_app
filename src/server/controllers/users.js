@@ -103,8 +103,20 @@ async function deleteUserByEmail(req, res) {
   }
 }
 
+async function getAllUsers(req, res) {
+  try {
+    const foundUsers = await User.getAllUsers();
+    res.status(HTTP_STATUS_CODES.OK).json(foundUsers);
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.NOT_FOUND)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
+
 module.exports = {
   createUser,
   getUserByUserEmail,
   deleteUserByEmail,
+  getAllUsers,
 };

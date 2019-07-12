@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
-import { Header, Img, Span, Ul } from './styles';
+import { Header, Img, Span, NavigationBar } from './styles';
 
 class HeaderBlock extends PureComponent {
   componentDidMount() {
@@ -31,17 +31,17 @@ class HeaderBlock extends PureComponent {
           <Img src={userPhotoURL} />
           <Span>{userName}</Span>
         </div>
-        <Ul>
-          <li>
+        <NavigationBar>
+          <span>
             <Link to="/profile">Home</Link>
-          </li>
-          <li>
+          </span>
+          <span>
             <Link to="/profile/status">Password Status Control</Link>
-          </li>
-          <li>
+          </span>
+          <span>
             <Link to="/profile/import-export">Import/export csv</Link>
-          </li>
-        </Ul>
+          </span>
+        </NavigationBar>
       </Header>
     );
   }

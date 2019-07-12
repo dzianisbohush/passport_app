@@ -1,5 +1,108 @@
+import getPasswordsByUserEmail from '../../common/api/getPasswordsByUserEmail';
+
 const Password = require('../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
+
+function isCorrect(password) {
+  if (!password.userEmail) {
+    return false;
+  }
+
+  if (!password.name) {
+    return false;
+  }
+
+  if (!password.resourceAddress) {
+    return false;
+  }
+
+  if (!password.login) {
+    return false;
+  }
+  if (!password.password) {
+    return false;
+  }
+  return true;
+}
+
+async function acceptSharingPasswords(req, res) {
+  if (!req.params.userEmail) {
+    res
+      .status(HTTP_STATUS_CODES.BAD_REQUEST)
+      .json({ error: MESSAGES.EMPTY_USER_EMAIL });
+    return;
+  }
+  try {
+    const userPasswords = await getPasswordsByUserEmail(req.params.userEmail);
+    if (!userPasswords) {
+      res
+        .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+        .json({ error: MESSAGES.NOT_FOUND });
+    }
+    userPasswords.forEach(async record => {
+      await Password.updatePasswordById(record.id, {
+        ...record,
+        isAccepted: true,
+      });
+    });
+    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
+
+async function rejectSharingPasswords(req, res) {
+  const { userEmail } = req.params;
+
+  if (!userEmail) {
+    res
+      .status(HTTP_STATUS_CODES.BAD_REQUEST)
+      .json({ error: MESSAGES.EMPTY_USER_EMAIL });
+  }
+
+  try {
+    const userPasswords = await getPasswordsByUserEmail(userEmail);
+    if (!userPasswords) {
+      res
+        .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+        .json({ error: MESSAGES.NOT_FOUND });
+    }
+    userPasswords.forEach(async record => {
+      await Password.deletePasswordById(record.id);
+    });
+    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
+
+async function sharePasswords(req, res) {
+  const { sharingData } = req.body;
+
+  try {
+    const date = new Date();
+    date.setMonth(date.getMonth() + 1);
+    const isSharingDataCorrect = sharingData.every(isCorrect);
+    if (isSharingDataCorrect) {
+      sharingData.forEach(async record => {
+        await Password.createPassword({
+          ...record,
+          isAccepted: false,
+          sendNotificationAt: date,
+        });
+      });
+      res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
+    }
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
 
 async function getPasswordsByUserId(req, res) {
   const { userEmail } = req.params;
@@ -164,7 +267,10 @@ async function createPassword(req, res) {
 
 module.exports = {
   createPassword,
+  acceptSharingPasswords,
   getPasswordsByUserId,
   deletePasswordById,
   updatePasswordById,
+  sharePasswords,
+  rejectSharingPasswords,
 };
