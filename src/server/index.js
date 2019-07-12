@@ -7,6 +7,14 @@ import googleAuth from './routes/googleAuth';
 import setupPassport from './auth/setupPassport';
 import { COOKIES_SECRET_KEY, COOKIES_MAX_AGE } from './config';
 
+// eslint-disable-next-line import/no-unresolved
+import Cron from 'cron';
+
+import EmailController from './controllers/EmailController';
+
+// eslint-disable-next-line prefer-destructuring
+const CronJob = Cron.CronJob;
+
 const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
 server.use(bodyParser.json());
@@ -24,6 +32,7 @@ server.use('/auth', googleAuth);
 
 setupPassport('google');
 
+const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
@@ -39,5 +48,19 @@ server
     } else {
       res.redirect('/');
     }
-  });
+    next();
+  })
+  .get('/api/get-users', (req, res) => res.json({ user1: 'vasa' }));
+
+// eslint-disable-next-line no-new
+new CronJob(
+  '0 3 * * *',
+  function() {
+    EmailController();
+  },
+  null,
+  true,
+  'America/Los_Angeles',
+);
+
 export default server;
