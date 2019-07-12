@@ -138,14 +138,14 @@ class TableBlock extends Component {
     } = this.state;
     const { loading, items, goToAddPage, goToEditPage } = this.props;
     const columns = this.getColumns();
-    if (isMobile) {
-      return (
-        <TableWrapper>
-          <PasswordButtons
-            isActiveShareBtn={isActiveShareBtn}
-            goToAddPage={goToAddPage}
-            handleShareButtonClick={this.handleShareButtonClick}
-          />
+    return (
+      <TableWrapper>
+        <PasswordButtons
+          isActiveShareBtn={isActiveShareBtn}
+          goToAddPage={goToAddPage}
+          handleShareButtonClick={this.handleShareButtonClick}
+        />
+        {isMobile ? (
           <Table
             rowSelection={{
               onSelect: this.handleRowSelected,
@@ -192,42 +192,24 @@ class TableBlock extends Component {
               pageSize: 5,
             }}
           />
-          <DeleteModal
-            isVisible={isDeleteModalVisible}
-            handleDeleteModalSubmit={this.handleDeleteModalSubmit}
-            handleDeleteModalDismiss={this.handleDeleteModalDismiss}
+        ) : (
+          <Table
+            rowSelection={{
+              onSelect: this.handleRowSelected,
+              onSelectAll: this.handleAllRowsSelected,
+            }}
+            columns={columns}
+            dataSource={items}
+            loading={loading}
+            rowKey="id"
+            pagination={{
+              defaultCurrent: 1,
+              total: items.length,
+              hideOnSinglePage: true,
+              pageSize: 5,
+            }}
           />
-          <ShareModal
-            visible={isShareModalVisible}
-            users={users}
-            passwordsToShare={passwordsToShare}
-          />
-        </TableWrapper>
-      );
-    }
-    return (
-      <TableWrapper>
-        <PasswordButtons
-          isActiveShareBtn={isActiveShareBtn}
-          goToAddPage={goToAddPage}
-          handleShareButtonClick={this.handleShareButtonClick}
-        />
-        <Table
-          rowSelection={{
-            onSelect: this.handleRowSelected,
-            onSelectAll: this.handleAllRowsSelected,
-          }}
-          columns={columns}
-          dataSource={items}
-          loading={loading}
-          rowKey="id"
-          pagination={{
-            defaultCurrent: 1,
-            total: items.length,
-            hideOnSinglePage: true,
-            pageSize: 5,
-          }}
-        />
+        )}
         <DeleteModal
           isVisible={isDeleteModalVisible}
           handleDeleteModalSubmit={this.handleDeleteModalSubmit}
