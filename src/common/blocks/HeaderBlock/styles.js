@@ -4,7 +4,7 @@ export const Header = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0px 50px;
+  padding: 5px 10px;
   @media only screen and (max-width: 600px) {
     flex-direction: column;
     margin: 0px;
@@ -16,7 +16,7 @@ export const Header = styled.header`
     }
   }
 
-  background-color: lightgrey;
+  background-color: #f5f5f5;
 `;
 
 export const Img = styled.img.attrs(() => ({
@@ -39,14 +39,12 @@ export const Span = styled.span`
   }
 `;
 
-export const Ul = styled.ul`
+export const NavigationBar = styled.div`
   display: flex;
   flex-direction: row;
   margin: 10px;
   text-align: center;
-  list-style-type: none;
-
-  & > li {
+  & > span {
     padding: 0px 10px;
     height: 20px;
   }
@@ -59,8 +57,8 @@ export const Ul = styled.ul`
     display: flex;
     flex-direction: column;
     align-self: center;
-    margin: 5px 0px;
-    & > li {
+    margin: 5px;
+    & > span {
       padding: 2px 0px;
       margin: 0px;
       border: 0px;

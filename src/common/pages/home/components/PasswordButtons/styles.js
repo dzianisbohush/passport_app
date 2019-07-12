@@ -6,6 +6,9 @@ export const StyledButtons = styled.div`
   & > button {
     margin-left: 20px;
   }
+  @media only screen and (max-width: 600px) {
+    text-align: center;
+  }
 `;
 
 export const StyledIcon = styled.span`
