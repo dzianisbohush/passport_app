@@ -31,7 +31,7 @@ async function sharePasswords(req, res) {
     date.setMonth(date.getMonth() + 1);
     const isSharingDataCorrect = sharingData.every(isCorrect);
     if (isSharingDataCorrect) {
-      sharingData.map(async record => {
+      sharingData.forEach(async record => {
         await Password.createPassword({
           ...record,
           isAccepted: false,
