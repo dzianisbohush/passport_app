@@ -49,6 +49,32 @@ async function createUser(req, res) {
   }
 }
 
+async function getUserByUserEmail(req, res) {
+  const { userEmail } = req.params;
+
+  if (!userEmail) {
+    res
+      .status(HTTP_STATUS_CODES.BAD_REQUEST)
+      .json({ error: MESSAGES.EMPTY_EMAIL });
+    return;
+  }
+
+  try {
+    const userData = await User.getUserByUserEmail(userEmail);
+    if (!userData || userData.length < 1) {
+      res
+        .status(HTTP_STATUS_CODES.NOT_FOUND)
+        .json({ error: MESSAGES.NOT_FOUND });
+      return;
+    }
+    res.status(HTTP_STATUS_CODES.OK).json(userData);
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
+
 async function deleteUserByEmail(req, res) {
   const { userEmail } = req.params;
   if (!userEmail) {
@@ -77,7 +103,20 @@ async function deleteUserByEmail(req, res) {
   }
 }
 
+async function getAllUsers(req, res) {
+  try {
+    const foundUsers = await User.getAllUsers();
+    res.status(HTTP_STATUS_CODES.OK).json(foundUsers);
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.NOT_FOUND)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
+
 module.exports = {
   createUser,
+  getUserByUserEmail,
   deleteUserByEmail,
+  getAllUsers,
 };

@@ -46,7 +46,7 @@ class EditPage extends PureComponent {
       <PasswordForm
         name={name}
         login={login}
-        title="Create Password"
+        title="Edit Password"
         resourceAddress={resourceAddress}
         submitAction={this.submitPasswordForm}
       />
