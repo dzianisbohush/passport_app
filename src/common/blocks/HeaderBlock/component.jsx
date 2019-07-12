@@ -12,10 +12,10 @@ const HeaderBlock = () => {
       </div>
       <NavigationBar>
         <span>
-          <Link to="/">Home</Link>
+          <Link to="/profile">Home</Link>
         </span>
         <span>
-          <Link to="/status">Password Status Control</Link>
+          <Link to="/profile/share_passwords">Password Status Control</Link>
         </span>
         <span>
           <Link to="/import_export">Import/export csv</Link>

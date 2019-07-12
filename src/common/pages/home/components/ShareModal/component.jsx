@@ -23,7 +23,10 @@ class ShareModal extends PureComponent {
     const { items } = this.state;
     const { userEmail } = this.props;
     const emails = items.map(elem => elem.email);
-    sharePassword(userEmail, emails, items);
+    const records = items.map((elem, index) => {
+      return { ...elem, userEmail: emails[index] };
+    });
+    sharePassword(userEmail, emails, records);
   };
 
   render() {

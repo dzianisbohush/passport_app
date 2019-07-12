@@ -137,6 +137,7 @@ class TableBlock extends Component {
       users,
     } = this.state;
     const { loading, items, goToAddPage, goToEditPage } = this.props;
+    const records = items.filter(elem => elem.isAccepted);
     const columns = this.getColumns();
     return (
       <TableWrapper>
@@ -182,12 +183,12 @@ class TableBlock extends Component {
                 </div>
               </ExpandedRows>
             )}
-            dataSource={items}
+            dataSource={records}
             loading={loading}
             rowKey="id"
             pagination={{
               defaultCurrent: 1,
-              total: items.length,
+              total: records.length,
               hideOnSinglePage: true,
               pageSize: 5,
             }}
@@ -199,12 +200,12 @@ class TableBlock extends Component {
               onSelectAll: this.handleAllRowsSelected,
             }}
             columns={columns}
-            dataSource={items}
+            dataSource={records}
             loading={loading}
             rowKey="id"
             pagination={{
               defaultCurrent: 1,
-              total: items.length,
+              total: records.length,
               hideOnSinglePage: true,
               pageSize: 5,
             }}
