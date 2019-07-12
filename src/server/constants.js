@@ -28,4 +28,11 @@ const MESSAGES = {
   OK: 'Ok',
 };
 
-module.exports = { HTTP_STATUS_CODES, MESSAGES };
+const SANDGRID = {
+  NAME: 'andrewtester512',
+  PASS: 'qwer1234qwer1234',
+  URL: 'http://localhost:3000',
+  EMAIL: 'andrewtester512@gmail.com',
+};
+
+module.exports = { HTTP_STATUS_CODES, MESSAGES, SANDGRID };
