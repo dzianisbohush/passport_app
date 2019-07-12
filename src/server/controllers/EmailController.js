@@ -1,12 +1,15 @@
 import HBS from 'handlebars';
 import fs from 'fs';
 import path from 'path';
+// eslint-disable-next-line import/no-unresolved
 import Sendgrid from 'sendgrid-web';
-import { SANDGRID } from '../constants';
 
 import Password from '../models/password';
 
-const sendgrid = new Sendgrid({ user: SANDGRID.NAME, key: SANDGRID.PASS });
+const sendgrid = new Sendgrid({
+  user: process.env.REACT_APP_SANDGRID_NAME,
+  key: process.env.REACT_APP_SANDGRID_PASS,
+});
 // eslint-disable-next-line max-len
 const template = fs.readFileSync(
   path.join(__dirname, '../', 'src', 'server', 'templates', 'Email.hbs'),
@@ -20,13 +23,13 @@ const EmailController = () => {
     arr.forEach(el => {
       // eslint-disable-next-line no-shadow
       const data = {
-        we: SANDGRID.URL,
+        we: process.env.REACT_APP_SANDGRID_URL,
         site: el.dataValues.resourceAddress,
       };
       sendgrid.send(
         {
           to: el.dataValues.userEmail,
-          from: SANDGRID.EMAIL,
+          from: process.env.REACT_APP_SANDGRID_EMAIL,
           subject: 'please refresh pasword',
           html: compiledtemplate({ data }),
         },

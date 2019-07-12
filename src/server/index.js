@@ -1,6 +1,7 @@
 import express from 'express';
 import render from 'server/middlewares/renderer';
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
+
+// eslint-disable-next-line import/no-unresolved
 import Cron from 'cron';
 
 import EmailController from './controllers/EmailController';
@@ -23,7 +24,7 @@ server
 
 // eslint-disable-next-line no-new
 new CronJob(
-  '50 * * * * *',
+  '0 3 1 * *',
   function() {
     EmailController();
   },
