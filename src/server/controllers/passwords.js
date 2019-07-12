@@ -45,6 +45,34 @@ async function acceptSharingPasswords(req, res) {
         isAccepted: true,
       });
     });
+    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
+
+async function rejectSharingPasswords(req, res) {
+  const { userEmail } = req.params;
+
+  if (!userEmail) {
+    res
+      .status(HTTP_STATUS_CODES.BAD_REQUEST)
+      .json({ error: MESSAGES.EMPTY_USER_EMAIL });
+  }
+
+  try {
+    const userPasswords = await getPasswordsByUserEmail(userEmail);
+    if (!userPasswords) {
+      res
+        .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+        .json({ error: MESSAGES.NOT_FOUND });
+    }
+    userPasswords.forEach(async record => {
+      await Password.deletePasswordById(record.id);
+    });
+    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
   } catch (e) {
     res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
@@ -244,4 +272,5 @@ module.exports = {
   deletePasswordById,
   updatePasswordById,
   sharePasswords,
+  rejectSharingPasswords,
 };
