@@ -249,6 +249,7 @@ async function createPassword(req, res) {
       res
         .status(HTTP_STATUS_CODES.CONFLICT)
         .json({ message: MESSAGES.DUPLICATE_PASSWORD });
+      return;
     }
     const date = new Date();
     date.setMonth(date.getMonth() + 1);
