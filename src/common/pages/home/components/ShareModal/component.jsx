@@ -12,6 +12,13 @@ class ShareModal extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    const { visible } = this.props;
+    this.setState({
+      visible,
+    });
+  }
+
   onSelect = value => {
     const { items } = this.state;
     this.setState({
@@ -27,12 +34,26 @@ class ShareModal extends PureComponent {
       return { ...elem, userEmail: emails[index] };
     });
     sharePassword(userEmail, emails, records);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = () => {
+    this.setState({
+      visible: false,
+    });
   };
 
   render() {
-    const { visible, users } = this.props;
+    const { users } = this.props;
+    const { visible } = this.state;
     return (
-      <Modal visible={visible} onOk={this.handleSubmit}>
+      <Modal
+        visible={visible}
+        onOk={this.handleSubmit}
+        onCancel={this.handleCancel}
+      >
         <Select
           mode="multiple"
           placeholder="Select users"
