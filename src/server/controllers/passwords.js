@@ -38,6 +38,7 @@ async function sharePasswords(req, res) {
           sendNotificationAt: date,
         });
       });
+      res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
     }
   } catch (e) {
     res
