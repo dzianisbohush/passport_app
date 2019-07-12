@@ -1,6 +1,64 @@
 const Password = require('../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
 
+async function sharePasswords(req, res) {
+  const { sharingData } = req.body;
+
+  function isCorrect(password) {
+    if (!password.userEmail) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_USER_EMAIL });
+      return;
+    }
+
+    if (!password.name) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_NAME });
+      return;
+    }
+
+    if (!password.resourceAddress) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_RESOURCE_ADDRESS });
+      return;
+    }
+
+    if (!password.login) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_LOGIN });
+      return;
+    }
+    if (!password.password) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_PASSWORD });
+    }
+  }
+
+  try {
+    const date = new Date();
+    date.setMonth(date.getMonth() + 1);
+    const isSharingDataCorrect = sharingData.every(isCorrect);
+    if (isSharingDataCorrect) {
+      sharingData.map(async record => {
+        await Password.createPassword({
+          ...record,
+          isAccepted: false,
+          sendNotificationAt: date,
+        });
+      });
+    }
+  } catch (e) {
+    res
+      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
+      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  }
+}
+
 async function getPasswordsByUserId(req, res) {
   const { userEmail } = req.params;
 
@@ -167,4 +225,5 @@ module.exports = {
   getPasswordsByUserId,
   deletePasswordById,
   updatePasswordById,
+  sharePasswords,
 };
