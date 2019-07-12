@@ -24,7 +24,7 @@ server
 
 // eslint-disable-next-line no-new
 new CronJob(
-  '0 3 1 * *',
+  '0 3 * * *',
   function() {
     EmailController();
   },

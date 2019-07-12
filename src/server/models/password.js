@@ -85,7 +85,7 @@ function deletePasswordById(id) {
 }
 function getAllUserForEmailing() {
   const d = new Date();
-  return Password.findAll({ where: { createdAt: { [Op.lt]: d } } });
+  return Password.findAll({ where: { sendNotificationAt: { [Op.gte]: d } } });
 }
 
 module.exports = {
