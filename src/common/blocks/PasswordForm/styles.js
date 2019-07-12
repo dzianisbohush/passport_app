@@ -9,6 +9,7 @@ const WrappedForm = styled.div`
   @media only screen and (max-width: 600px) {
     width: 100%;
     left: 0;
+    padding: 20px;
   }
 `;
 export default WrappedForm;
