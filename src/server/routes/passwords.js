@@ -8,5 +8,6 @@ router.put('/:id', controller.updatePasswordById);
 router.get('/:userEmail', controller.getPasswordsByUserId);
 router.delete('/:id', controller.deletePasswordById);
 router.post('/share', controller.sharePasswords);
+router.patch('/share/accept/:userEmail', controller.acceptSharingPasswords);
 
 export default router;
