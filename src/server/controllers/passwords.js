@@ -1,43 +1,30 @@
 const Password = require('../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
 
+function isCorrect(password) {
+  if (!password.userEmail) {
+    return false;
+  }
+
+  if (!password.name) {
+    return false;
+  }
+
+  if (!password.resourceAddress) {
+    return false;
+  }
+
+  if (!password.login) {
+    return false;
+  }
+  if (!password.password) {
+    return false;
+  }
+  return true;
+}
+
 async function sharePasswords(req, res) {
   const { sharingData } = req.body;
-
-  function isCorrect(password) {
-    if (!password.userEmail) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_USER_EMAIL });
-      return;
-    }
-
-    if (!password.name) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_NAME });
-      return;
-    }
-
-    if (!password.resourceAddress) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_RESOURCE_ADDRESS });
-      return;
-    }
-
-    if (!password.login) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_LOGIN });
-      return;
-    }
-    if (!password.password) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_PASSWORD });
-    }
-  }
 
   try {
     const date = new Date();
