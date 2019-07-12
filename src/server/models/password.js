@@ -1,6 +1,7 @@
 // We need to use require instead of import
 // because this file is imported by sequelize-cli(without babel)
 const Sequelize = require('sequelize');
+const { Op } = require('sequelize');
 const postgresConnection = require('../../../config/dbConfig');
 
 const { Model } = Sequelize;
@@ -82,6 +83,10 @@ async function updatePasswordById(id, newData) {
 function deletePasswordById(id) {
   Password.findByPk(id).then(record => record.destroy());
 }
+function getAllUserForEmailing() {
+  const d = new Date();
+  return Password.findAll({ where: { sendNotificationAt: { [Op.gte]: d } } });
+}
 
 module.exports = {
   passwordSchema,
@@ -91,4 +96,5 @@ module.exports = {
   getPasswordsByUserEmail,
   deletePasswordById,
   updatePasswordById,
+  getAllUserForEmailing,
 };
