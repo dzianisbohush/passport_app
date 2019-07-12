@@ -3,9 +3,17 @@ import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
 import render from 'server/routes/renderer';
+import Cron from 'cron';
 import googleAuth from './routes/googleAuth';
 import setupPassport from './auth/setupPassport';
 import { COOKIES_SECRET_KEY, COOKIES_MAX_AGE } from './config';
+
+// eslint-disable-next-line import/no-unresolved
+
+import EmailController from './controllers/EmailController';
+
+// eslint-disable-next-line prefer-destructuring
+const CronJob = Cron.CronJob;
 
 const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -39,5 +47,19 @@ server
     } else {
       res.redirect('/');
     }
-  });
+    next();
+  })
+  .get('/api/get-users', (req, res) => res.json({ user1: 'vasa' }));
+
+// eslint-disable-next-line no-new
+new CronJob(
+  '0 3 * * *',
+  function() {
+    EmailController();
+  },
+  null,
+  true,
+  'America/Los_Angeles',
+);
+
 export default server;
