@@ -5,36 +5,76 @@ import PropTypes from 'prop-types';
 import PasswordButtons from 'common/pages/home/components/PasswordButtons';
 import TableActionsButtons from 'common/pages/home/components/TableActionsButtons';
 import DeleteModal from 'common/blocks/DeleteModal';
+import ShareModal from 'common/pages/home/components/ShareModal';
+import getUsers from 'common/api/getUsers';
 
-import TableWrapper from './styles';
+import { TableWrapper, ExpandedRows } from './styles';
 
 class TableBlock extends Component {
-  state = {
-    isActiveShareBtn: false,
-    isVisible: false,
-    itemIdToDelete: null,
+  constructor(props) {
+    super(props);
+    this.state = {
+      isActiveShareBtn: false,
+      isDeleteModalVisible: false,
+      isShareModalVisible: false,
+      itemIdToDelete: null,
+      passwordsToShare: [],
+      users: [],
+    };
+  }
+
+  componentDidMount() {
+    const users = getUsers();
+    const isMobile = document.documentElement.clientWidth <= 600;
+    this.setState({
+      isMobile,
+      users,
+    });
+  }
+
+  handleRowSelected = (row, isSelected) => {
+    const { passwordsToShare } = this.state;
+    if (isSelected) {
+      this.setState({
+        isActiveShareBtn: true,
+        passwordsToShare: [...passwordsToShare, row],
+      });
+    } else {
+      const index = passwordsToShare.findIndex(elem => elem.id === row.id);
+      passwordsToShare.splice(index, 1);
+      this.setState({
+        isActiveShareBtn: false,
+        passwordsToShare,
+      });
+    }
   };
 
-  handleRowSelected = () => {
-    const { isActiveShareBtn } = this.state;
-
-    this.setState({
-      isActiveShareBtn: !isActiveShareBtn,
-    });
+  handleAllRowsSelected = (isSelected, rows) => {
+    if (isSelected) {
+      this.setState({
+        isActiveShareBtn: true,
+        passwordsToShare: rows,
+      });
+    } else {
+      this.setState({
+        isActiveShareBtn: false,
+        passwordsToShare: [],
+      });
+    }
   };
 
   handleDeleteClick = e => {
     e.preventDefault();
     const { id } = e.target.dataset;
     this.setState({
-      isVisible: true,
+      isDeleteModalVisible: true,
       itemIdToDelete: id,
     });
   };
 
   handleDeleteModalDismiss = () => {
     this.setState({
-      isVisible: false,
+      isDeleteModalVisible: false,
     });
   };
 
@@ -42,10 +82,16 @@ class TableBlock extends Component {
     const { deletePasswordItem } = this.props;
     const { itemIdToDelete } = this.state;
     this.setState({
-      isVisible: false,
+      isDeleteModalVisible: false,
       itemIdToDelete: null,
     });
     deletePasswordItem(itemIdToDelete);
+  };
+
+  handleShareButtonClick = () => {
+    this.setState({
+      isShareModalVisible: true,
+    });
   };
 
   getColumns = () => {
@@ -82,37 +128,100 @@ class TableBlock extends Component {
   };
 
   render() {
-    const { isActiveShareBtn, isVisible } = this.state;
-    const { loading, items, goToAddPage } = this.props;
+    const {
+      isMobile,
+      isActiveShareBtn,
+      isDeleteModalVisible,
+      isShareModalVisible,
+      passwordsToShare,
+      users,
+    } = this.state;
+    const { loading, items, goToAddPage, goToEditPage } = this.props;
     const columns = this.getColumns();
-
     return (
       <TableWrapper>
         <PasswordButtons
           isActiveShareBtn={isActiveShareBtn}
           goToAddPage={goToAddPage}
+          handleShareButtonClick={this.handleShareButtonClick}
         />
-        <Table
-          rowSelection={{
-            onSelect: this.handleRowSelected,
-            onSelectAll: this.handleRowSelected,
-          }}
-          columns={columns}
-          dataSource={items}
-          loading={loading}
-          rowKey="id"
-          pagination={{
-            defaultCurrent: 1,
-            total: items.length,
-            hideOnSinglePage: true,
-            pageSize: 5,
-          }}
-        />
+        {isMobile ? (
+          <Table
+            rowSelection={{
+              onSelect: this.handleRowSelected,
+              onSelectAll: this.handleAllRowsSelected,
+            }}
+            columns={[
+              {
+                title: 'name',
+                dataIndex: 'name',
+              },
+            ]}
+            expandedRowRender={record => (
+              <ExpandedRows>
+                <div>
+                  <b>Resource: </b>
+                  {record.resourceAddress}
+                </div>
+                <div>
+                  <b>login: </b>
+                  {record.login}
+                </div>
+                <div>
+                  <b>password: </b>
+                  {record.password}
+                </div>
+                <div>
+                  {
+                    <TableActionsButtons
+                      goToEditPage={goToEditPage}
+                      itemId={record.id}
+                      handleDeleteClick={this.handleDeleteClick}
+                    />
+                  }
+                </div>
+              </ExpandedRows>
+            )}
+            dataSource={items}
+            loading={loading}
+            rowKey="id"
+            pagination={{
+              defaultCurrent: 1,
+              total: items.length,
+              hideOnSinglePage: true,
+              pageSize: 5,
+            }}
+          />
+        ) : (
+          <Table
+            rowSelection={{
+              onSelect: this.handleRowSelected,
+              onSelectAll: this.handleAllRowsSelected,
+            }}
+            columns={columns}
+            dataSource={items}
+            loading={loading}
+            rowKey="id"
+            pagination={{
+              defaultCurrent: 1,
+              total: items.length,
+              hideOnSinglePage: true,
+              pageSize: 5,
+            }}
+          />
+        )}
         <DeleteModal
-          isVisible={isVisible}
+          isVisible={isDeleteModalVisible}
           handleDeleteModalSubmit={this.handleDeleteModalSubmit}
           handleDeleteModalDismiss={this.handleDeleteModalDismiss}
         />
+        {users.length && (
+          <ShareModal
+            visible={isShareModalVisible}
+            users={users}
+            passwordsToShare={passwordsToShare}
+          />
+        )}
       </TableWrapper>
     );
   }

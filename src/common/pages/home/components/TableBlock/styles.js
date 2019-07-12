@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 
-const TableWrapper = styled.div`
+export const TableWrapper = styled.div`
   margin: 50px;
 `;
 
-export default TableWrapper;
+export const ExpandedRows = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  & > div {
+    margin: 10px;
+  }
+`;

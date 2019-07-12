@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Header, Img, Span, Ul } from './styles';
+import { Header, Img, Span, NavigationBar } from './styles';
 
 const HeaderBlock = () => {
   return (
@@ -10,17 +10,17 @@ const HeaderBlock = () => {
         <Img />
         <Span>Andrei Yanushkevich</Span>
       </div>
-      <Ul>
-        <li>
+      <NavigationBar>
+        <span>
           <Link to="/">Home</Link>
-        </li>
-        <li>
+        </span>
+        <span>
           <Link to="/status">Password Status Control</Link>
-        </li>
-        <li>
+        </span>
+        <span>
           <Link to="/import_export">Import/export csv</Link>
-        </li>
-      </Ul>
+        </span>
+      </NavigationBar>
     </Header>
   );
 };
