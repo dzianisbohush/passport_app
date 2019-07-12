@@ -9,12 +9,11 @@ import {
 } from 'common/store/actions/passwords';
 import { Modal } from 'antd';
 
-const changePasswordItem = item => async dispatch => {
+const changePasswordItem = (item, userEmail) => async dispatch => {
   try {
     dispatch(changePasswordPending());
 
-    const response = await changePassword({ ...item, userEmail: 'ru@ru.ru' }); // @todo real
-    // email
+    const response = await changePassword({ ...item, userEmail });
     const { status } = response;
 
     if (status === HTTP_STATUS_CODES.OK) {
@@ -27,11 +26,13 @@ const changePasswordItem = item => async dispatch => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  changePasswordItem: item => dispatch(changePasswordItem(item)),
+  changePasswordItem: (item, userEmail) =>
+    dispatch(changePasswordItem(item, userEmail)),
 });
 
 const mapStateToProps = state => ({
   passwordsItems: state.passwords.items,
+  userEmail: state.user.info.email,
 });
 
 export default connect(

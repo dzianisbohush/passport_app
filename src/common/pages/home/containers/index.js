@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { Modal } from 'antd';
-
 import Home from 'common/pages/home/components';
 import deletePassword from 'common/api/deletePasswordItem';
 import getPasswordsByUserEmail from 'common/api/getPasswordsByUserEmail';
@@ -14,11 +13,11 @@ import {
 } from 'common/store/actions/passwords';
 import { HTTP_STATUS_CODES } from 'server/constants';
 
-const getPasswordsItems = () => async dispatch => {
+const getPasswordsItems = userEmail => async dispatch => {
   try {
     dispatch(getPasswordsPending());
 
-    const response = await getPasswordsByUserEmail('ru@ru.ru'); // @todo put real user email
+    const response = await getPasswordsByUserEmail(userEmail);
 
     const { data } = response;
 
@@ -53,7 +52,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getPasswordsItems: () => dispatch(getPasswordsItems()),
+  getPasswordsItems: userEmail => dispatch(getPasswordsItems(userEmail)),
   deletePasswordItem: id => dispatch(deletePasswordItem(id)),
 });
 

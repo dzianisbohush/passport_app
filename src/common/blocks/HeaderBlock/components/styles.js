@@ -21,9 +21,6 @@ export const Header = styled.header`
 
 export const Img = styled.img.attrs(() => ({
   alt: 'User pic',
-  srcSet:
-    // eslint-disable-next-line max-len
-    'http://komotoz.ru/kartinki/images/kartinki_pro_lubov/kartinki_pro_lubov_17.jpg',
 }))`
   border-radius: 100%;
   width: 50px;
@@ -48,11 +45,9 @@ export const NavigationBar = styled.div`
     padding: 0px 10px;
     height: 20px;
   }
-
   & > :not(:last-child) {
     border-right: 1px solid black;
   }
-
   @media only screen and (max-width: 600px) {
     display: flex;
     flex-direction: column;
