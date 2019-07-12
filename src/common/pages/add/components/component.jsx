@@ -4,9 +4,9 @@ import PasswordForm from 'common/blocks/PasswordForm';
 
 class AddPage extends PureComponent {
   submitPasswordForm = values => {
-    const { addPasswordItem } = this.props;
+    const { addPasswordItem, userEmail } = this.props;
 
-    addPasswordItem(values);
+    addPasswordItem(values, userEmail);
   };
 
   render() {
@@ -21,6 +21,7 @@ class AddPage extends PureComponent {
 
 AddPage.propTypes = {
   addPasswordItem: PropTypes.func.isRequired,
+  userEmail: PropTypes.string.isRequired,
 };
 
 export default AddPage;

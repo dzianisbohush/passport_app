@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import HeaderBlock from 'common/blocks/HeaderBlock';
+import queryString from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import TableBlock from './TableBlock';
 
 class Home extends Component {
   componentDidMount() {
-    const { getPasswordsItems } = this.props;
+    const {
+      getPasswordsItems,
+      location: { search },
+    } = this.props;
+    const { email: userEmail } = queryString.parse(search);
 
-    getPasswordsItems();
+    if (userEmail) {
+      getPasswordsItems(userEmail);
+      localStorage.setItem('email', userEmail);
+    } else {
+      const userEmailFromLS = localStorage.getItem('email');
+      getPasswordsItems(userEmailFromLS);
+    }
   }
 
   goToEditPage = id => {
@@ -27,16 +37,13 @@ class Home extends Component {
     const { loading, passwordsItems, deletePasswordItem } = this.props;
 
     return (
-      <div>
-        <HeaderBlock />
-        <TableBlock
-          loading={loading}
-          items={passwordsItems}
-          goToEditPage={this.goToEditPage}
-          goToAddPage={this.goToAddPage}
-          deletePasswordItem={deletePasswordItem}
-        />
-      </div>
+      <TableBlock
+        loading={loading}
+        items={passwordsItems}
+        goToEditPage={this.goToEditPage}
+        goToAddPage={this.goToAddPage}
+        deletePasswordItem={deletePasswordItem}
+      />
     );
   }
 }
@@ -59,6 +66,7 @@ Home.propTypes = {
     }),
   ).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
+  location: ReactRouterPropTypes.location.isRequired,
 };
 
 export default Home;
