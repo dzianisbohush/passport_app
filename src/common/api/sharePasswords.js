@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 import axios from 'axios';
 
-const sharePassword = async (userEmail, emails, passwordItems) => {
+const sharePasswords = async (userEmail, emails, passwordItems) => {
   try {
-    const response = await axios.post('/api/users', {
+    const response = await axios.post('/api/passwords/share', {
       userEmail,
       emails,
       passwordItems,
@@ -13,4 +13,4 @@ const sharePassword = async (userEmail, emails, passwordItems) => {
     console.log(error);
   }
 };
-export default sharePassword;
+export default sharePasswords;
