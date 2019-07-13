@@ -16,7 +16,10 @@ const Start = () => (
         <FontAwesomeIcon icon={faGooglePlus} />
         <span>Authorize with Gooogle +</span>
       </StyledLoginLink>
-      <StyledLogoutLink href="auth/logout">
+      <StyledLogoutLink
+        href="auth/logout"
+        onClick={() => localStorage.removeItem('email')}
+      >
         <FontAwesomeIcon icon={faSignOutAlt} />
         <span>Logout</span>
       </StyledLogoutLink>

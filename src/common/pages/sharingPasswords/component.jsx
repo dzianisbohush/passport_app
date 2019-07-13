@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Table, Button } from 'antd';
 import PropTypes from 'prop-types';
 
-import HeaderBlock from 'common/blocks/HeaderBlock';
 import acceptPassword from 'common/api/acceptPassword';
 import declinePassword from 'common/api/declinePassword';
 import { SharePassword, ButtonsWrapper, TablesWrapper } from './styles';
@@ -50,7 +49,6 @@ class sharingPasswordPage extends Component {
     const columns = this.getColumns();
     return (
       <div>
-        <HeaderBlock />
         {isShare ? (
           <SharePassword>
             <h3>Would you like to accept password ?</h3>
