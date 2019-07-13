@@ -6,6 +6,7 @@ import render from 'server/routes/renderer';
 import Cron from 'cron';
 import googleAuth from './routes/googleAuth';
 import setupPassport from './auth/setupPassport';
+import files from './routes/files';
 import { COOKIES_SECRET_KEY, COOKIES_MAX_AGE } from './config';
 
 // eslint-disable-next-line import/no-unresolved
@@ -29,6 +30,7 @@ server.use(
 server.use(passport.initialize());
 server.use(passport.session());
 server.use('/auth', googleAuth);
+server.use('/api/files', files);
 
 setupPassport('google');
 

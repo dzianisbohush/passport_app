@@ -38,9 +38,6 @@ class HeaderBlock extends PureComponent {
           <span>
             <Link to="/profile/status">Password Status Control</Link>
           </span>
-          <span>
-            <Link to="/profile/import-export">Import/export csv</Link>
-          </span>
         </NavigationBar>
       </Header>
     );

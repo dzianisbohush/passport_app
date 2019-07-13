@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Modal, Table } from 'antd';
 import PropTypes from 'prop-types';
-
 import PasswordButtons from 'common/pages/home/components/PasswordButtons';
+import HandlingCSVButtons from 'common/pages/home/components/HandlingCSVButtons';
 import TableActionsButtons from 'common/pages/home/components/TableActionsButtons';
 import DeleteModal from 'common/blocks/DeleteModal';
 import ShareModal from 'common/pages/home/components/ShareModal';
+import UploadFileModal from 'common/pages/home/components/UploadFileModal';
 
 import { TableWrapper, ExpandedRows } from './styles';
 
@@ -16,6 +17,7 @@ class TableBlock extends Component {
       isActiveShareBtn: false,
       isDeleteModalVisible: false,
       isShareModalVisible: false,
+      isFileUploadModalVisible: false,
       itemIdToDelete: null,
       passwordsToShare: [],
     };
@@ -104,6 +106,18 @@ class TableBlock extends Component {
     });
   };
 
+  handleUploadFileButtonClick = () => {
+    this.setState({
+      isFileUploadModalVisible: true,
+    });
+  };
+
+  handleUploadFileModalCloseButtonClick = () => {
+    this.setState({
+      isFileUploadModalVisible: false,
+    });
+  };
+
   getColumns = () => {
     const { goToEditPage } = this.props;
 
@@ -142,6 +156,7 @@ class TableBlock extends Component {
       isMobile,
       isActiveShareBtn,
       isDeleteModalVisible,
+      isFileUploadModalVisible,
       isShareModalVisible,
       passwordsToShare,
     } = this.state;
@@ -229,6 +244,11 @@ class TableBlock extends Component {
             }}
           />
         )}
+        <HandlingCSVButtons
+          goToAddPage={goToAddPage}
+          openUploadModal={this.handleUploadFileButtonClick}
+          items={items}
+        />
         <DeleteModal
           isVisible={isDeleteModalVisible}
           handleDeleteModalSubmit={this.handleDeleteModalSubmit}
@@ -241,6 +261,11 @@ class TableBlock extends Component {
           closeModal={this.handleShareModalCloseButtonClick}
           passwordsToShare={passwordsToShare}
           sharePasswords={sharePasswords}
+        />
+        <UploadFileModal
+          visible={isFileUploadModalVisible}
+          closeModal={this.handleUploadFileModalCloseButtonClick}
+          userEmail={userEmail}
         />
       </TableWrapper>
     );
