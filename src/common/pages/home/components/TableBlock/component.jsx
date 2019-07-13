@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Table } from 'antd';
+import { Modal, Table } from 'antd';
 import PropTypes from 'prop-types';
 
 import PasswordButtons from 'common/pages/home/components/PasswordButtons';
 import TableActionsButtons from 'common/pages/home/components/TableActionsButtons';
 import DeleteModal from 'common/blocks/DeleteModal';
 import ShareModal from 'common/pages/home/components/ShareModal';
-import getUsers from 'common/api/getUsers';
 
 import { TableWrapper, ExpandedRows } from './styles';
 
@@ -19,16 +18,13 @@ class TableBlock extends Component {
       isShareModalVisible: false,
       itemIdToDelete: null,
       passwordsToShare: [],
-      users: [],
     };
   }
 
   componentDidMount() {
-    const users = getUsers();
     const isMobile = document.documentElement.clientWidth <= 600;
     this.setState({
       isMobile,
-      users,
     });
   }
 
@@ -89,8 +85,22 @@ class TableBlock extends Component {
   };
 
   handleShareButtonClick = () => {
+    const { usersForSharing } = this.props;
+
+    if (!usersForSharing.length) {
+      Modal.error({ title: 'Data base does not contain users for sharing' });
+
+      return;
+    }
+
     this.setState({
       isShareModalVisible: true,
+    });
+  };
+
+  handleShareModalCloseButtonClick = () => {
+    this.setState({
+      isShareModalVisible: false,
     });
   };
 
@@ -134,10 +144,19 @@ class TableBlock extends Component {
       isDeleteModalVisible,
       isShareModalVisible,
       passwordsToShare,
-      users,
     } = this.state;
-    const { loading, items, goToAddPage, goToEditPage } = this.props;
+    const {
+      loading,
+      items,
+      goToAddPage,
+      goToEditPage,
+      usersForSharing,
+      userEmail,
+      sharePasswords,
+    } = this.props;
+    const records = items.filter(elem => elem.isAccepted);
     const columns = this.getColumns();
+
     return (
       <TableWrapper>
         <PasswordButtons
@@ -182,12 +201,12 @@ class TableBlock extends Component {
                 </div>
               </ExpandedRows>
             )}
-            dataSource={items}
+            dataSource={records}
             loading={loading}
             rowKey="id"
             pagination={{
               defaultCurrent: 1,
-              total: items.length,
+              total: records.length,
               hideOnSinglePage: true,
               pageSize: 5,
             }}
@@ -199,12 +218,12 @@ class TableBlock extends Component {
               onSelectAll: this.handleAllRowsSelected,
             }}
             columns={columns}
-            dataSource={items}
+            dataSource={records}
             loading={loading}
             rowKey="id"
             pagination={{
               defaultCurrent: 1,
-              total: items.length,
+              total: records.length,
               hideOnSinglePage: true,
               pageSize: 5,
             }}
@@ -215,13 +234,14 @@ class TableBlock extends Component {
           handleDeleteModalSubmit={this.handleDeleteModalSubmit}
           handleDeleteModalDismiss={this.handleDeleteModalDismiss}
         />
-        {users.length && (
-          <ShareModal
-            visible={isShareModalVisible}
-            users={users}
-            passwordsToShare={passwordsToShare}
-          />
-        )}
+        <ShareModal
+          visible={isShareModalVisible}
+          users={usersForSharing}
+          userEmail={userEmail}
+          closeModal={this.handleShareModalCloseButtonClick}
+          passwordsToShare={passwordsToShare}
+          sharePasswords={sharePasswords}
+        />
       </TableWrapper>
     );
   }
@@ -229,6 +249,12 @@ class TableBlock extends Component {
 
 TableBlock.propTypes = {
   loading: PropTypes.bool.isRequired,
+  userEmail: PropTypes.string.isRequired,
+  usersForSharing: PropTypes.arrayOf(
+    PropTypes.shape({
+      email: PropTypes.string,
+    }),
+  ).isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       createdAt: PropTypes.string,
@@ -245,6 +271,7 @@ TableBlock.propTypes = {
   goToEditPage: PropTypes.func.isRequired,
   goToAddPage: PropTypes.func.isRequired,
   deletePasswordItem: PropTypes.func.isRequired,
+  sharePasswords: PropTypes.func.isRequired,
 };
 
 export default TableBlock;
