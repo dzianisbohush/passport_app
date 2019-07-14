@@ -81,19 +81,19 @@ async function rejectSharingPasswords(req, res) {
 }
 
 async function sharePasswords(req, res) {
-  const { sharingData } = req.body.records;
+  const { records } = req.body;
 
   try {
     const date = new Date();
     date.setMonth(date.getMonth() + 1);
-    const isSharingDataCorrect = sharingData.every(isCorrect);
+    const isSharingDataCorrect = records.every(isCorrect);
     if (!isSharingDataCorrect) {
       res
         .status(HTTP_STATUS_CODES.BAD_REQUEST)
         .json({ error: MESSAGES.INVALID_DATA });
     }
     if (isSharingDataCorrect) {
-      sharingData.forEach(async record => {
+      records.forEach(async record => {
         await Password.createPassword({
           ...record,
           isAccepted: false,
