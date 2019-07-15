@@ -3,12 +3,13 @@ import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
 import render from 'server/routes/renderer';
+import Cron from 'cron';
 import googleAuth from './routes/googleAuth';
 import setupPassport from './auth/setupPassport';
+import files from './routes/files';
 import { COOKIES_SECRET_KEY, COOKIES_MAX_AGE } from './config';
 
 // eslint-disable-next-line import/no-unresolved
-import Cron from 'cron';
 
 import EmailController from './controllers/EmailController';
 
@@ -29,10 +30,10 @@ server.use(
 server.use(passport.initialize());
 server.use(passport.session());
 server.use('/auth', googleAuth);
+server.use('/api/files', files);
 
 setupPassport('google');
 
-const server = express();
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))

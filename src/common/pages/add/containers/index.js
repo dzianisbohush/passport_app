@@ -9,11 +9,11 @@ import {
   addPasswordFailure,
 } from 'common/store/actions/passwords';
 
-const addPasswordItem = item => async dispatch => {
+const addPasswordItem = (item, userEmail) => async dispatch => {
   try {
     dispatch(addPasswordPending());
 
-    const response = await addPassword({ ...item, userEmail: 'ru@ru.ru' }); // @todo put real email
+    const response = await addPassword({ ...item, userEmail });
     const { status } = response;
 
     if (status === HTTP_STATUS_CODES.CREATED) {
@@ -26,10 +26,13 @@ const addPasswordItem = item => async dispatch => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  addPasswordItem: item => dispatch(addPasswordItem(item)),
+  addPasswordItem: (item, userEmail) =>
+    dispatch(addPasswordItem(item, userEmail)),
 });
 
-const mapStateToProps = () => ({});
+const mapStateToProps = state => ({
+  userEmail: state.user.info.email,
+});
 
 export default connect(
   mapStateToProps,

@@ -1,14 +1,27 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import HeaderBlock from 'common/blocks/HeaderBlock';
+import queryString from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import TableBlock from './TableBlock';
 
 class Home extends Component {
   componentDidMount() {
-    const { getPasswordsItems } = this.props;
+    const {
+      getPasswordsItems,
+      getUsersForSharing,
+      location: { search },
+    } = this.props;
+    const { email: userEmail } = queryString.parse(search);
 
-    getPasswordsItems();
+    if (userEmail) {
+      getPasswordsItems(userEmail);
+      localStorage.setItem('email', userEmail);
+    } else {
+      const userEmailFromLS = localStorage.getItem('email');
+      getPasswordsItems(userEmailFromLS);
+    }
+
+    getUsersForSharing();
   }
 
   goToEditPage = id => {
@@ -24,26 +37,40 @@ class Home extends Component {
   };
 
   render() {
-    const { loading, passwordsItems, deletePasswordItem } = this.props;
+    const {
+      loading,
+      passwordsItems,
+      deletePasswordItem,
+      userEmail,
+      usersForSharing,
+      sharePasswords,
+    } = this.props;
 
     return (
-      <div>
-        <HeaderBlock />
-        <TableBlock
-          loading={loading}
-          items={passwordsItems}
-          goToEditPage={this.goToEditPage}
-          goToAddPage={this.goToAddPage}
-          deletePasswordItem={deletePasswordItem}
-        />
-      </div>
+      <TableBlock
+        loading={loading}
+        userEmail={userEmail}
+        items={passwordsItems}
+        usersForSharing={usersForSharing}
+        goToEditPage={this.goToEditPage}
+        goToAddPage={this.goToAddPage}
+        sharePasswords={sharePasswords}
+        deletePasswordItem={deletePasswordItem}
+      />
     );
   }
 }
 
+Home.defaultProps = {
+  userEmail: '',
+  usersForSharing: [],
+};
+
 Home.propTypes = {
   getPasswordsItems: PropTypes.func.isRequired,
   deletePasswordItem: PropTypes.func.isRequired,
+  getUsersForSharing: PropTypes.func.isRequired,
+  sharePasswords: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   passwordsItems: PropTypes.arrayOf(
     PropTypes.shape({
@@ -59,6 +86,13 @@ Home.propTypes = {
     }),
   ).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
+  location: ReactRouterPropTypes.location.isRequired,
+  userEmail: PropTypes.string,
+  usersForSharing: PropTypes.arrayOf(
+    PropTypes.shape({
+      email: PropTypes.string,
+    }),
+  ),
 };
 
 export default Home;
