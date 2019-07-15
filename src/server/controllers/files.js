@@ -79,9 +79,9 @@ async function uploadFile(req, res) {
     parsedResults.forEach(async item => {
       const duplicatePasswords = existingUserPasswords.find(
         existingPassword =>
+          existingPassword.name === item.name &&
           existingPassword.resourceAddress === item.resourceAddress &&
-          existingPassword.login === item.login &&
-          existingPassword.password === item.password,
+          existingPassword.login === item.login,
       );
 
       const isPasswordAlreadyExists = !!duplicatePasswords;
