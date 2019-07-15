@@ -22,7 +22,7 @@ function asyncParseCSV(path) {
 function adaptData(userEmail, originalData) {
   return originalData.map(item => {
     return {
-      name: item['﻿"Name"'],
+      name: item.Name || item['﻿"Name"'],
       userEmail,
       resourceAddress: item.Address,
       login: item.Login,
