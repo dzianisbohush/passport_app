@@ -23,6 +23,7 @@ const MESSAGES = {
   EMPTY_LOGIN: 'Login is required',
   EMPTY_PASSWORD: 'Password is required',
   TOKEN_ERROR: 'Wrong token',
+  INVALID_DATA: 'Sent data is not valid',
   NOT_FOUND: 'Not found',
   INTERNAL_SERVER_ERROR: 'Internal server error',
   OK: 'Ok',

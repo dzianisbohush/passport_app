@@ -4,6 +4,7 @@ import Home from 'common/pages/home/containers';
 import EditPage from 'common/pages/edit/containers';
 import AddPage from 'common/pages/add/containers';
 import Header from 'common/blocks/HeaderBlock/containers';
+import SharingPasswordPage from 'common/pages/sharingPasswords';
 
 import 'antd/dist/antd.css';
 
@@ -14,6 +15,7 @@ const App = () => (
       <Route exact path="/profile" component={Home} />
       <Route exact path="/profile/edit/:id?" component={EditPage} />
       <Route exact path="/profile/add" component={AddPage} />
+      <Route exact path="/profile/status" component={SharingPasswordPage} />
     </Switch>
   </React.Fragment>
 );

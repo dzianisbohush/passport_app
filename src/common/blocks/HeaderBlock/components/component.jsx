@@ -23,7 +23,7 @@ class HeaderBlock extends PureComponent {
   }
 
   render() {
-    const { userName, userPhotoURL } = this.props;
+    const { userName, userPhotoURL, hasPasswordsForAccepting } = this.props;
 
     return (
       <Header>
@@ -31,15 +31,12 @@ class HeaderBlock extends PureComponent {
           <Img src={userPhotoURL} />
           <Span>{userName}</Span>
         </div>
-        <NavigationBar>
+        <NavigationBar notification={hasPasswordsForAccepting}>
           <span>
             <Link to="/profile">Home</Link>
           </span>
           <span>
             <Link to="/profile/status">Password Status Control</Link>
-          </span>
-          <span>
-            <Link to="/profile/import-export">Import/export csv</Link>
           </span>
         </NavigationBar>
       </Header>
@@ -52,6 +49,7 @@ HeaderBlock.propTypes = {
   userPhotoURL: PropTypes.string.isRequired,
   location: ReactRouterPropTypes.location.isRequired,
   getUserInfo: PropTypes.func.isRequired,
+  hasPasswordsForAccepting: PropTypes.bool.isRequired,
 };
 
 export default withRouter(HeaderBlock);
