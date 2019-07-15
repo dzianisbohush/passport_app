@@ -6,8 +6,16 @@ const createBodyForSharing = (userEmail, emails, passwordItems) => {
 
   passwordItems.forEach(password => {
     emails.forEach(email => {
+      const passwordItem = password;
+
+      delete passwordItem.id;
+      delete passwordItem.createdAt;
+      delete passwordItem.isAccepted;
+      delete passwordItem.sendNotificationAt;
+      delete passwordItem.updatedAt;
+
       records.push({
-        ...password,
+        ...passwordItem,
         userEmail: email,
       });
     });

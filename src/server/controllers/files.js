@@ -22,7 +22,7 @@ function asyncParseCSV(path) {
 function adaptData(userEmail, originalData) {
   return originalData.map(item => {
     return {
-      name: item['﻿"Name"'],
+      name: item.Name || item['﻿"Name"'],
       userEmail,
       resourceAddress: item.Address,
       login: item.Login,
@@ -79,9 +79,9 @@ async function uploadFile(req, res) {
     parsedResults.forEach(async item => {
       const duplicatePasswords = existingUserPasswords.find(
         existingPassword =>
-          existingPassword.name === item.name &&
           existingPassword.resourceAddress === item.resourceAddress &&
-          existingPassword.login === item.login,
+          existingPassword.login === item.login &&
+          existingPassword.password === item.password,
       );
 
       const isPasswordAlreadyExists = !!duplicatePasswords;
