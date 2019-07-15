@@ -1,51 +1,27 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { Modal, Upload, Button, Icon } from 'antd';
+import { Modal, Upload, Button, Icon, Checkbox } from 'antd';
+
+import CheckboxWrapper from './styles';
 
 class UploadFileModal extends PureComponent {
   state = {
     fileList: [],
     uploading: false,
-    needRewrite: false,
+    needRewrite: true,
+    isChecked: false,
   };
 
   handleUpload = () => {
     const { fileList, needRewrite } = this.state;
-    const { userEmail } = this.props;
+    const { userEmail, uploadPasswordsInCSV, getPasswordsItems } = this.props;
     const formData = new FormData();
 
     formData.append('file', fileList[0]);
     formData.set('userEmail', userEmail);
-    formData.set('needRewrite', needRewrite); // @todo add checkbox for this
-
-    this.setState({
-      uploading: true,
-    });
-
-    // @todo refactor this
-    axios({
-      method: 'post',
-      url: '/api/files/upload',
-      data: formData,
-      config: { headers: { 'Content-Type': 'multipart/form-data' } },
-    })
-      .then(response => {
-        this.setState({
-          uploading: false,
-        });
-        Modal.info({ title: 'Passwords successfully added' });
-        // @todo add update passwords table
-        console.log(response);
-      })
-      .catch(response => {
-        this.setState({
-          uploading: false,
-        });
-        Modal.error({ title: 'Passwords did not add' });
-
-        console.log(response);
-      });
+    formData.set('needRewrite', needRewrite);
+    uploadPasswordsInCSV(formData);
+    getPasswordsItems(userEmail);
   };
 
   handleRemoveFile = () => {
@@ -65,9 +41,18 @@ class UploadFileModal extends PureComponent {
     closeModal();
   };
 
+  handleCheckboxClick = () => {
+    const { isChecked, needRewrite } = this.state;
+
+    this.setState({
+      isChecked: !isChecked,
+      needRewrite: !needRewrite,
+    });
+  };
+
   render() {
     const { visible } = this.props;
-    const { uploading, fileList } = this.state;
+    const { uploading, fileList, isChecked } = this.state;
 
     return (
       <Modal
@@ -86,6 +71,14 @@ class UploadFileModal extends PureComponent {
               <Icon type="upload" /> Select File
             </Button>
           </Upload>
+          <CheckboxWrapper>
+            <Checkbox checked={!isChecked} onChange={this.handleCheckboxClick}>
+              Rewrite
+            </Checkbox>
+            <Checkbox checked={isChecked} onChange={this.handleCheckboxClick}>
+              Cancel
+            </Checkbox>
+          </CheckboxWrapper>
           <Button
             type="primary"
             onClick={this.handleUpload}
@@ -104,6 +97,8 @@ class UploadFileModal extends PureComponent {
 UploadFileModal.propTypes = {
   visible: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
+  uploadPasswordsInCSV: PropTypes.func.isRequired,
+  getPasswordsItems: PropTypes.func.isRequired,
   userEmail: PropTypes.string.isRequired,
 };
 

@@ -44,6 +44,8 @@ class Home extends Component {
       userEmail,
       usersForSharing,
       sharePasswords,
+      uploadPasswordsInCSV,
+      getPasswordsItems,
     } = this.props;
 
     return (
@@ -56,6 +58,8 @@ class Home extends Component {
         goToAddPage={this.goToAddPage}
         sharePasswords={sharePasswords}
         deletePasswordItem={deletePasswordItem}
+        uploadPasswordsInCSV={uploadPasswordsInCSV}
+        getPasswordsItems={getPasswordsItems}
       />
     );
   }
@@ -71,6 +75,7 @@ Home.propTypes = {
   deletePasswordItem: PropTypes.func.isRequired,
   getUsersForSharing: PropTypes.func.isRequired,
   sharePasswords: PropTypes.func.isRequired,
+  uploadPasswordsInCSV: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   passwordsItems: PropTypes.arrayOf(
     PropTypes.shape({

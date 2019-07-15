@@ -12,6 +12,8 @@ import {
   DELETE_PASSWORD_FAILURE,
   SHARE_PASSWORDS_PENDING,
   SHARE_PASSWORDS_FAILURE,
+  UPLOAD_PASSWORDS_PENDING,
+  UPLOAD_PASSWORDS_FAILURE,
 } from 'common/store/constants';
 
 export const getPasswordsPending = () => ({
@@ -69,5 +71,14 @@ export const sharePasswordsPending = () => ({
 
 export const sharePasswordsFailure = payload => ({
   type: SHARE_PASSWORDS_FAILURE,
+  payload,
+});
+
+export const uploadPasswordsPending = () => ({
+  type: UPLOAD_PASSWORDS_PENDING,
+});
+
+export const uploadPasswordsFailure = payload => ({
+  type: UPLOAD_PASSWORDS_FAILURE,
   payload,
 });
