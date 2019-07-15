@@ -9,6 +9,10 @@ const createBodyForSharing = (userEmail, emails, passwordItems) => {
       const passwordItem = password;
 
       delete passwordItem.id;
+      delete passwordItem.createdAt;
+      delete passwordItem.isAccepted;
+      delete passwordItem.sendNotificationAt;
+      delete passwordItem.updatedAt;
 
       records.push({
         ...passwordItem,
