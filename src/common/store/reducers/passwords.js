@@ -13,6 +13,8 @@ import {
   SHARE_PASSWORDS_PENDING,
   SHARE_PASSWORDS_SUCCESS,
   SHARE_PASSWORDS_FAILURE,
+  UPLOAD_PASSWORDS_PENDING,
+  UPLOAD_PASSWORDS_FAILURE,
 } from 'common/store/constants';
 
 const initialState = {
@@ -99,6 +101,17 @@ const passwords = (state = initialState, action) => {
         loading: false,
       };
     case SHARE_PASSWORDS_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+      };
+    case UPLOAD_PASSWORDS_PENDING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case UPLOAD_PASSWORDS_FAILURE:
       return {
         ...state,
         error: action.payload,
