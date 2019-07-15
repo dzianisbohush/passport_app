@@ -31,11 +31,19 @@ class UploadFileModal extends PureComponent {
       config: { headers: { 'Content-Type': 'multipart/form-data' } },
     })
       .then(response => {
-        // handle success
+        this.setState({
+          uploading: false,
+        });
+        Modal.info({ title: 'Passwords successfully added' });
+        // @todo add update passwords table
         console.log(response);
       })
       .catch(response => {
-        // handle error
+        this.setState({
+          uploading: false,
+        });
+        Modal.error({ title: 'Passwords did not add' });
+
         console.log(response);
       });
   };

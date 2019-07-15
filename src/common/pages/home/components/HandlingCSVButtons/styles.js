@@ -4,12 +4,12 @@ export const StyledButtons = styled.div`
   text-align: center;
   & > button {
     margin-left: 20px;
+    margin-top: 5px;
   }
 
   @media only screen and (max-width: 600px) {
     & > button {
       margin-left: 0;
-      margin-top: 5px;
     }
   }
 `;

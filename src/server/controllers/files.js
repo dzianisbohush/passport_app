@@ -71,7 +71,6 @@ async function uploadFile(req, res) {
   });
 
   try {
-    console.log('try');
     const date = new Date();
     date.setMonth(date.getMonth() + 1);
     const existingUserPasswords = await Password.getPasswordsByUserEmail(
@@ -86,7 +85,6 @@ async function uploadFile(req, res) {
       );
 
       const isPasswordAlreadyExists = !!duplicatePasswords;
-      console.log(isPasswordAlreadyExists);
       if (isPasswordAlreadyExists) return;
       await Password.createPassword({
         ...item,
