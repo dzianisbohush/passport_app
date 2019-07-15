@@ -15,6 +15,7 @@ import {
   deletePasswordSuccess,
   deletePasswordFailure,
   sharePasswordsPending,
+  sharePasswordsSuccess,
   sharePasswordsFailure,
   uploadPasswordsPending,
   uploadPasswordsFailure,
@@ -93,6 +94,7 @@ const sharePasswordsItems = (
     if (status === HTTP_STATUS_CODES.OK) {
       Modal.info({ title: 'Passwords successfully shared' });
     }
+    dispatch(sharePasswordsSuccess());
   } catch (e) {
     Modal.error({ title: 'Password did not shared' });
     dispatch(sharePasswordsFailure(e));

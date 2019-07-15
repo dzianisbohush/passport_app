@@ -2,21 +2,29 @@
 import axios from 'axios';
 
 const createBodyForSharing = (userEmail, emails, passwordItems) => {
-  const records = [];
+  const emailsToShare = [];
 
-  passwordItems.forEach(password => {
-    emails.forEach(email => {
-      records.push({
-        ...password,
-        userEmail: email,
-      });
+  const preparedPasswordItems = passwordItems.map(passwordItem => {
+    const { login, name, resourceAddress, password } = passwordItem;
+
+    return {
+      login,
+      name,
+      resourceAddress,
+      password,
+    };
+  });
+
+  emails.forEach(email => {
+    emailsToShare.push({
+      userEmail: email,
+      records: preparedPasswordItems,
     });
   });
 
   return {
     email: userEmail,
-    emailsToShare: emails,
-    records,
+    emailsToShare,
   };
 };
 
