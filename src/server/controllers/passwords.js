@@ -1,28 +1,6 @@
 const Password = require('../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
 
-function isCorrect(password) {
-  if (!password.userEmail) {
-    return false;
-  }
-
-  if (!password.name) {
-    return false;
-  }
-
-  if (!password.resourceAddress) {
-    return false;
-  }
-
-  if (!password.login) {
-    return false;
-  }
-  if (!password.password) {
-    return false;
-  }
-  return true;
-}
-
 async function acceptSharingPasswords(req, res) {
   if (!req.params.userEmail) {
     res
@@ -83,25 +61,52 @@ async function rejectSharingPasswords(req, res) {
 async function sharePasswords(req, res) {
   const { records } = req.body;
 
+  records.forEach(item => {
+    if (!item.userEmail) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_USER_EMAIL });
+      return;
+    }
+
+    if (!item.name) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_NAME });
+      return;
+    }
+
+    if (!item.resourceAddress) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_RESOURCE_ADDRESS });
+      return;
+    }
+
+    if (!item.login) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_LOGIN });
+      return;
+    }
+    if (!item.password) {
+      res
+        .status(HTTP_STATUS_CODES.BAD_REQUEST)
+        .json({ error: MESSAGES.EMPTY_PASSWORD });
+    }
+  });
+
   try {
     const date = new Date();
     date.setMonth(date.getMonth() + 1);
-    const isSharingDataCorrect = records.every(isCorrect);
-    if (!isSharingDataCorrect) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.INVALID_DATA });
-    }
-    if (isSharingDataCorrect) {
-      records.forEach(async record => {
-        await Password.createPassword({
-          ...record,
-          isAccepted: false,
-          sendNotificationAt: date,
-        });
+    records.forEach(async record => {
+      await Password.createPassword({
+        ...record,
+        isAccepted: false,
+        sendNotificationAt: date,
       });
-      res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
-    }
+    });
+    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
   } catch (e) {
     res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
