@@ -34,6 +34,7 @@ function adaptData(userEmail, originalData) {
 async function uploadFile(req, res) {
   const { userEmail } = req.body;
   const originalData = await asyncParseCSV(req.file.path);
+  console.log(originalData);
   const parsedResults = await adaptData(userEmail, originalData);
   parsedResults.forEach(item => {
     if (!item.userEmail) {

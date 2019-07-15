@@ -8,20 +8,18 @@ class UploadFileModal extends PureComponent {
   state = {
     fileList: [],
     uploading: false,
-    needRewrite: true,
-    isChecked: false,
+    needRewrite: false,
   };
 
   handleUpload = () => {
     const { fileList, needRewrite } = this.state;
-    const { userEmail, uploadPasswordsInCSV, getPasswordsItems } = this.props;
+    const { userEmail, uploadPasswordsInCSV } = this.props;
     const formData = new FormData();
 
     formData.append('file', fileList[0]);
     formData.set('userEmail', userEmail);
     formData.set('needRewrite', needRewrite);
-    uploadPasswordsInCSV(formData);
-    getPasswordsItems(userEmail);
+    uploadPasswordsInCSV(formData, userEmail);
   };
 
   handleRemoveFile = () => {
@@ -42,17 +40,16 @@ class UploadFileModal extends PureComponent {
   };
 
   handleCheckboxClick = () => {
-    const { isChecked, needRewrite } = this.state;
+    const { needRewrite } = this.state;
 
     this.setState({
-      isChecked: !isChecked,
       needRewrite: !needRewrite,
     });
   };
 
   render() {
     const { visible } = this.props;
-    const { uploading, fileList, isChecked } = this.state;
+    const { uploading, fileList, needRewrite } = this.state;
 
     return (
       <Modal
@@ -72,11 +69,8 @@ class UploadFileModal extends PureComponent {
             </Button>
           </Upload>
           <CheckboxWrapper>
-            <Checkbox checked={!isChecked} onChange={this.handleCheckboxClick}>
+            <Checkbox checked={needRewrite} onChange={this.handleCheckboxClick}>
               Rewrite
-            </Checkbox>
-            <Checkbox checked={isChecked} onChange={this.handleCheckboxClick}>
-              Cancel
             </Checkbox>
           </CheckboxWrapper>
           <Button
@@ -98,7 +92,6 @@ UploadFileModal.propTypes = {
   visible: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   uploadPasswordsInCSV: PropTypes.func.isRequired,
-  getPasswordsItems: PropTypes.func.isRequired,
   userEmail: PropTypes.string.isRequired,
 };
 

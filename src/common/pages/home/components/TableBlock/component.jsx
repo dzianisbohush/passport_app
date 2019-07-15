@@ -169,7 +169,6 @@ class TableBlock extends Component {
       userEmail,
       sharePasswords,
       uploadPasswordsInCSV,
-      getPasswordsItems,
     } = this.props;
     const records = items.filter(elem => elem.isAccepted);
     const columns = this.getColumns();
@@ -269,7 +268,6 @@ class TableBlock extends Component {
           closeModal={this.handleUploadFileModalCloseButtonClick}
           userEmail={userEmail}
           uploadPasswordsInCSV={uploadPasswordsInCSV}
-          getPasswordsItems={getPasswordsItems}
         />
       </TableWrapper>
     );
@@ -302,7 +300,6 @@ TableBlock.propTypes = {
   deletePasswordItem: PropTypes.func.isRequired,
   sharePasswords: PropTypes.func.isRequired,
   uploadPasswordsInCSV: PropTypes.func.isRequired,
-  getPasswordsItems: PropTypes.func.isRequired,
 };
 
 export default TableBlock;

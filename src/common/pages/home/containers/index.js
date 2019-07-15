@@ -101,14 +101,14 @@ const sharePasswordsItems = (
   }
 };
 
-const uploadPasswordsInCSV = formData => async dispatch => {
+const uploadPasswordsInCSV = (formData, userEmail) => async dispatch => {
   try {
-    dispatch(uploadPasswordsPending);
+    dispatch(uploadPasswordsPending());
     await uploadPasswords(formData);
-
+    dispatch(getPasswordsItems(userEmail));
     Modal.info({ title: 'Passwords successfully added' });
   } catch (e) {
-    dispatch(uploadPasswordsFailure);
+    dispatch(uploadPasswordsFailure());
     Modal.error({ title: 'Passwords did not add' });
   }
 };
@@ -130,7 +130,8 @@ const mapDispatchToProps = dispatch => ({
       sharePasswordsItems(userEmail, emailsForSharing, passwordsToShare),
     ),
   getUsersForSharing: () => dispatch(getUsersForSharing()),
-  uploadPasswordsInCSV: formData => dispatch(uploadPasswordsInCSV(formData)),
+  uploadPasswordsInCSV: (formData, userEmail) =>
+    dispatch(uploadPasswordsInCSV(formData, userEmail)),
 });
 
 export default connect(
