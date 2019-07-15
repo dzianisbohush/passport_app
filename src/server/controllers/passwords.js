@@ -59,55 +59,81 @@ async function rejectSharingPasswords(req, res) {
 }
 
 async function sharePasswords(req, res) {
-  const { records } = req.body;
-
-  records.forEach(item => {
+  const { emailsToShare } = req.body;
+  const validationDataErrors = [];
+  emailsToShare.forEach(item => {
     if (!item.userEmail) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_USER_EMAIL });
+      validationDataErrors.push({ error: MESSAGES.EMPTY_USER_EMAIL });
       return;
     }
 
-    if (!item.name) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_NAME });
-      return;
-    }
+    item.records.forEach(record => {
+      if (!record.name) {
+        validationDataErrors.push({ error: MESSAGES.EMPTY_NAME });
+        return;
+      }
 
-    if (!item.resourceAddress) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_RESOURCE_ADDRESS });
-      return;
-    }
+      if (!record.resourceAddress) {
+        validationDataErrors.push({ error: MESSAGES.EMPTY_RESOURCE_ADDRESS });
+        return;
+      }
 
-    if (!item.login) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_LOGIN });
-      return;
-    }
-    if (!item.password) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_PASSWORD });
-    }
+      if (!record.login) {
+        validationDataErrors.push({ error: MESSAGES.EMPTY_LOGIN });
+        return;
+      }
+      if (!record.password) {
+        validationDataErrors.push({ error: MESSAGES.EMPTY_PASSWORD });
+      }
+    });
   });
+  if (validationDataErrors.length > 0) {
+    res.status(HTTP_STATUS_CODES.BAD_REQUEST).json(validationDataErrors);
+    return;
+  }
 
   try {
     const date = new Date();
     date.setMonth(date.getMonth() + 1);
-    records.forEach(async record => {
-      await Password.createPassword({
-        ...record,
-        isAccepted: false,
-        sendNotificationAt: date,
+    const isSharingSuccess = [];
+    emailsToShare.forEach(async item => {
+      const existingUserPasswords = await Password.getPasswordsByUserEmail(
+        item.userEmail,
+      );
+      item.records.forEach(async record => {
+        const duplicatePasswords = existingUserPasswords.find(
+          existingPassword =>
+            existingPassword.name === record.name &&
+            existingPassword.resourceAddress === record.resourceAddress &&
+            existingPassword.login === record.login,
+        );
+
+        const isPasswordAlreadyExists = !!duplicatePasswords;
+        if (isPasswordAlreadyExists) return;
+        await Password.createPassword({
+          ...record,
+          userEmail: item.userEmail,
+          isAccepted: true,
+          sendNotificationAt: date,
+        });
+        console.log('isSharingSuccess', isSharingSuccess);
+        console.log('_______________');
+        isSharingSuccess.push({ message: MESSAGES.OK });
+        console.log('isSharingSuccess', isSharingSuccess);
       });
     });
-    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
+    console.log('____ ____');
+    console.log('isSharingSuccess', isSharingSuccess);
+    if (isSharingSuccess.length > 0) {
+      console.log('checking isSharingSuccess');
+      res.status(HTTP_STATUS_CODES.OK).json(isSharingSuccess);
+      return;
+    }
+    res
+      .status(HTTP_STATUS_CODES.BAD_REQUEST)
+      .json({ error: MESSAGES.NOT_FOUND });
   } catch (e) {
+    console.log('catch');
     res
       .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
       .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
