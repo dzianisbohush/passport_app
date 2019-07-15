@@ -2,9 +2,9 @@
 
 import axios from 'axios';
 
-const acceptPassword = async userEmail => {
+const declinePasswords = async userEmail => {
   try {
-    const response = await axios.patch(
+    const response = await axios.delete(
       `/api/api/passwords/share/accept/:${userEmail}`,
     );
 
@@ -14,4 +14,4 @@ const acceptPassword = async userEmail => {
   }
 };
 
-export default acceptPassword;
+export default declinePasswords;
