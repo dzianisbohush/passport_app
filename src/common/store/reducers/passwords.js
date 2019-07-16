@@ -13,6 +13,12 @@ import {
   SHARE_PASSWORDS_PENDING,
   SHARE_PASSWORDS_SUCCESS,
   SHARE_PASSWORDS_FAILURE,
+  ACCEPT_PASSWORDS_PENDING,
+  ACCEPT_PASSWORDS_SUCCESS,
+  ACCEPT_PASSWORDS_FAILURE,
+  DECLINE_PASSWORDS_PENDING,
+  DECLINE_PASSWORDS_SUCCESS,
+  DECLINE_PASSWORDS_FAILURE,
   UPLOAD_PASSWORDS_PENDING,
   UPLOAD_PASSWORDS_FAILURE,
 } from 'common/store/constants';
@@ -31,6 +37,8 @@ const passwords = (state = initialState, action) => {
     case SHARE_PASSWORDS_PENDING:
     case UPLOAD_PASSWORDS_PENDING:
     case CHANGE_PASSWORD_PENDING:
+    case ACCEPT_PASSWORDS_PENDING:
+    case DECLINE_PASSWORDS_PENDING:
       return {
         ...state,
         loading: true,
@@ -46,6 +54,8 @@ const passwords = (state = initialState, action) => {
     case CHANGE_PASSWORD_FAILURE:
     case DELETE_PASSWORD_FAILURE:
     case SHARE_PASSWORDS_FAILURE:
+    case ACCEPT_PASSWORDS_FAILURE:
+    case DECLINE_PASSWORDS_FAILURE:
     case UPLOAD_PASSWORDS_FAILURE:
       return {
         ...state,
@@ -68,6 +78,16 @@ const passwords = (state = initialState, action) => {
         loading: false,
       };
     case SHARE_PASSWORDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case ACCEPT_PASSWORDS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DECLINE_PASSWORDS_SUCCESS:
       return {
         ...state,
         loading: false,
