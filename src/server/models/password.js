@@ -67,6 +67,13 @@ function createPassword(userData) {
   return Password.create(userData);
 }
 
+function getPasswordsForExtByUserEmail(userEmail) {
+  return Password.findAll({
+    where: { userEmail },
+    attributes: ['resourceAddress', 'login', 'password'],
+  });
+}
+
 async function createPasswordIfNotExist(userData) {
   const isPasswordExist = await Password.findAll({
     where: {
@@ -114,4 +121,5 @@ module.exports = {
   deletePasswordById,
   updatePasswordById,
   getAllUserForEmailing,
+  getPasswordsForExtByUserEmail,
 };
