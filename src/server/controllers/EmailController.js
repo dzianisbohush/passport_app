@@ -35,11 +35,9 @@ const EmailController = () => {
         },
         function(err) {
           if (err) {
-            console.log(err);
             // eslint-disable-next-line no-undef
             res.json({ Error: 'Error in sending mail' });
           } else {
-            console.log('Success.');
             // eslint-disable-next-line no-undef
             res.json({ Success: 'sucessful' });
           }
