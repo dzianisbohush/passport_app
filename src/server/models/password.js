@@ -67,6 +67,13 @@ function createPassword(userData) {
   return Password.create(userData);
 }
 
+function getPasswordsForExtByUserEmail(userEmail) {
+  return Password.findAll({
+    where: { userEmail },
+    attributes: ['resourceAddress', 'login', 'password'],
+  });
+}
+
 function getPasswordsByUserEmail(userEmail) {
   return Password.findAll({ where: { userEmail } });
 }
@@ -97,4 +104,5 @@ module.exports = {
   deletePasswordById,
   updatePasswordById,
   getAllUserForEmailing,
+  getPasswordsForExtByUserEmail
 };

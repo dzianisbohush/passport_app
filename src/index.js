@@ -4,6 +4,7 @@ import Sequelize from 'sequelize';
 import postgresConnection from '../config/dbConfig';
 import passwords from './server/routes/passwords';
 import users from './server/routes/users';
+import ext from './server/routes/extension';
 
 const bodyParser = require('body-parser');
 
@@ -27,6 +28,7 @@ export default express()
   .use(bodyParser.json())
   .use('/api/users', users)
   .use('/api/passwords', passwords)
+  .use('/api/ext', ext)
   .use((req, res) => app.handle(req, res))
   .listen(port, err => {
     if (err) {
