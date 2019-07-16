@@ -29,4 +29,14 @@ const MESSAGES = {
   OK: 'Ok',
 };
 
-module.exports = { HTTP_STATUS_CODES, MESSAGES };
+const COOKIE = {
+  COOKIES_SECRET_KEY: 'secretkey',
+  COOKIES_MAX_AGE: 1000 * 60 * 60 * 24,
+};
+
+const CRON = {
+  RUN_SETTUNGS: '0 3 * * *',
+  TIME_SETTINGS: 'America/Los_Angeles',
+};
+
+module.exports = { HTTP_STATUS_CODES, MESSAGES, COOKIE, CRON };
