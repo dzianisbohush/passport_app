@@ -1,5 +1,6 @@
-const Password = require('../models/password.js');
-const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
+const Password = require('../../models/password.js');
+const { HTTP_STATUS_CODES, MESSAGES } = require('../../constants');
+const { validatePasswords } = require('./utils');
 
 async function acceptSharingPasswords(req, res) {
   if (!req.params.userEmail) {
@@ -59,58 +60,40 @@ async function rejectSharingPasswords(req, res) {
 }
 
 async function sharePasswords(req, res) {
-  const { records } = req.body;
-
-  records.forEach(item => {
-    if (!item.userEmail) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_USER_EMAIL });
-      return;
-    }
-
-    if (!item.name) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_NAME });
-      return;
-    }
-
-    if (!item.resourceAddress) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_RESOURCE_ADDRESS });
-      return;
-    }
-
-    if (!item.login) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_LOGIN });
-      return;
-    }
-    if (!item.password) {
-      res
-        .status(HTTP_STATUS_CODES.BAD_REQUEST)
-        .json({ error: MESSAGES.EMPTY_PASSWORD });
-    }
-  });
+  const { emailsToShare: passwordsToShare } = req.body;
 
   try {
-    const date = new Date();
-    date.setMonth(date.getMonth() + 1);
-    records.forEach(async record => {
-      await Password.createPassword({
-        ...record,
-        isAccepted: false,
-        sendNotificationAt: date,
+    const sendNotificationAt = new Date();
+    sendNotificationAt.setMonth(sendNotificationAt.getMonth() + 1);
+
+    passwordsToShare.forEach(record => {
+      const { userEmail, records: passwords } = record;
+      if (!userEmail) throw new Error(MESSAGES.EMPTY_USER_EMAIL);
+      validatePasswords(passwords);
+
+      const createdPasswords = passwords.map(async pwd => {
+        await Password.createPasswordIfNotExist({
+          ...pwd,
+          sendNotificationAt,
+          userEmail,
+          isAccepted: false,
+        });
       });
+
+      const hasNoDuplicates = createdPasswords.every(pwd => pwd !== null);
+      const hasOnlyDuplicates = createdPasswords.every(pwd => pwd === null);
+
+      if (hasNoDuplicates) {
+        res.status(HTTP_STATUS_CODES.CREATED).json(MESSAGES.CREATED);
+        return;
+      }
+
+      if (hasOnlyDuplicates) throw new Error(MESSAGES.DUPLICATE_PASSWORD);
+
+      res.status(HTTP_STATUS_CODES.CREATED).json(MESSAGES.CREATED);
     });
-    res.status(HTTP_STATUS_CODES.OK).json({ message: MESSAGES.OK });
-  } catch (e) {
-    res
-      .status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR)
-      .json({ error: MESSAGES.INTERNAL_SERVER_ERROR });
+  } catch (error) {
+    res.status(HTTP_STATUS_CODES.INTERNAL_SERVER_ERROR).json({ error });
   }
 }
 

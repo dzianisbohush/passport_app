@@ -91,7 +91,7 @@ const sharePasswordsItems = (
     );
     const { status } = response;
 
-    if (status === HTTP_STATUS_CODES.OK) {
+    if (status === HTTP_STATUS_CODES.CREATED) {
       Modal.info({ title: 'Passwords successfully shared' });
     }
     dispatch(sharePasswordsSuccess());

@@ -72,6 +72,21 @@ function getPasswordsForExtByUserEmail(userEmail) {
     where: { userEmail },
     attributes: ['resourceAddress', 'login', 'password'],
   });
+
+async function createPasswordIfNotExist(userData) {
+  const isPasswordExist = await Password.findAll({
+    where: {
+      userEmail: userData.userEmail,
+      name: userData.name,
+      resourceAddress: userData.resourceAddress,
+      login: userData.login,
+    },
+  });
+
+  if (!isPasswordExist.length) {
+    return Password.create(userData);
+  }
+  return null;
 }
 
 function getPasswordsByUserEmail(userEmail) {
@@ -99,6 +114,7 @@ module.exports = {
   passwordSchema,
   Password,
   createPassword,
+  createPasswordIfNotExist,
   getPasswordById,
   getPasswordsByUserEmail,
   deletePasswordById,
