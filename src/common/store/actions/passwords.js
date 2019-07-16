@@ -104,7 +104,7 @@ export const declinePasswordsSuccess = () => ({
   type: DECLINE_PASSWORDS_SUCCESS,
 });
 
-export const declinePasswordsFailure = payload => ({
+export const declinePasswordsFailure = () => ({
   type: DECLINE_PASSWORDS_FAILURE,
   payload,
 });

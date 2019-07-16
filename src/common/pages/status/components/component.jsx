@@ -33,7 +33,7 @@ class passwordsStatusControlPage extends Component {
 
   getPasswordsForAccepting = passwordsItems => {
     const passwordsForAccepting = passwordsItems.filter(
-      item => item.isAccepted, // @todo change item.isAccepted to !item.isAccepted
+      item => !item.isAccepted,
     );
 
     if (passwordsForAccepting.length) {
