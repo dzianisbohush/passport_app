@@ -7,8 +7,8 @@ import Sendgrid from 'sendgrid-web';
 import Password from '../models/password';
 
 const sendgrid = new Sendgrid({
-  user: process.env.REACT_APP_SANDGRID_NAME,
-  key: process.env.REACT_APP_SANDGRID_PASS,
+  user: process.env.RAZZLE_SANDGRID_NAME,
+  key: process.env.RAZZLE_SANDGRID_PASS,
 });
 // eslint-disable-next-line max-len
 const template = fs.readFileSync(
@@ -23,13 +23,13 @@ const EmailController = () => {
     arr.forEach(el => {
       // eslint-disable-next-line no-shadow
       const data = {
-        we: process.env.REACT_APP_SANDGRID_URL,
+        we: process.env.RAZZLE_SANDGRID_URL,
         site: el.dataValues.resourceAddress,
       };
       sendgrid.send(
         {
           to: el.dataValues.userEmail,
-          from: process.env.REACT_APP_SANDGRID_EMAIL,
+          from: process.env.RAZZLE_SANDGRID_EMAIL,
           subject: 'please refresh pasword',
           html: compiledtemplate({ data }),
         },

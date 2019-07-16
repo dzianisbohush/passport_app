@@ -17,12 +17,7 @@ class ShareModal extends PureComponent {
 
   handleSubmit = () => {
     const { emailsForSharing } = this.state;
-    const {
-      userEmail,
-      closeModal,
-      passwordsToShare,
-      sharePasswords,
-    } = this.props;
+    const { userEmail, passwordsToShare, sharePasswords } = this.props;
 
     if (!emailsForSharing.length) {
       Modal.info({ title: 'Please select users emails for sharing passwords' });
@@ -31,8 +26,6 @@ class ShareModal extends PureComponent {
     }
 
     sharePasswords(userEmail, emailsForSharing, passwordsToShare);
-
-    closeModal();
   };
 
   handleCancel = () => {

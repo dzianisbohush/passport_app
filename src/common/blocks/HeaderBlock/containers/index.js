@@ -26,6 +26,9 @@ export const getUserInfo = userEmail => async dispatch => {
 const mapStateToProps = state => ({
   userName: state.user.info.name,
   userPhotoURL: state.user.info.img,
+  hasPasswordsForAccepting: !!state.passwords.items.filter(
+    item => !item.isAccepted,
+  ).length,
 });
 
 const mapDispatchToProps = dispatch => ({
