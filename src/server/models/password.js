@@ -72,6 +72,7 @@ function getPasswordsForExtByUserEmail(userEmail) {
     where: { userEmail },
     attributes: ['resourceAddress', 'login', 'password'],
   });
+}
 
 async function createPasswordIfNotExist(userData) {
   const isPasswordExist = await Password.findAll({
