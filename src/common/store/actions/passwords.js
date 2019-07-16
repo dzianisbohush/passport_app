@@ -19,6 +19,8 @@ import {
   DECLINE_PASSWORDS_PENDING,
   DECLINE_PASSWORDS_SUCCESS,
   DECLINE_PASSWORDS_FAILURE,
+  UPLOAD_PASSWORDS_PENDING,
+  UPLOAD_PASSWORDS_FAILURE,
 } from 'common/store/constants';
 
 export const getPasswordsPending = () => ({
@@ -106,5 +108,13 @@ export const declinePasswordsSuccess = () => ({
 
 export const declinePasswordsFailure = () => ({
   type: DECLINE_PASSWORDS_FAILURE,
+});
+
+export const uploadPasswordsPending = () => ({
+  type: UPLOAD_PASSWORDS_PENDING,
+});
+
+export const uploadPasswordsFailure = payload => ({
+  type: UPLOAD_PASSWORDS_FAILURE,
   payload,
 });

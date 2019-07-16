@@ -1,4 +1,9 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const New = keyframes`
+  from {color: red;}
+  to {color: orange;}
+`;
 
 export const Header = styled.header`
   display: flex;
@@ -45,8 +50,18 @@ export const NavigationBar = styled.div`
     padding: 0px 10px;
     height: 20px;
   }
-  & > :not(:last-child) {
+  & > :first-child {
     border-right: 1px solid black;
+  }
+  & > :nth-child(2)::after {
+    content: "New!";
+    margin-bottom: 40px;
+    height: 20px;
+    display: ${props => (props.notification ? 'inline' : 'none')}
+    animation: ${New} 5s alternate infinite;
+    position: absolute;
+
+    font-size: 0.7em;
   }
   @media only screen and (max-width: 600px) {
     display: flex;
@@ -58,7 +73,7 @@ export const NavigationBar = styled.div`
       margin: 0px;
       border: 0px;
     }
-    & > :not(:last-child) {
+    & > :first-child {
       border-right: none;
     }
   }

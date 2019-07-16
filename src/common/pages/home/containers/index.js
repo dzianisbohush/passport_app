@@ -1,10 +1,12 @@
 import { connect } from 'react-redux';
 import { Modal } from 'antd';
+
 import Home from 'common/pages/home/components';
 import deletePassword from 'common/api/deletePasswordItem';
 import getPasswordsByUserEmail from 'common/api/getPasswordsByUserEmail';
 import getUsers from 'common/api/getUsers';
 import sharePasswords from 'common/api/sharePasswords';
+import uploadPasswords from 'common/api/uploadPasswords';
 import {
   getPasswordsPending,
   getPasswordsFailure,
@@ -15,6 +17,8 @@ import {
   sharePasswordsPending,
   sharePasswordsSuccess,
   sharePasswordsFailure,
+  uploadPasswordsPending,
+  uploadPasswordsFailure,
 } from 'common/store/actions/passwords';
 import {
   getUsersForSharingPending,
@@ -87,13 +91,25 @@ const sharePasswordsItems = (
     );
     const { status } = response;
 
-    if (status === HTTP_STATUS_CODES.OK) {
+    if (status === HTTP_STATUS_CODES.CREATED) {
       Modal.info({ title: 'Passwords successfully shared' });
     }
     dispatch(sharePasswordsSuccess());
   } catch (e) {
     Modal.error({ title: 'Password did not shared' });
     dispatch(sharePasswordsFailure(e));
+  }
+};
+
+const uploadPasswordsInCSV = (formData, userEmail) => async dispatch => {
+  try {
+    dispatch(uploadPasswordsPending());
+    await uploadPasswords(formData);
+    dispatch(getPasswordsItems(userEmail));
+    Modal.info({ title: 'Passwords successfully added' });
+  } catch (e) {
+    dispatch(uploadPasswordsFailure());
+    Modal.error({ title: 'Passwords did not add' });
   }
 };
 
@@ -114,6 +130,8 @@ const mapDispatchToProps = dispatch => ({
       sharePasswordsItems(userEmail, emailsForSharing, passwordsToShare),
     ),
   getUsersForSharing: () => dispatch(getUsersForSharing()),
+  uploadPasswordsInCSV: (formData, userEmail) =>
+    dispatch(uploadPasswordsInCSV(formData, userEmail)),
 });
 
 export default connect(
