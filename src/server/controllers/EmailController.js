@@ -17,7 +17,9 @@ const template = fs.readFileSync(
 );
 const compiledtemplate = HBS.compile(template);
 
-const EmailController = () => {
+// eslint-disable-next-line no-unused-vars
+const EmailController = (req, res, next) => {
+  console.log('i am here', ...req.body);
   Password.getAllUserForEmailing().then(data => {
     const arr = Array.from(data);
     arr.forEach(el => {
@@ -35,11 +37,9 @@ const EmailController = () => {
         },
         function(err) {
           if (err) {
-            console.log(err);
             // eslint-disable-next-line no-undef
             res.json({ Error: 'Error in sending mail' });
           } else {
-            console.log('Success.');
             // eslint-disable-next-line no-undef
             res.json({ Success: 'sucessful' });
           }
