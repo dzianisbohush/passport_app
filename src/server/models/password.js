@@ -104,5 +104,5 @@ module.exports = {
   deletePasswordById,
   updatePasswordById,
   getAllUserForEmailing,
-  getPasswordsForExtByUserEmail
+  getPasswordsForExtByUserEmail,
 };
