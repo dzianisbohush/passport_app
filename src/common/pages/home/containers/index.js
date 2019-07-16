@@ -27,7 +27,7 @@ import {
 } from 'common/store/actions/usersForSharing';
 import { HTTP_STATUS_CODES } from 'server/constants';
 
-const getPasswordsItems = userEmail => async dispatch => {
+export const getPasswordsItems = userEmail => async dispatch => {
   try {
     dispatch(getPasswordsPending());
 
