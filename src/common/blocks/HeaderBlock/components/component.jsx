@@ -5,6 +5,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
 import { Header, Img, Span, NavigationBar } from './styles';
+import defaultUserPhoto from '../assets/img/defaultUserPhoto.png';
 
 class HeaderBlock extends PureComponent {
   componentDidMount() {
@@ -24,11 +25,12 @@ class HeaderBlock extends PureComponent {
 
   render() {
     const { userName, userPhotoURL, hasPasswordsForAccepting } = this.props;
+    const userPhoto = userPhotoURL.length ? userPhotoURL : defaultUserPhoto;
 
     return (
       <Header>
         <div>
-          <Img src={userPhotoURL} />
+          <Img src={userPhoto} />
           <Span>{userName}</Span>
         </div>
         <NavigationBar notification={hasPasswordsForAccepting}>

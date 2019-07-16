@@ -26,6 +26,11 @@ const initialState = {
 const passwords = (state = initialState, action) => {
   switch (action.type) {
     case GET_PASSWORDS_PENDING:
+    case ADD_PASSWORD_PENDING:
+    case DELETE_PASSWORD_PENDING:
+    case SHARE_PASSWORDS_PENDING:
+    case UPLOAD_PASSWORDS_PENDING:
+    case CHANGE_PASSWORD_PENDING:
       return {
         ...state,
         loading: true,
@@ -37,6 +42,11 @@ const passwords = (state = initialState, action) => {
         loading: false,
       };
     case GET_PASSWORDS_FAILURE:
+    case ADD_PASSWORD_FAILURE:
+    case CHANGE_PASSWORD_FAILURE:
+    case DELETE_PASSWORD_FAILURE:
+    case SHARE_PASSWORDS_FAILURE:
+    case UPLOAD_PASSWORDS_FAILURE:
       return {
         ...state,
         error: action.payload,
@@ -49,33 +59,6 @@ const passwords = (state = initialState, action) => {
         error: '',
         loading: false,
       };
-    case ADD_PASSWORD_PENDING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case ADD_PASSWORD_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    case CHANGE_PASSWORD_PENDING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case CHANGE_PASSWORD_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    case DELETE_PASSWORD_PENDING:
-      return {
-        ...state,
-        loading: false,
-      };
     case DELETE_PASSWORD_SUCCESS:
       return {
         ...state,
@@ -84,37 +67,9 @@ const passwords = (state = initialState, action) => {
         ),
         loading: false,
       };
-    case DELETE_PASSWORD_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    case SHARE_PASSWORDS_PENDING:
-      return {
-        ...state,
-        loading: true,
-      };
     case SHARE_PASSWORDS_SUCCESS:
       return {
         ...state,
-        loading: false,
-      };
-    case SHARE_PASSWORDS_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    case UPLOAD_PASSWORDS_PENDING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case UPLOAD_PASSWORDS_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
         loading: false,
       };
     default:
