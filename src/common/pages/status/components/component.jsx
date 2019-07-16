@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
+import H1 from './styles';
 import AcceptBlock from './Accept';
 
 class passwordsStatusControlPage extends Component {
@@ -68,7 +70,7 @@ class passwordsStatusControlPage extends Component {
             passwordsForAccepting={passwordsForAccepting}
           />
         ) : (
-          <h1>You don`t have passwords for accepting</h1>
+          <H1>You don`t have passwords for accepting</H1>
         )}
       </React.Fragment>
     );
