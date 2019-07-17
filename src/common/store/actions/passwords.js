@@ -13,6 +13,12 @@ import {
   SHARE_PASSWORDS_PENDING,
   SHARE_PASSWORDS_SUCCESS,
   SHARE_PASSWORDS_FAILURE,
+  ACCEPT_PASSWORDS_PENDING,
+  ACCEPT_PASSWORDS_SUCCESS,
+  ACCEPT_PASSWORDS_FAILURE,
+  DECLINE_PASSWORDS_PENDING,
+  DECLINE_PASSWORDS_SUCCESS,
+  DECLINE_PASSWORDS_FAILURE,
   UPLOAD_PASSWORDS_PENDING,
   UPLOAD_PASSWORDS_FAILURE,
 } from 'common/store/constants';
@@ -77,6 +83,31 @@ export const sharePasswordsSuccess = () => ({
 export const sharePasswordsFailure = payload => ({
   type: SHARE_PASSWORDS_FAILURE,
   payload,
+});
+
+export const acceptPasswordsPending = () => ({
+  type: ACCEPT_PASSWORDS_PENDING,
+});
+
+export const acceptPasswordsSuccess = () => ({
+  type: ACCEPT_PASSWORDS_SUCCESS,
+});
+
+export const acceptPasswordsFailure = payload => ({
+  type: ACCEPT_PASSWORDS_FAILURE,
+  payload,
+});
+
+export const declinePasswordsPending = () => ({
+  type: DECLINE_PASSWORDS_PENDING,
+});
+
+export const declinePasswordsSuccess = () => ({
+  type: DECLINE_PASSWORDS_SUCCESS,
+});
+
+export const declinePasswordsFailure = () => ({
+  type: DECLINE_PASSWORDS_FAILURE,
 });
 
 export const uploadPasswordsPending = () => ({

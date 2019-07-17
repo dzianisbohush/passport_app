@@ -2,10 +2,10 @@
 
 import axios from 'axios';
 
-const declinePassword = async userEmail => {
+const declinePasswords = async userEmail => {
   try {
     const response = await axios.delete(
-      `/api/api/passwords/share/accept/:${userEmail}`,
+      `/api/passwords/share/accept/${userEmail}`,
     );
 
     return response;
@@ -14,4 +14,4 @@ const declinePassword = async userEmail => {
   }
 };
 
-export default declinePassword;
+export default declinePasswords;

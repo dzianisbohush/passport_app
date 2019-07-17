@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 export const SharePassword = styled.div`
   margin: 50px 30%;
-  width: 30%;
-  border: 1.5px solid black;
-  background-color: lightgrey;
+  width: 40%;
+  border: 1.5px solid lightgrey;
+  background-color: #f5f5f5;
   padding: 0px 5%;
 
   & > h3 {
-    margin: 20px auto;
+    text-align: center;
+    margin: 10px 0px;
   }
 
   @media only screen and (max-width: 600px) {
@@ -22,6 +23,7 @@ export const ButtonsWrapper = styled.div`
   & > button {
     margin: 10px 40px;
   }
+  text-align: center;
 `;
 
 export const TablesWrapper = styled.div`

@@ -4,9 +4,11 @@ import PasswordForm from 'common/blocks/PasswordForm';
 
 class AddPage extends PureComponent {
   submitPasswordForm = values => {
-    const { addPasswordItem, userEmail } = this.props;
-
+    // eslint-disable-next-line no-unused-vars,react/prop-types
+    const { addPasswordItem, userEmail, history } = this.props;
     addPasswordItem(values, userEmail);
+    // eslint-disable-next-line react/prop-types
+    history.goBack();
   };
 
   render() {

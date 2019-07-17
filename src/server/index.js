@@ -7,9 +7,7 @@ import Cron from 'cron';
 import googleAuth from './routes/googleAuth';
 import setupPassport from './auth/setupPassport';
 import files from './routes/files';
-import { COOKIES_SECRET_KEY, COOKIES_MAX_AGE } from './config';
-
-// eslint-disable-next-line import/no-unresolved
+import { COOKIE, CRON } from './constants';
 
 import EmailController from './controllers/EmailController';
 
@@ -22,8 +20,8 @@ server.use(bodyParser.json());
 
 server.use(
   cookieSession({
-    maxAge: COOKIES_MAX_AGE,
-    keys: [COOKIES_SECRET_KEY],
+    maxAge: COOKIE.COOKIES_MAX_AGE,
+    keys: [COOKIE.COOKIES_SECRET_KEY],
   }),
 );
 
@@ -55,13 +53,13 @@ server
 
 // eslint-disable-next-line no-new
 new CronJob(
-  '0 3 * * *',
+  CRON.RUN_SETTUNGS,
   function() {
     EmailController();
   },
   null,
   true,
-  'America/Los_Angeles',
+  CRON.TIME_SETTINGS,
 );
 
 export default server;
