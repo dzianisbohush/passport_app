@@ -2,8 +2,10 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieSession from 'cookie-session';
 import passport from 'passport';
-import render from 'server/routes/renderer';
 import Cron from 'cron';
+
+import * as routes from 'constants/server/routes';
+import render from 'server/routes/renderer';
 import googleAuth from './routes/googleAuth';
 import setupPassport from './auth/setupPassport';
 import files from './routes/files';
@@ -27,8 +29,8 @@ server.use(
 
 server.use(passport.initialize());
 server.use(passport.session());
-server.use('/auth', googleAuth);
-server.use('/api/files', files);
+server.use(routes.AUTH, googleAuth);
+server.use(routes.API_FILES, files);
 
 setupPassport('google');
 
@@ -39,7 +41,9 @@ server
     const { user } = req;
 
     if (
-      (user && !req.path.includes('/api/') && !req.path.includes('/auth/')) ||
+      (user &&
+        !req.path.includes(`${routes.API}/`) &&
+        !req.path.includes(`${routes.AUTH}/`)) ||
       req.path === '/'
     ) {
       render(req, res);
