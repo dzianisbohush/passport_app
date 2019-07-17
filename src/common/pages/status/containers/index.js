@@ -21,7 +21,6 @@ const acceptPasswordsItems = userEmail => async dispatch => {
     const response = await acceptPasswords(userEmail);
     const { status } = response;
 
-    // @ todo check this status
     if (status === HTTP_STATUS_CODES.OK) {
       Modal.info({ title: 'Passwords successfully accepted' });
     }
@@ -39,7 +38,6 @@ const declinePasswordsItems = userEmail => async dispatch => {
     const response = await declinePasswords(userEmail);
     const { status } = response;
 
-    // @ todo check this status
     if (status === HTTP_STATUS_CODES.OK) {
       Modal.info({ title: 'Passwords successfully declined' });
     }
@@ -57,8 +55,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getPasswordsItems: userEmail => dispatch(getPasswordsItems(userEmail)),
-  declinePasswords: userEmail => dispatch(acceptPasswordsItems(userEmail)),
-  acceptPasswords: userEmail => dispatch(declinePasswordsItems(userEmail)),
+  declinePasswords: userEmail => dispatch(declinePasswordsItems(userEmail)),
+  acceptPasswords: userEmail => dispatch(acceptPasswordsItems(userEmail)),
 });
 
 export default connect(
