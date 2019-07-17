@@ -19,7 +19,6 @@ const compiledtemplate = HBS.compile(template);
 
 // eslint-disable-next-line no-unused-vars
 const EmailController = (req, res, next) => {
-  console.log('i am here', ...req.body);
   Password.getAllUserForEmailing().then(data => {
     const arr = Array.from(data);
     arr.forEach(el => {
