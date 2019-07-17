@@ -35,11 +35,11 @@ export const getPasswordsItems = userEmail => async dispatch => {
 
     const { data } = response;
 
-    dispatch(getPasswordsSuccess(data || []));
-  } catch (e) {
-    dispatch(getPasswordsFailure(e));
+    dispatch(getPasswordsSuccess(data));
+  } catch (error) {
+    dispatch(getPasswordsFailure(error));
 
-    console.log(e);
+    throw new Error(error);
   }
 };
 
@@ -51,11 +51,11 @@ const getUsersForSharing = () => async dispatch => {
 
     const { data } = response;
 
-    dispatch(getUsersForSharingSuccess(data || []));
-  } catch (e) {
-    dispatch(getUsersForSharingFailure(e));
+    dispatch(getUsersForSharingSuccess(data));
+  } catch (error) {
+    dispatch(getUsersForSharingFailure(error));
 
-    console.log(e);
+    throw new Error(error);
   }
 };
 
@@ -70,9 +70,10 @@ const deletePasswordItem = id => async dispatch => {
       Modal.info({ title: 'Password successfully deleted' });
     }
     dispatch(deletePasswordSuccess(id));
-  } catch (e) {
+  } catch (error) {
     Modal.error({ title: 'Password did not delete' });
-    dispatch(deletePasswordFailure(e));
+    dispatch(deletePasswordFailure(error));
+    throw new Error(error);
   }
 };
 
@@ -95,9 +96,10 @@ const sharePasswordsItems = (
       Modal.info({ title: 'Passwords successfully shared' });
     }
     dispatch(sharePasswordsSuccess());
-  } catch (e) {
+  } catch (error) {
     Modal.error({ title: 'Password did not shared' });
-    dispatch(sharePasswordsFailure(e));
+    dispatch(sharePasswordsFailure(error));
+    throw new Error(error);
   }
 };
 
@@ -107,9 +109,10 @@ const uploadPasswordsInCSV = (formData, userEmail) => async dispatch => {
     await uploadPasswords(formData);
     dispatch(getPasswordsItems(userEmail));
     Modal.info({ title: 'Passwords successfully added' });
-  } catch (e) {
+  } catch (error) {
     dispatch(uploadPasswordsFailure());
     Modal.error({ title: 'Passwords did not add' });
+    throw new Error(error);
   }
 };
 

@@ -1,27 +1,32 @@
+import { handleActions, combineActions } from 'redux-actions';
+
 import {
-  GET_PASSWORDS_PENDING,
-  GET_PASSWORDS_SUCCESS,
-  GET_PASSWORDS_FAILURE,
-  GET_REMOVE_PASSWORDS_ITEMS,
-  ADD_PASSWORD_PENDING,
-  ADD_PASSWORD_FAILURE,
-  CHANGE_PASSWORD_FAILURE,
-  CHANGE_PASSWORD_PENDING,
-  DELETE_PASSWORD_PENDING,
-  DELETE_PASSWORD_SUCCESS,
-  DELETE_PASSWORD_FAILURE,
-  SHARE_PASSWORDS_PENDING,
-  SHARE_PASSWORDS_SUCCESS,
-  SHARE_PASSWORDS_FAILURE,
-  ACCEPT_PASSWORDS_PENDING,
-  ACCEPT_PASSWORDS_SUCCESS,
-  ACCEPT_PASSWORDS_FAILURE,
-  DECLINE_PASSWORDS_PENDING,
-  DECLINE_PASSWORDS_SUCCESS,
-  DECLINE_PASSWORDS_FAILURE,
-  UPLOAD_PASSWORDS_PENDING,
-  UPLOAD_PASSWORDS_FAILURE,
-} from 'common/store/constants';
+  getPasswordsPending,
+  getPasswordsSuccess,
+  getPasswordsFailure,
+  removePasswordsItems,
+  addPasswordPending,
+  addPasswordSuccess,
+  addPasswordFailure,
+  changePasswordPending,
+  changePasswordSuccess,
+  changePasswordFailure,
+  deletePasswordPending,
+  deletePasswordSuccess,
+  deletePasswordFailure,
+  sharePasswordsPending,
+  sharePasswordsSuccess,
+  sharePasswordsFailure,
+  acceptPasswordsPending,
+  acceptPasswordsSuccess,
+  acceptPasswordsFailure,
+  declinePasswordsPending,
+  declinePasswordsSuccess,
+  declinePasswordsFailure,
+  uploadPasswordsPending,
+  uploadPasswordsSuccess,
+  uploadPasswordsFailure,
+} from 'common/store/actions/passwords';
 
 const initialState = {
   items: [],
@@ -29,72 +34,75 @@ const initialState = {
   error: '',
 };
 
-const passwords = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_PASSWORDS_PENDING:
-    case ADD_PASSWORD_PENDING:
-    case DELETE_PASSWORD_PENDING:
-    case SHARE_PASSWORDS_PENDING:
-    case UPLOAD_PASSWORDS_PENDING:
-    case CHANGE_PASSWORD_PENDING:
-    case ACCEPT_PASSWORDS_PENDING:
-    case DECLINE_PASSWORDS_PENDING:
+// REDUCERS
+export default handleActions(
+  {
+    [combineActions(
+      getPasswordsPending,
+      addPasswordPending,
+      deletePasswordPending,
+      sharePasswordsPending,
+      uploadPasswordsPending,
+      changePasswordPending,
+      acceptPasswordsPending,
+      declinePasswordsPending,
+    )](state) {
       return {
         ...state,
         loading: true,
       };
-    case GET_PASSWORDS_SUCCESS:
+    },
+    [getPasswordsSuccess](state, { payload }) {
       return {
         ...state,
-        items: action.payload,
+        items: payload,
         loading: false,
       };
-    case GET_PASSWORDS_FAILURE:
-    case ADD_PASSWORD_FAILURE:
-    case CHANGE_PASSWORD_FAILURE:
-    case DELETE_PASSWORD_FAILURE:
-    case SHARE_PASSWORDS_FAILURE:
-    case ACCEPT_PASSWORDS_FAILURE:
-    case DECLINE_PASSWORDS_FAILURE:
-    case UPLOAD_PASSWORDS_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false,
-      };
-    case GET_REMOVE_PASSWORDS_ITEMS:
+    },
+    [removePasswordsItems](state) {
       return {
         ...state,
         items: [],
         error: '',
         loading: false,
       };
-    case DELETE_PASSWORD_SUCCESS:
+    },
+    [deletePasswordSuccess](state, { payload }) {
       return {
         ...state,
-        items: state.items.filter(
-          elem => elem.id.toString() !== action.payload,
-        ),
+        items: state.items.filter(elem => elem.id.toString() !== payload),
         loading: false,
       };
-    case SHARE_PASSWORDS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
-    case ACCEPT_PASSWORDS_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
-    case DECLINE_PASSWORDS_SUCCESS:
+    },
+    [combineActions(
+      sharePasswordsSuccess,
+      acceptPasswordsSuccess,
+      declinePasswordsSuccess,
+      addPasswordSuccess,
+      changePasswordSuccess,
+      uploadPasswordsSuccess,
+    )](state) {
       return {
         ...state,
         loading: false,
       };
-    default:
-      return state;
-  }
-};
-
-export default passwords;
+    },
+    [combineActions(
+      getPasswordsFailure,
+      addPasswordFailure,
+      changePasswordFailure,
+      deletePasswordFailure,
+      sharePasswordsFailure,
+      acceptPasswordsFailure,
+      declinePasswordsFailure,
+      uploadPasswordsFailure,
+    )](state, { payload }) {
+      return {
+        ...state,
+        error: payload,
+        loading: false,
+      };
+    },
+  },
+  initialState,
+);

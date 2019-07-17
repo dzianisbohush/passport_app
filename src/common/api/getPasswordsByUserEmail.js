@@ -1,13 +1,10 @@
-/* eslint-disable consistent-return */
 import axios from 'axios';
 
 const getPasswordsByUserEmail = async userId => {
   try {
-    const response = await axios.get(`/api/passwords/${userId}`);
-
-    return response;
-  } catch (e) {
-    console.log(e);
+    return await axios.get(`/api/passwords/${userId}`);
+  } catch (error) {
+    throw new Error(error);
   }
 };
 

@@ -1,16 +1,10 @@
-/* eslint-disable consistent-return */
-
 import axios from 'axios';
 
 const acceptPasswords = async userEmail => {
   try {
-    const response = await axios.patch(
-      `/api/passwords/share/accept/${userEmail}`,
-    );
-
-    return response;
+    return await axios.patch(`/api/passwords/share/accept/${userEmail}`);
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 

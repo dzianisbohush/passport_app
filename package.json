@@ -41,6 +41,7 @@
     "react-router-dom": "^5.0.1",
     "react-router-prop-types": "^1.0.4",
     "redux": "^3.6.0",
+    "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.2.0",
     "sendgrid": "^5.2.3",

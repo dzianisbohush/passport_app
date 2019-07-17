@@ -1,8 +1,10 @@
+import { handleActions } from 'redux-actions';
+
 import {
-  GET_USER_PENDING,
-  GET_USER_SUCCESS,
-  GET_USER_FAILURE,
-} from 'common/store/constants';
+  getUserPending,
+  getUserSuccess,
+  getUserFailure,
+} from 'common/store/actions/user';
 
 const initialState = {
   info: {
@@ -14,28 +16,29 @@ const initialState = {
   error: '',
 };
 
-const user = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_USER_PENDING:
+// REDUCERS
+export default handleActions(
+  {
+    [getUserPending](state) {
       return {
         ...state,
         loading: true,
       };
-    case GET_USER_SUCCESS:
+    },
+    [getUserSuccess](state, { payload }) {
       return {
         ...state,
-        info: action.payload,
+        info: payload,
         loading: false,
       };
-    case GET_USER_FAILURE:
+    },
+    [getUserFailure](state, { payload }) {
       return {
         ...state,
-        error: action.payload,
+        error: payload,
         loading: false,
       };
-    default:
-      return state;
-  }
-};
-
-export default user;
+    },
+  },
+  initialState,
+);

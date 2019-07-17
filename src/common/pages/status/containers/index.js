@@ -25,9 +25,10 @@ const acceptPasswordsItems = userEmail => async dispatch => {
       Modal.info({ title: 'Passwords successfully accepted' });
     }
     dispatch(acceptPasswordsSuccess(userEmail));
-  } catch (e) {
+  } catch (error) {
     Modal.error({ title: 'Password did not accept' });
-    dispatch(acceptPasswordsFailure(e));
+    dispatch(acceptPasswordsFailure(error));
+    throw new Error(error);
   }
 };
 
@@ -42,9 +43,10 @@ const declinePasswordsItems = userEmail => async dispatch => {
       Modal.info({ title: 'Passwords successfully declined' });
     }
     dispatch(declinePasswordsSuccess(userEmail));
-  } catch (e) {
+  } catch (error) {
     Modal.error({ title: 'Password did not decline' });
-    dispatch(declinePasswordsFailure(e));
+    dispatch(declinePasswordsFailure(error));
+    throw new Error(error);
   }
 };
 
