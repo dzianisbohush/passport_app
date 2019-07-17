@@ -1,25 +1,29 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Upload, Button, Icon, Checkbox } from 'antd';
-
-import CheckboxWrapper from './styles';
+import { Modal, Upload, Button, Icon } from 'antd';
 
 class UploadFileModal extends PureComponent {
   state = {
     fileList: [],
     uploading: false,
-    needRewrite: false,
   };
 
   handleUpload = () => {
-    const { fileList, needRewrite } = this.state;
-    const { userEmail, uploadPasswordsInCSV } = this.props;
+    const { fileList } = this.state;
+    const { userEmail, uploadPasswordsInCSV, closeModal } = this.props;
     const formData = new FormData();
 
     formData.append('file', fileList[0]);
     formData.set('userEmail', userEmail);
-    formData.set('needRewrite', needRewrite);
     uploadPasswordsInCSV(formData, userEmail);
+    // eslint-disable-next-line no-unused-vars
+    this.setState(state => {
+      return {
+        fileList: [],
+        uploading: false,
+      };
+    });
+    closeModal();
   };
 
   handleRemoveFile = () => {
@@ -39,17 +43,9 @@ class UploadFileModal extends PureComponent {
     closeModal();
   };
 
-  handleCheckboxClick = () => {
-    const { needRewrite } = this.state;
-
-    this.setState({
-      needRewrite: !needRewrite,
-    });
-  };
-
   render() {
     const { visible } = this.props;
-    const { uploading, fileList, needRewrite } = this.state;
+    const { uploading, fileList } = this.state;
 
     return (
       <Modal
@@ -68,11 +64,6 @@ class UploadFileModal extends PureComponent {
               <Icon type="upload" /> Select File
             </Button>
           </Upload>
-          <CheckboxWrapper>
-            <Checkbox checked={needRewrite} onChange={this.handleCheckboxClick}>
-              Rewrite
-            </Checkbox>
-          </CheckboxWrapper>
           <Button
             type="primary"
             onClick={this.handleUpload}
