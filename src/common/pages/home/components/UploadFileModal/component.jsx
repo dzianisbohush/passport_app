@@ -12,7 +12,6 @@ class UploadFileModal extends PureComponent {
     const { fileList } = this.state;
     const { userEmail, uploadPasswordsInCSV, closeModal } = this.props;
     const formData = new FormData();
-
     formData.append('file', fileList[0]);
     formData.set('userEmail', userEmail);
     uploadPasswordsInCSV(formData, userEmail);
