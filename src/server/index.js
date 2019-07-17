@@ -11,8 +11,7 @@ import { COOKIE, CRON } from './constants';
 
 import EmailController from './controllers/EmailController';
 
-// eslint-disable-next-line prefer-destructuring
-const CronJob = Cron.CronJob;
+const { CronJob } = Cron;
 
 const server = express();
 server.use(bodyParser.urlencoded({ extended: true }));
@@ -54,7 +53,7 @@ server
 // eslint-disable-next-line no-new
 new CronJob(
   CRON.RUN_SETTUNGS,
-  function() {
+  () => {
     EmailController();
   },
   null,

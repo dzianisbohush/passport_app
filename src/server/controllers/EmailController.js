@@ -17,7 +17,7 @@ const template = fs.readFileSync(
 );
 const compiledtemplate = HBS.compile(template);
 
-const EmailController = () => {
+const EmailController = (req, res) => {
   Password.getAllUserForEmailing().then(data => {
     const arr = Array.from(data);
     arr.forEach(el => {
@@ -33,7 +33,7 @@ const EmailController = () => {
           subject: 'please refresh pasword',
           html: compiledtemplate({ data }),
         },
-        function(err) {
+        err => {
           if (err) {
             // eslint-disable-next-line no-undef
             res.json({ Error: 'Error in sending mail' });

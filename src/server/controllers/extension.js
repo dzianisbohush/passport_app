@@ -10,8 +10,8 @@ function getPassportData(req, res) {
         data: Array.from(data),
       });
     })
+    // eslint-disable-next-line no-unused-vars
     .catch(err => {
-      console.log(err);
       res.status(403).json({ isError: true, msg: 'error', data: null });
     });
 }

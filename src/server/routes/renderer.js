@@ -3,9 +3,9 @@ import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { ServerStyleSheet } from 'styled-components';
-import App from 'common/App';
-import configureStore from 'common/store/configureStore';
 import getHtmlTemplate from 'server/templates/html';
+import App from 'client/App';
+import configureStore from 'client/store/configureStore';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); //eslint-disable-line
 
