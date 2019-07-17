@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 import axios from 'axios';
 
 const createBodyForSharing = (userEmail, emails, passwordItems) => {
@@ -32,10 +31,9 @@ const sharePasswords = async (userEmail, emails, passwordItems) => {
   try {
     const body = createBodyForSharing(userEmail, emails, passwordItems);
 
-    const response = await axios.post('/api/passwords/share', body);
-    return response;
+    return await axios.post('/api/passwords/share', body);
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 export default sharePasswords;

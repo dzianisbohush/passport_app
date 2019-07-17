@@ -2,8 +2,6 @@ const User = require('../models/user.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../constants');
 
 async function createUser(req, res) {
-  const defaultUserIcon =
-    'http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/user-male-icon.png';
   const userData = req.body;
   if (!userData.email) {
     res
@@ -36,7 +34,7 @@ async function createUser(req, res) {
     }
 
     if (!userData.img) {
-      userData.img = defaultUserIcon;
+      userData.img = '';
     }
     await User.createUser({
       ...userData,

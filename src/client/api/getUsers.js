@@ -1,13 +1,10 @@
-/* eslint-disable consistent-return */
 import axios from 'axios';
 
 const getUsers = async () => {
   try {
-    const response = await axios.get(`/api/users`);
-
-    return response;
-  } catch (e) {
-    console.log(e);
+    return await axios.get(`/api/users`);
+  } catch (error) {
+    throw new Error(error);
   }
 };
 

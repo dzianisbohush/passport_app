@@ -8,6 +8,7 @@ const DeleteModal = props => {
     handleDeleteModalDismiss,
     handleDeleteModalSubmit,
   } = props;
+
   return (
     <Modal
       visible={isVisible}

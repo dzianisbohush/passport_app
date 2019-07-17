@@ -15,11 +15,10 @@ export const getUserInfo = userEmail => async dispatch => {
 
     const { data } = response;
 
-    dispatch(getUserSuccess(data || {}));
-  } catch (e) {
-    dispatch(getUserFailure(e));
-
-    console.log(e);
+    dispatch(getUserSuccess(data));
+  } catch (error) {
+    dispatch(getUserFailure(error.message));
+    throw new Error(error);
   }
 };
 
