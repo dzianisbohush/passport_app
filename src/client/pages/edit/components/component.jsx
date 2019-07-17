@@ -33,10 +33,13 @@ class EditPage extends PureComponent {
   }
 
   submitPasswordForm = values => {
-    const { changePasswordItem } = this.props;
+    const { changePasswordItem, history } = this.props;
+    
     const { itemId } = this.state;
-
+    
     changePasswordItem({ ...values, id: itemId });
+    
+    history.goBack();
   };
 
   render() {
