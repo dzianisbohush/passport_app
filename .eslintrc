@@ -21,7 +21,8 @@
     "import/resolver": {
       "alias": [
         ["client", "./src/client/"],
-        ["server", "./src/server/"]
+        ["server", "./src/server/"],
+        ["constants", "./src/constants"],
       ]
     }
   }
