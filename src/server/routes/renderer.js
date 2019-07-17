@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { ServerStyleSheet } from 'styled-components';
 import serialize from 'serialize-javascript';
-import App from 'common/App';
-import configureStore from 'common/store/configureStore';
+import App from 'client/App';
+import configureStore from 'client/store/configureStore';
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST); //eslint-disable-line
 

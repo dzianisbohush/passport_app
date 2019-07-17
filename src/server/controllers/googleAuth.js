@@ -2,7 +2,7 @@ import url from 'url';
 import { openAuthWindow } from '../auth/strategies/google';
 
 export async function logout(req, res) {
-  // TODO: move /logout into common auth route
+  // TODO: move /logout into client auth route
   await req.logout();
   res.redirect('/');
 }
