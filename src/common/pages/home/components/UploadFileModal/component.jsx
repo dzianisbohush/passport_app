@@ -39,7 +39,13 @@ class UploadFileModal extends PureComponent {
 
   handleCancel = () => {
     const { closeModal } = this.props;
-
+    // eslint-disable-next-line no-unused-vars
+    this.setState(state => {
+      return {
+        fileList: [],
+        uploading: false,
+      };
+    });
     closeModal();
   };
 
