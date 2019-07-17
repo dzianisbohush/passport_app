@@ -8,7 +8,7 @@ module.exports = {
     config.resolve.alias = {
       client: path.resolve('src/client/'),
       server: path.resolve('src/server/'),
-      common: path.resolve('src/common/'),
+      constants: path.resolve('src/constants'),
     };
 
     // change default devtool
