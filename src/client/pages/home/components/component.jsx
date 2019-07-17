@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Modal } from 'antd';
 
+import { PROFILE_EDIT, PROFILE_ADD } from 'constants/client/routes';
 import DeleteModal from 'client/blocks/DeleteModal';
 import ShareModal from './ShareModal';
 import HandlingCSVButtons from './HandlingCSVButtons';
@@ -46,13 +47,13 @@ class Home extends Component {
   goToEditPage = id => {
     const { history } = this.props;
 
-    history.push(`profile/edit/${id}`);
+    history.push(`${PROFILE_EDIT}/${id}`);
   };
 
   goToAddPage = () => {
     const { history } = this.props;
 
-    history.push('profile/add');
+    history.push(PROFILE_ADD);
   };
 
   handleDeleteModalDismiss = () => {
