@@ -1,3 +1,5 @@
+const emailcontroler = require('../SharingEmail');
+
 const Password = require('../../models/password.js');
 const { HTTP_STATUS_CODES, MESSAGES } = require('../../constants');
 const { validatePasswords } = require('./utils');
@@ -61,11 +63,11 @@ async function rejectSharingPasswords(req, res) {
 
 async function sharePasswords(req, res) {
   const { emailsToShare: passwordsToShare } = req.body;
+  const acountOwner = req.body.email;
 
   try {
     const sendNotificationAt = new Date();
     sendNotificationAt.setMonth(sendNotificationAt.getMonth() + 1);
-
     passwordsToShare.forEach(record => {
       const { userEmail, records: passwords } = record;
       if (!userEmail) throw new Error(MESSAGES.EMPTY_USER_EMAIL);
@@ -82,14 +84,13 @@ async function sharePasswords(req, res) {
 
       const hasNoDuplicates = createdPasswords.every(pwd => pwd !== null);
       const hasOnlyDuplicates = createdPasswords.every(pwd => pwd === null);
-
+      emailcontroler.SharingEmailsController(acountOwner, userEmail);
       if (hasNoDuplicates) {
         res.status(HTTP_STATUS_CODES.CREATED).json(MESSAGES.CREATED);
         return;
       }
 
       if (hasOnlyDuplicates) throw new Error(MESSAGES.DUPLICATE_PASSWORD);
-
       res.status(HTTP_STATUS_CODES.CREATED).json(MESSAGES.CREATED);
     });
   } catch (error) {

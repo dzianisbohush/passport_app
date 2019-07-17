@@ -30,7 +30,7 @@ const MESSAGES = {
 };
 
 const COOKIE = {
-  COOKIES_SECRET_KEY: 'secretkey',
+  COOKIES_SECRET_KEY: process.env.RAZZLE_SANDGRID_COOKIE_SECRET_KEY,
   COOKIES_MAX_AGE: 1000 * 60 * 60 * 24,
 };
 

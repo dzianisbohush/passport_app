@@ -1,3 +1,5 @@
+import { UPLOAD } from 'constants/server/routes';
+
 const express = require('express');
 const multer = require('multer');
 
@@ -6,6 +8,6 @@ const controller = require('../controllers/files');
 
 const router = express.Router();
 
-router.post('/upload', upload.single('file'), controller.uploadFile);
+router.post(UPLOAD, upload.single('file'), controller.uploadFile);
 
 export default router;
