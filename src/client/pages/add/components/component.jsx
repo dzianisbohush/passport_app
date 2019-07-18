@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
+
 import PasswordForm from 'client/blocks/PasswordForm';
 
 class AddPage extends PureComponent {
   submitPasswordForm = values => {
-    // eslint-disable-next-line no-unused-vars,react/prop-types
     const { addPasswordItem, userEmail, history } = this.props;
     addPasswordItem(values, userEmail);
-    // eslint-disable-next-line react/prop-types
     history.goBack();
   };
 
@@ -24,6 +24,7 @@ class AddPage extends PureComponent {
 AddPage.propTypes = {
   addPasswordItem: PropTypes.func.isRequired,
   userEmail: PropTypes.string.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default AddPage;

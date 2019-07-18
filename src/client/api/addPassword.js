@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PASSWORD_CONST } from '../../constants';
 
 const addPassword = async ({
   userEmail,
@@ -9,11 +10,11 @@ const addPassword = async ({
 }) => {
   try {
     return await axios.post('/api/passwords', {
-      userEmail,
-      name,
-      resourceAddress,
-      login,
-      password,
+      [PASSWORD_CONST.USER_EMAIL]: userEmail,
+      [PASSWORD_CONST.NAME]: name,
+      [PASSWORD_CONST.RESOURCE_ADDRESS]: resourceAddress,
+      [PASSWORD_CONST.LOGIN]: login,
+      [PASSWORD_CONST.PASSWORD]: password,
     });
   } catch (error) {
     throw new Error(error);

@@ -33,11 +33,12 @@ class EditPage extends PureComponent {
   }
 
   submitPasswordForm = values => {
-    // eslint-disable-next-line react/prop-types
     const { changePasswordItem, history } = this.props;
+
     const { itemId } = this.state;
+
     changePasswordItem({ ...values, id: itemId });
-    // eslint-disable-next-line react/prop-types
+
     history.goBack();
   };
 
@@ -72,6 +73,7 @@ EditPage.propTypes = {
     }),
   ).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default EditPage;

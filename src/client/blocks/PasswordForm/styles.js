@@ -3,13 +3,13 @@ import styled from 'styled-components';
 const WrappedForm = styled.div`
   margin: 0;
   position: absolute;
-  top: 20%;
-  left: 40%;
-  width: 20%;
+  top: ${props => props.theme.spacingUnit}%;
+  left: ${props => props.theme.spacingUnit * 2}%;
+  width: ${props => props.theme.width}%;
   @media only screen and (max-width: 600px) {
-    width: 100%;
+    width: ${props => props.theme.width * 5}%;
     left: 0;
-    padding: 20px;
+    padding: ${props => props.theme.spacingUnit}px;
   }
 `;
 export default WrappedForm;

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PASSWORD_CONST } from '../../constants/index';
 
 const createBodyForSharing = (userEmail, emails, passwordItems) => {
   const emailsToShare = [];
@@ -7,16 +8,16 @@ const createBodyForSharing = (userEmail, emails, passwordItems) => {
     const { login, name, resourceAddress, password } = passwordItem;
 
     return {
-      login,
-      name,
-      resourceAddress,
-      password,
+      [PASSWORD_CONST.LOGIN]: login,
+      [PASSWORD_CONST.NAME]: name,
+      [PASSWORD_CONST.RESOURCE_ADDRESS]: resourceAddress,
+      [PASSWORD_CONST.PASSWORD]: password,
     };
   });
 
   emails.forEach(email => {
     emailsToShare.push({
-      userEmail: email,
+      [PASSWORD_CONST.USER_EMAIL]: email,
       records: preparedPasswordItems,
     });
   });
