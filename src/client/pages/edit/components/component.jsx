@@ -73,7 +73,7 @@ EditPage.propTypes = {
     }),
   ).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default EditPage;

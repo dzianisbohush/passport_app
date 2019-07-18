@@ -24,7 +24,7 @@ class AddPage extends PureComponent {
 AddPage.propTypes = {
   addPasswordItem: PropTypes.func.isRequired,
   userEmail: PropTypes.string.isRequired,
-  history: ReactRouterPropTypes.location.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default AddPage;
