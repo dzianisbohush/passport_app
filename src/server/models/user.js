@@ -1,5 +1,8 @@
 // We need to use require instead of import
 // because this file is imported by sequelize-cli(without babel)
+// eslint-disable-next-line prefer-destructuring
+const USER_CONST = require('../../constants').USER_CONST;
+// eslint-disable-next-line import/order
 const Sequelize = require('sequelize');
 const postgresConnection = require('../../../config/dbConfig');
 
@@ -14,30 +17,30 @@ const sequelize = new Sequelize(database, username, password, {
 });
 
 const userSchema = {
-  id: {
+  [USER_CONST.ID]: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER,
   },
-  googleId: {
+  [USER_CONST.GOOGLE_ID]: {
     allowNull: false,
     type: Sequelize.STRING,
   },
-  email: {
+  [USER_CONST.EMAIL]: {
     type: Sequelize.STRING,
   },
-  name: {
+  [USER_CONST.NAME]: {
     type: Sequelize.STRING,
   },
-  img: {
+  [USER_CONST.IMG]: {
     type: Sequelize.STRING,
   },
-  createdAt: {
+  [USER_CONST.CREATED_AT]: {
     allowNull: false,
     type: Sequelize.DATE,
   },
-  updatedAt: {
+  [USER_CONST.UPDATED_AT]: {
     allowNull: false,
     type: Sequelize.DATE,
   },
@@ -46,7 +49,7 @@ const userSchema = {
 class User extends Model {}
 User.init(userSchema, {
   sequelize,
-  modelName: 'User',
+  modelName: USER_CONST.TABLE_NAME,
 });
 
 function createUser(userData) {
