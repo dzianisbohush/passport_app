@@ -1,6 +1,5 @@
 const { userSchema } = require('../models/user');
-// eslint-disable-next-line prefer-destructuring
-const USER_CONST = require('../../constants/index').USER_CONST;
+const { USER_CONST } = require('../../constants/index');
 
 module.exports = {
   up: queryInterface =>

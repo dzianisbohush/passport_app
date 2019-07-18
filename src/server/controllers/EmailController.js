@@ -30,7 +30,7 @@ const EmailController = (req, res) => {
         {
           to: el.dataValues.userEmail,
           from: process.env.RAZZLE_SANDGRID_EMAIL,
-          subject: 'please refresh pasыword',
+          subject: 'please refresh password',
           html: compiledtemplate({ data }),
         },
         err => {

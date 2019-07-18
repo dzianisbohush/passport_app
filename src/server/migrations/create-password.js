@@ -1,6 +1,5 @@
 const { passwordSchema } = require('../models/password');
-// eslint-disable-next-line prefer-destructuring
-const PASSWORD_CONST = require('../../constants/index').PASSWORD_CONST;
+const { PASSWORD_CONST } = require('../../constants/index');
 
 module.exports = {
   up: queryInterface =>

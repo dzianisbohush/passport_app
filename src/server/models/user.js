@@ -1,7 +1,6 @@
 // We need to use require instead of import
 // because this file is imported by sequelize-cli(without babel)
-// eslint-disable-next-line prefer-destructuring
-const USER_CONST = require('../../constants').USER_CONST;
+const { USER_CONST } = require('../../constants');
 // eslint-disable-next-line import/order
 const Sequelize = require('sequelize');
 const postgresConnection = require('../../../config/dbConfig');
