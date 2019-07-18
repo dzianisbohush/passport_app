@@ -45,7 +45,7 @@ export const Span = styled.span`
 export const NavigationBar = styled.div`
   display: flex;
   flex-direction: row;
-  margin: ${props => props.theme.spacingUnit}x;
+  margin: ${props => props.theme.spacingUnit}px;
   text-align: center;
   & > span {
     padding: 0px ${props => props.theme.spacingUnit}px;
