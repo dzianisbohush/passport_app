@@ -1,16 +1,5 @@
 import styled from 'styled-components';
 
-// colors constants
-const white = '#ffffff';
-const cyan = '#00d4ff';
-const robinsEggBlue = '#00c4eb';
-const orange = '#ffa500';
-const tangerine = '#eb9800';
-const matisse = '#1e5799';
-const mariner = '#207cca';
-const curiousBlue = '#2989d8';
-const seagull = '#7db9e8';
-
 export const StyledMainWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -19,12 +8,12 @@ export const StyledMainWrapper = styled.div`
 
   background: linear-gradient(
     135deg,
-    ${matisse} 0%,
-    ${mariner} 32%,
-    ${mariner} 32%,
-    ${curiousBlue} 50%,
-    ${matisse} 97%,
-    ${seagull} 100%
+    ${props => props.theme.colors.matisse} 0%,
+    ${props => props.theme.colors.mariner} 32%,
+    ${props => props.theme.colors.mariner} 32%,
+    ${props => props.theme.colors.curiousBlue} 50%,
+    ${props => props.theme.colors.matisse} 97%,
+    ${props => props.theme.colors.seagull} 100%
   );
 `;
 
@@ -39,24 +28,24 @@ const StyledLink = styled.a`
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: ${props => props.theme.fontSize}rem;
 `;
 
 export const StyledLoginLink = styled(StyledLink)`
-  background-color: ${cyan};
-  color: ${white};
+  background-color: ${props => props.theme.colors.cyan};
+  color: ${props => props.theme.colors.white};
   &:hover {
-    background-color: ${robinsEggBlue};
-    color: ${white};
+    background-color: ${props => props.theme.colors.robinsEggBlue};
+    color: ${props => props.theme.colors.white};
   }
 `;
 
 export const StyledLogoutLink = styled(StyledLink)`
-  background-color: ${orange};
-  color: ${white};
+  background-color: ${props => props.theme.colors.orange};
+  color: ${props => props.theme.colors.white};
   margin-top: 10px;
   &:hover {
-    background-color: ${tangerine};
-    color: ${white};
+    background-color: ${props => props.theme.colors.tangerine};
+    color: ${props => props.theme.colors.white};
   }
 `;

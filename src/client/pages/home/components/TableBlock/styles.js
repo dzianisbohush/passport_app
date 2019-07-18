@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const TableWrapper = styled.div`
-  margin: 50px;
+  margin: ${props => props.theme.spacingUnit * 5}px;
 `;
 
 export const ExpandedRows = styled.div`
@@ -9,6 +9,6 @@ export const ExpandedRows = styled.div`
   flex-direction: column;
   margin: auto;
   & > div {
-    margin: 10px;
+    margin: ${props => props.theme.spacingUnit}px;
   }
 `;

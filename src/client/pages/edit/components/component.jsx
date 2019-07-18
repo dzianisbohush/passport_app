@@ -34,11 +34,11 @@ class EditPage extends PureComponent {
 
   submitPasswordForm = values => {
     const { changePasswordItem, history } = this.props;
-    
+
     const { itemId } = this.state;
-    
+
     changePasswordItem({ ...values, id: itemId });
-    
+
     history.goBack();
   };
 
@@ -73,6 +73,7 @@ EditPage.propTypes = {
     }),
   ).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
 export default EditPage;

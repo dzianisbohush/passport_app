@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const H1 = styled.h1`
-  margin: 50px 0px;
+  margin: ${props => props.theme.spacingUnit * 5}px 0px;
   text-align: center;
 `;
 

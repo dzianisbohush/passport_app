@@ -1,49 +1,51 @@
 import styled from 'styled-components';
 
 export const SharePassword = styled.div`
-  margin: 50px 30%;
-  width: 40%;
-  border: 1.5px solid lightgrey;
-  background-color: #f5f5f5;
-  padding: 0px 5%;
+  margin: ${props => props.theme.spacingUnit * 5}px
+    ${props => props.theme.spacingUnit * 3}%;
+  width: ${props => props.theme.width}%;
+  border: 1.5px solid ${props => props.theme.borderColor};
+  background-color: ${props => props.theme.backgroundColor};
+  padding: 0px ${props => props.theme.spacingUnit / 2}%;
 
   & > h3 {
     text-align: center;
-    margin: 10px 0px;
+    margin: ${props => props.theme.spacingUnit}px 0px;
   }
 
   @media only screen and (max-width: 600px) {
     margin: 0px;
-    padding: 0px 10%;
-    width: 100%;
+    padding: 0px ${props => props.theme.spacingUnit}%;
+    width: ${props => props.theme.width * 2}%;
   }
 `;
 
 export const ButtonsWrapper = styled.div`
   & > button {
-    margin: 10px 40px;
+    margin: ${props => props.theme.spacingUnit / 2}px
+      ${props => props.theme.spacingUnit * 4}px;
   }
   text-align: center;
 `;
 
 export const TablesWrapper = styled.div`
-  margin: 50px;
+  margin: ${props => props.theme.spacingUnit * 5}px;
   & > h2 {
     text-align: center;
-    margin: 50px;
+    margin: ${props => props.theme.spacingUnit * 5}px;
   }
   & > div {
-    margin: 50px auto;
-    width: 50%;
+    margin: ${props => props.theme.spacingUnit * 5}px auto;
+    width: ${props => props.theme.width}%;
   }
   @media only screen and (max-width: 600px) {
     & > h2 {
-      margin: 50px 0px;
+      margin: ${props => props.theme.spacingUnit * 5}px 0px;
     }
     margin: 0px;
     & > div {
-      margin: 50px 0px;
-      width: 100%;
+      margin: ${props => props.theme.spacingUnit * 5}px 0px;
+      width: ${props => props.theme.width * 2}%;
     }
   }
 `;
