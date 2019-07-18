@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { Modal } from 'antd';
+import { ThemeProvider } from 'styled-components';
 
 import { PROFILE_EDIT, PROFILE_ADD } from 'constants/client/routes';
+import { homePageTheme } from 'constants/client/themes';
 import DeleteModal from 'client/blocks/DeleteModal';
 import ShareModal from './ShareModal';
 import HandlingCSVButtons from './HandlingCSVButtons';
@@ -168,44 +170,46 @@ class Home extends Component {
     } = this.props;
 
     return (
-      <div>
-        <TableBlock
-          loading={loading}
-          userEmail={userEmail}
-          items={passwordsItems}
-          goToEditPage={this.goToEditPage}
-          goToAddPage={this.goToAddPage}
-          handleShareButtonClick={this.handleShareButtonClick}
-          handleRowSelected={this.handleRowSelected}
-          handleAllRowsSelected={this.handleAllRowsSelected}
-          handleDeleteClick={this.handleDeleteClick}
-          isActiveShareBtn={isActiveShareBtn}
-        />
-        <HandlingCSVButtons
-          goToAddPage={this.goToAddPage}
-          openUploadModal={this.handleUploadFileButtonClick}
-          items={passwordsItems}
-        />
-        <DeleteModal
-          isVisible={isDeleteModalVisible}
-          handleDeleteModalSubmit={this.handleDeleteModalSubmit}
-          handleDeleteModalDismiss={this.handleDeleteModalDismiss}
-        />
-        <ShareModal
-          visible={isShareModalVisible}
-          users={usersForSharing}
-          userEmail={userEmail}
-          closeModal={this.handleShareModalCloseButtonClick}
-          passwordsToShare={passwordsToShare}
-          sharePasswords={sharePasswords}
-        />
-        <UploadFileModal
-          visible={isFileUploadModalVisible}
-          closeModal={this.handleUploadFileModalCloseButtonClick}
-          userEmail={userEmail}
-          uploadPasswordsInCSV={uploadPasswordsInCSV}
-        />
-      </div>
+      <ThemeProvider theme={homePageTheme}>
+        <div>
+          <TableBlock
+            loading={loading}
+            userEmail={userEmail}
+            items={passwordsItems}
+            goToEditPage={this.goToEditPage}
+            goToAddPage={this.goToAddPage}
+            handleShareButtonClick={this.handleShareButtonClick}
+            handleRowSelected={this.handleRowSelected}
+            handleAllRowsSelected={this.handleAllRowsSelected}
+            handleDeleteClick={this.handleDeleteClick}
+            isActiveShareBtn={isActiveShareBtn}
+          />
+          <HandlingCSVButtons
+            goToAddPage={this.goToAddPage}
+            openUploadModal={this.handleUploadFileButtonClick}
+            items={passwordsItems}
+          />
+          <DeleteModal
+            isVisible={isDeleteModalVisible}
+            handleDeleteModalSubmit={this.handleDeleteModalSubmit}
+            handleDeleteModalDismiss={this.handleDeleteModalDismiss}
+          />
+          <ShareModal
+            visible={isShareModalVisible}
+            users={usersForSharing}
+            userEmail={userEmail}
+            closeModal={this.handleShareModalCloseButtonClick}
+            passwordsToShare={passwordsToShare}
+            sharePasswords={sharePasswords}
+          />
+          <UploadFileModal
+            visible={isFileUploadModalVisible}
+            closeModal={this.handleUploadFileModalCloseButtonClick}
+            userEmail={userEmail}
+            uploadPasswordsInCSV={uploadPasswordsInCSV}
+          />
+        </div>
+      </ThemeProvider>
     );
   }
 }

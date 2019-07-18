@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { ThemeProvider } from 'styled-components';
 
+import { statusPageTheme } from 'constants/client/themes';
 import H1 from './styles';
 import AcceptBlock from './Accept';
 
@@ -62,17 +64,19 @@ class passwordsStatusControlPage extends Component {
     const { isAccepting, passwordsForAccepting } = this.state;
 
     return (
-      <React.Fragment>
-        {isAccepting ? (
-          <AcceptBlock
-            declinePassword={this.handleDeclinePassword}
-            acceptPassword={this.handleAcceptPassword}
-            passwordsForAccepting={passwordsForAccepting}
-          />
-        ) : (
-          <H1>You don`t have passwords for accepting</H1>
-        )}
-      </React.Fragment>
+      <ThemeProvider theme={statusPageTheme}>
+        <React.Fragment>
+          {isAccepting ? (
+            <AcceptBlock
+              declinePassword={this.handleDeclinePassword}
+              acceptPassword={this.handleAcceptPassword}
+              passwordsForAccepting={passwordsForAccepting}
+            />
+          ) : (
+            <H1>You don`t have passwords for accepting</H1>
+          )}
+        </React.Fragment>
+      </ThemeProvider>
     );
   }
 }

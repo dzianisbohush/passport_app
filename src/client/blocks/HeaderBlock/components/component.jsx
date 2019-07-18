@@ -4,7 +4,9 @@ import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import queryString from 'query-string';
 import PropTypes from 'prop-types';
+import { ThemeProvider } from 'styled-components';
 
+import { headerTheme } from 'constants/client/themes';
 import { PROFILE, PROFILE_STATUS } from 'constants/client/routes';
 import { Header, Img, Span, NavigationBar } from './styles';
 
@@ -28,20 +30,22 @@ class HeaderBlock extends PureComponent {
     const { userName, userPhotoURL, hasPasswordsForAccepting } = this.props;
 
     return (
-      <Header>
-        <div>
-          <Img src={userPhotoURL} />
-          <Span>{userName}</Span>
-        </div>
-        <NavigationBar notification={hasPasswordsForAccepting}>
-          <span>
-            <Link to={PROFILE}>Home</Link>
-          </span>
-          <span>
-            <Link to={PROFILE_STATUS}>Password Status Control</Link>
-          </span>
-        </NavigationBar>
-      </Header>
+      <ThemeProvider theme={headerTheme}>
+        <Header>
+          <div>
+            <Img src={userPhotoURL} />
+            <Span>{userName}</Span>
+          </div>
+          <NavigationBar notification={hasPasswordsForAccepting}>
+            <span>
+              <Link to={PROFILE}>Home</Link>
+            </span>
+            <span>
+              <Link to={PROFILE_STATUS}>Password Status Control</Link>
+            </span>
+          </NavigationBar>
+        </Header>
+      </ThemeProvider>
     );
   }
 }
