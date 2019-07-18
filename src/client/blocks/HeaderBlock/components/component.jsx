@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 import { headerTheme } from 'constants/client/themes';
 import { PROFILE, PROFILE_STATUS } from 'constants/client/routes';
 import { Header, Img, Span, NavigationBar } from './styles';
+import defaultUserPhoto from '../assets/img/defaultUserPhoto.png';
 
 class HeaderBlock extends PureComponent {
   componentDidMount() {
@@ -28,12 +29,13 @@ class HeaderBlock extends PureComponent {
 
   render() {
     const { userName, userPhotoURL, hasPasswordsForAccepting } = this.props;
+    const userPhoto = userPhotoURL.length ? userPhotoURL : defaultUserPhoto;
 
     return (
       <ThemeProvider theme={headerTheme}>
         <Header>
           <div>
-            <Img src={userPhotoURL} />
+            <Img src={userPhoto} />
             <Span>{userName}</Span>
           </div>
           <NavigationBar notification={hasPasswordsForAccepting}>

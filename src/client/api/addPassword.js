@@ -1,5 +1,3 @@
-/* eslint-disable consistent-return */
-
 import axios from 'axios';
 
 const addPassword = async ({
@@ -10,17 +8,15 @@ const addPassword = async ({
   password,
 }) => {
   try {
-    const response = await axios.post('/api/passwords', {
+    return await axios.post('/api/passwords', {
       userEmail,
       name,
       resourceAddress,
       login,
       password,
     });
-
-    return response;
   } catch (error) {
-    console.log(error);
+    throw new Error(error);
   }
 };
 

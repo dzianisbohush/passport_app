@@ -1,13 +1,10 @@
-/* eslint-disable consistent-return */
 import axios from 'axios';
 
 const getUserInfoByUserEmail = async userEmail => {
   try {
-    const response = await axios.get(`/api/users/${userEmail}`);
-
-    return response;
-  } catch (e) {
-    console.log(e);
+    return await axios.get(`/api/users/${userEmail}`);
+  } catch (error) {
+    throw new Error(error);
   }
 };
 

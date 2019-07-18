@@ -1,8 +1,10 @@
+import { handleActions } from 'redux-actions';
+
 import {
-  GET_USERS_FOR_SHARING_SUCCESS,
-  GET_USERS_FOR_SHARING_PENDING,
-  GET_USERS_FOR_SHARING_FAILURE,
-} from 'client/store/constants';
+  getUsersForSharingPending,
+  getUsersForSharingSuccess,
+  getUsersForSharingFailure,
+} from 'client/store/actions/usersForSharing';
 
 const initialState = {
   items: [],
@@ -10,28 +12,29 @@ const initialState = {
   error: '',
 };
 
-const usersForSharing = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_USERS_FOR_SHARING_PENDING:
+// REDUCERS
+export default handleActions(
+  {
+    [getUsersForSharingPending](state) {
       return {
         ...state,
         loading: true,
       };
-    case GET_USERS_FOR_SHARING_SUCCESS:
+    },
+    [getUsersForSharingSuccess](state, { payload }) {
       return {
         ...state,
-        items: action.payload,
+        items: payload,
         loading: false,
       };
-    case GET_USERS_FOR_SHARING_FAILURE:
+    },
+    [getUsersForSharingFailure](state, { payload }) {
       return {
         ...state,
-        error: action.payload,
+        error: payload,
         loading: false,
       };
-    default:
-      return state;
-  }
-};
-
-export default usersForSharing;
+    },
+  },
+  initialState,
+);

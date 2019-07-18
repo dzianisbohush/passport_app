@@ -17,8 +17,7 @@ const template = fs.readFileSync(
 );
 const compiledtemplate = HBS.compile(template);
 
-// eslint-disable-next-line no-unused-vars
-const EmailController = (req, res, next) => {
+const EmailController = (req, res) => {
   Password.getAllUserForEmailing().then(data => {
     const arr = Array.from(data);
     arr.forEach(el => {
@@ -34,7 +33,7 @@ const EmailController = (req, res, next) => {
           subject: 'please refresh pasword',
           html: compiledtemplate({ data }),
         },
-        function(err) {
+        err => {
           if (err) {
             // eslint-disable-next-line no-undef
             res.json({ Error: 'Error in sending mail' });

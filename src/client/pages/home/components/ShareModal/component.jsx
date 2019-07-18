@@ -9,7 +9,7 @@ class ShareModal extends PureComponent {
     emailsForSharing: [],
   };
 
-  onSelect = value => {
+  handleSelect = value => {
     const { emailsForSharing } = this.state;
 
     this.setState({
@@ -17,9 +17,29 @@ class ShareModal extends PureComponent {
     });
   };
 
+  handleDeselect = value => {
+    const { emailsForSharing } = this.state;
+    const emails = emailsForSharing;
+
+    const indexOfValue = emails.indexOf(value);
+
+    if (indexOfValue > -1) {
+      emails.splice(indexOfValue, 1);
+
+      this.setState({
+        emailsForSharing: [...emails],
+      });
+    }
+  };
+
   handleSubmit = () => {
     const { emailsForSharing } = this.state;
-    const { userEmail, passwordsToShare, sharePasswords } = this.props;
+    const {
+      userEmail,
+      passwordsToShare,
+      sharePasswords,
+      closeModal,
+    } = this.props;
 
     if (!emailsForSharing.length) {
       Modal.info({ title: 'Please select users emails for sharing passwords' });
@@ -28,16 +48,26 @@ class ShareModal extends PureComponent {
     }
 
     sharePasswords(userEmail, emailsForSharing, passwordsToShare);
+    this.clearEmailForSharing();
+    closeModal();
+  };
+
+  clearEmailForSharing = () => {
+    this.setState({
+      emailsForSharing: [],
+    });
   };
 
   handleCancel = () => {
     const { closeModal } = this.props;
+    this.clearEmailForSharing();
 
     closeModal();
   };
 
   render() {
     const { users, visible } = this.props;
+    const { emailsForSharing } = this.state;
 
     return (
       <Modal
@@ -49,9 +79,11 @@ class ShareModal extends PureComponent {
       >
         <SelectWrapper>
           <Select
+            value={emailsForSharing}
             mode="multiple"
             placeholder="Select emails"
-            onSelect={this.onSelect}
+            onSelect={this.handleSelect}
+            onDeselect={this.handleDeselect}
             size="large"
           >
             {users.map(elem => {

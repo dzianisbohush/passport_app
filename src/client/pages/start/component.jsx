@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGooglePlus } from '@fortawesome/free-brands-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -12,24 +12,32 @@ import {
   StyledLogoutLink,
 } from './styles';
 
-const Start = () => (
-  <ThemeProvider theme={startPageTheme}>
-    <StyledMainWrapper>
-      <StyledButtonsWrapper>
-        <StyledLoginLink href="auth/google">
-          <FontAwesomeIcon icon={faGooglePlus} />
-          <span>Authorize with Gooogle +</span>
-        </StyledLoginLink>
-        <StyledLogoutLink
-          href="auth/logout"
-          onClick={() => localStorage.removeItem('email')}
-        >
-          <FontAwesomeIcon icon={faSignOutAlt} />
-          <span>Logout</span>
-        </StyledLogoutLink>
-      </StyledButtonsWrapper>
-    </StyledMainWrapper>
-  </ThemeProvider>
-);
+class StartPage extends PureComponent {
+  handleLogoutClick = () => {
+    localStorage.removeItem('email');
+  };
 
-export default Start;
+  render() {
+    return (
+      <ThemeProvider theme={startPageTheme}>
+        <StyledMainWrapper>
+          <StyledButtonsWrapper>
+            <StyledLoginLink href="auth/google">
+              <FontAwesomeIcon icon={faGooglePlus} />
+              <span>Authorize with Gooogle +</span>
+            </StyledLoginLink>
+            <StyledLogoutLink
+              href="auth/logout"
+              onClick={() => localStorage.removeItem('email')}
+            >
+              <FontAwesomeIcon icon={faSignOutAlt} />
+              <span>Logout</span>
+            </StyledLogoutLink>
+          </StyledButtonsWrapper>
+        </StyledMainWrapper>
+      </ThemeProvider>
+    );
+  }
+}
+
+export default StartPage;

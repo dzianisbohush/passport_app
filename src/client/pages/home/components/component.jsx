@@ -58,12 +58,6 @@ class Home extends Component {
     history.push(PROFILE_ADD);
   };
 
-  handleDeleteModalDismiss = () => {
-    this.setState({
-      isDeleteModalVisible: false,
-    });
-  };
-
   handleDeleteModalSubmit = () => {
     const { deletePasswordItem } = this.props;
     const { itemIdToDelete } = this.state;

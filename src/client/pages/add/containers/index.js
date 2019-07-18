@@ -19,9 +19,10 @@ const addPasswordItem = (item, userEmail) => async dispatch => {
     if (status === HTTP_STATUS_CODES.CREATED) {
       Modal.info({ title: 'Password successfully created' });
     }
-  } catch (e) {
+  } catch (error) {
     Modal.error({ title: 'Password did not created' });
-    dispatch(addPasswordFailure(e));
+    dispatch(addPasswordFailure(error));
+    throw new Error(error);
   }
 };
 

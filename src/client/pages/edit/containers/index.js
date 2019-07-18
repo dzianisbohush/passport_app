@@ -19,9 +19,10 @@ const changePasswordItem = (item, userEmail) => async dispatch => {
     if (status === HTTP_STATUS_CODES.OK) {
       Modal.info({ title: 'Password successfully changed' });
     }
-  } catch (e) {
+  } catch (error) {
     Modal.error({ title: 'Password did not change' });
-    dispatch(changePasswordFailure(e));
+    dispatch(changePasswordFailure(error));
+    throw new Error(error);
   }
 };
 
