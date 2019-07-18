@@ -25,4 +25,3 @@ services:
       DB_NAME: database
     ports:
     - "4000:4000"
-    - "4001:4001"
