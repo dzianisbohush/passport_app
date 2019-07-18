@@ -106,7 +106,7 @@ class Home extends Component {
       const index = passwordsToShare.findIndex(elem => elem.id === row.id);
       passwordsToShare.splice(index, 1);
       this.setState({
-        isActiveShareBtn: false,
+        isActiveShareBtn: passwordsToShare.length !== 0,
         passwordsToShare,
       });
     }
