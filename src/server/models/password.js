@@ -2,6 +2,7 @@
 // because this file is imported by sequelize-cli(without babel)
 const Sequelize = require('sequelize');
 const { Op } = require('sequelize');
+const { PASSWORD_CONST } = require('../../constants');
 const postgresConnection = require('../../../config/dbConfig');
 
 const { Model } = Sequelize;
@@ -15,43 +16,43 @@ const sequelize = new Sequelize(database, username, password, {
 });
 
 const passwordSchema = {
-  id: {
+  [PASSWORD_CONST.ID]: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: Sequelize.INTEGER,
   },
-  userEmail: {
+  [PASSWORD_CONST.USER_EMAIL]: {
     allowNull: false,
     type: Sequelize.STRING,
   },
-  name: {
+  [PASSWORD_CONST.NAME]: {
     type: Sequelize.STRING,
   },
-  resourceAddress: {
+  [PASSWORD_CONST.RESOURCE_ADDRESS]: {
     allowNull: false,
     type: Sequelize.STRING,
   },
-  login: {
+  [PASSWORD_CONST.LOGIN]: {
     allowNull: false,
     type: Sequelize.STRING,
   },
-  password: {
+  [PASSWORD_CONST.PASSWORD]: {
     allowNull: false,
     type: Sequelize.STRING,
   },
-  isAccepted: {
+  [PASSWORD_CONST.IS_ACCEPTED]: {
     type: Sequelize.BOOLEAN,
   },
-  sendNotificationAt: {
+  [PASSWORD_CONST.SEND_NOTIFICATION_AT]: {
     allowNull: false,
     type: Sequelize.DATE,
   },
-  createdAt: {
+  [PASSWORD_CONST.CREATED_AT]: {
     allowNull: false,
     type: Sequelize.DATE,
   },
-  updatedAt: {
+  [PASSWORD_CONST.UPDATED_AT]: {
     allowNull: false,
     type: Sequelize.DATE,
   },
@@ -60,7 +61,7 @@ const passwordSchema = {
 class Password extends Model {}
 Password.init(passwordSchema, {
   sequelize,
-  modelName: 'Password',
+  modelName: PASSWORD_CONST.TABLE_NAME,
 });
 
 function createPassword(userData) {
@@ -70,7 +71,11 @@ function createPassword(userData) {
 function getPasswordsForExtByUserEmail(userEmail) {
   return Password.findAll({
     where: { userEmail },
-    attributes: ['resourceAddress', 'login', 'password'],
+    attributes: [
+      PASSWORD_CONST.RESOURCE_ADDRESS,
+      PASSWORD_CONST.LOGIN,
+      PASSWORD_CONST.PASSWORD,
+    ],
   });
 }
 
@@ -108,7 +113,9 @@ function deletePasswordById(id) {
 }
 function getAllUserForEmailing() {
   const d = new Date();
-  return Password.findAll({ where: { sendNotificationAt: { [Op.gte]: d } } });
+  return Password.findAll({
+    where: { [PASSWORD_CONST.SEND_NOTIFICATION_AT]: { [Op.gte]: d } },
+  });
 }
 
 module.exports = {

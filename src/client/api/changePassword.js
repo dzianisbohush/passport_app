@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { PASSWORD_CONST } from '../../constants/index';
 
 const changePassword = async ({
   id,
@@ -10,11 +11,11 @@ const changePassword = async ({
 }) => {
   try {
     return await axios.put(`/api/passwords/${id}`, {
-      userEmail,
-      name,
-      resourceAddress,
-      login,
-      password,
+      [PASSWORD_CONST.USER_EMAIL]: userEmail,
+      [PASSWORD_CONST.NAME]: name,
+      [PASSWORD_CONST.RESOURCE_ADDRESS]: resourceAddress,
+      [PASSWORD_CONST.LOGIN]: login,
+      [PASSWORD_CONST.PASSWORD]: password,
     });
   } catch (error) {
     throw new Error(error);
